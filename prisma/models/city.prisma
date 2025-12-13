@@ -1,0 +1,24 @@
+model City {
+   id Int @id @default(autoincrement())
+
+   name                               String   @unique
+
+   countryId                          Int      @map("country_id")
+   
+   minOrderValueForDeliveryByDefault  Decimal? @default("0") @map("min_order_value_for_delivery_by_default") @db.Decimal(12, 2)
+   deliveryPriceByDefault             Decimal? @default("0") @map("delivery_price_by_default") @db.Decimal(12, 2)
+   orderValueForFreeDeliveryByDefault Decimal? @map("order_value_for_free_delivery_by_default") @db.Decimal(12, 2)
+   mapIframe                          String?  @map("map_iframe")
+   geojson                            Json?
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   country Country @relation(fields: [countryId], references: [id])
+
+   restaurants Restaurant[]
+   deliveryZones DeliveryZone[]
+   addresses Address[]
+
+   @@map("cities")
+}

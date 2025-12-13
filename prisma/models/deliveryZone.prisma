@@ -1,0 +1,22 @@
+model DeliveryZone {
+   id Int @id @default(autoincrement())
+
+   name String
+
+   cityId                    Int      @map("city_id")
+   restaurantId              Int      @map("restaurant_id")
+   
+   minOrderValueForDelivery  Decimal  @default(0) @map("min_order_value_for_delivery") @db.Decimal(12, 2)
+   deliveryPrice             Decimal  @default(0) @map("delivery_price") @db.Decimal(12, 2)
+   orderValueForFreeDelivery Decimal? @map("order_value_for_free_delivery") @db.Decimal(12, 2)
+   geojsonFeature            Json     @map("geojson_feature")
+   isActive                  Boolean  @default(true) @map("is_active")
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   city       City       @relation(fields: [cityId], references: [id])
+   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+   @@map("delivery_zones")
+}

@@ -1,0 +1,40 @@
+model RestaurantSchedule {
+   id   Int    @id @default(autoincrement())
+   
+   name String @unique
+
+   mondayOpenTime  String? @map("monday_open_time")
+   mondayCloseTime String? @map("monday_close_time")
+   mondayIsOpen    Boolean @default(true) @map("monday_is_open")
+
+   tuesdayOpenTime  String? @map("tuesday_open_time")
+   tuesdayCloseTime String? @map("tuesday_close_time")
+   tuesdayIsOpen    Boolean @default(true) @map("tuesday_is_open")
+
+   wednesdayOpenTime  String? @map("wednesday_open_time")
+   wednesdayCloseTime String? @map("wednesday_close_time")
+   wednesdayIsOpen    Boolean @default(true) @map("wednesday_is_open")
+
+   thursdayOpenTime  String? @map("thursday_open_time")
+   thursdayCloseTime String? @map("thursday_close_time")
+   thursdayIsOpen    Boolean @default(true) @map("thursday_is_open")
+
+   fridayOpenTime  String? @map("friday_open_time")
+   fridayCloseTime String? @map("friday_close_time")
+   fridayIsOpen    Boolean @default(true) @map("friday_is_open")
+
+   saturdayOpenTime  String? @map("saturday_open_time")
+   saturdayCloseTime String? @map("saturday_close_time")
+   saturdayIsOpen    Boolean @default(true) @map("saturday_is_open")
+
+   sundayOpenTime  String? @map("sunday_open_time")
+   sundayCloseTime String? @map("sunday_close_time")
+   sundayIsOpen    Boolean @default(true) @map("sunday_is_open")
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   restaurants Restaurant[]
+
+   @@map("restaurant_schedules")
+}

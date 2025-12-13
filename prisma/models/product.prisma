@@ -1,0 +1,31 @@
+model Product {
+   id Int @id @default(autoincrement())
+
+   name String @unique
+
+   categoryId Int @map("category_id")
+
+   imagePath          String? @map("image_path")
+   descriptionShort   String? @map("description_short")
+   descriptionFull    String? @map("description_full")
+   priceDefault       Decimal @map("price_default") @db.Decimal(12, 2)
+   positionInCategory Int?    @map("position_in_category")
+   isActive           Boolean @default(true) @map("is_active")
+
+   // добавлено для будущей реализации - СТАРТ
+   composition   String?
+   weight        Int?
+   calories      Int?
+   proteins      Float?
+   fats          Float?
+   carbohydrates Float?
+   // добавлено для будущей реализации - СТОП
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   category Category @relation(fields: [categoryId], references: [id])
+   restaurants ProductRestaurant[]
+
+   @@map("products")
+}

@@ -1,0 +1,28 @@
+model Restaurant {
+   id Int @id @default(autoincrement())
+
+   name String @unique
+
+   cityId               Int @map("city_id")
+   restaurantScheduleId Int @map("restaurant_schedule_id")
+
+   deliveryToAddressAvailable           Boolean @default(true) @map("delivery_to_address_available")
+   pickUpAtCounterAvailable             Boolean @default(true) @map("pick_up_at_counter_available")
+   pickUpAtCarWindowAvailable           Boolean @default(false) @map("pick_up_at_car_window_available")
+   atRestaurantAtCounterAvailable       Boolean @default(false) @map("at_restaurant_at_counter_available")
+   atRestaurantToTableAvailable         Boolean @default(false) @map("at_restaurant_to_table_available")
+   deliveryToRestaurantParkingAvailable Boolean @default(false) @map("delivery_to_restaurant_parking_available")
+   isActive                             Boolean @default(true) @map("is_active")
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   city               City               @relation(fields: [cityId], references: [id])
+   restaurantSchedule RestaurantSchedule @relation(fields: [restaurantScheduleId], references: [id])
+   address Address?
+
+   deliveryZones DeliveryZone[]
+   products ProductRestaurant[]
+
+   @@map("restaurants")
+}

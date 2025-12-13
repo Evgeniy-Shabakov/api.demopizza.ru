@@ -1,0 +1,19 @@
+
+POST http://localhost:5000/api/v1/auth/login
+Content-Type: application/json
+
+{
+   "phone": "+79121312653"
+}
+
+###
+POST http://localhost:5000/api/v1/auth/refresh-token
+Content-Type: application/json
+
+{
+   "username": "Jho"
+}
+
+###
+GET http://localhost:5000/api/v1/auth/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGhvbmUiOiIrNzkxMjEzMTI2NTMiLCJpYXQiOjE3NjU1MzQ2MTEsImV4cCI6MTc2NTUzNDY0MX0.rC0912OU4X1IHZyPv09ZXXvuJRUUBlfwRyTo1gpbEh0
