@@ -10,7 +10,7 @@ export const authTelegramBotController = baseController(async (req, res) => {
       await handleTextMessage(message)
    }
    if (message.contact) {
-      await sendSimpleMessage(message.chat.id, 'вы отправили контакт')
+      await handleContactMessage(message)
    }
 
    res.status(204).send()
@@ -22,8 +22,7 @@ async function handleTextMessage(message) {
 
    switch (true) {
       case text.startsWith('/start'):
-         // this.handleStartCommand(chatId, text)
-         await sendSimpleMessage(chatId, 'Вы отправили команду старт')
+         await handleStartCommand(chatId, text)
          break
 
       case text === '/help':
@@ -33,6 +32,19 @@ async function handleTextMessage(message) {
       default:
          await sendSimpleMessage(chatId, `Не понимаю команду: '${text}'. Напишите /help`)
    }
+}
+
+async function handleStartCommand(chatId, text) {
+   const userAuthToken = text.split(' ')[1]
+
+   if (!userAuthToken) {
+      await sendSimpleMessage(chatId, "Для входа используйте ссылку из приложения");
+      return
+   }
+}
+
+async function handleContactMessage(message) {
+   await sendSimpleMessage(message.chat.id, 'вы отправили контакт')
 }
 
 async function sendSimpleMessage(chatId, text) {
