@@ -6,6 +6,7 @@ export const authTelegramBotController = baseController(async (req, res) => {
 
    const chatId = req.body.message.chat.id
 
+   await sendSimpleMessage(chatId, 'sdfsdfs')
    await axios.post(`https://api.telegram.org/bot${config.authTelegramBotToken}/sendMessage`, {
       chat_id: chatId,
       text: 'Привет'
@@ -13,3 +14,10 @@ export const authTelegramBotController = baseController(async (req, res) => {
 
    res.status(204).send()
 })
+
+async function sendSimpleMessage(chatId, text) {
+   await axios.post(`https://api.telegram.org/bot${config.authTelegramBotToken}/sendMessage`, {
+      chat_id: chatId,
+      text: text
+   })
+}
