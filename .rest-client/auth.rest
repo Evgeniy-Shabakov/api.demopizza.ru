@@ -6,14 +6,14 @@ Content-Type: application/json
    "phone": "+79121312653"
 }
 
+###      
+DELETE http://localhost:5000/api/v1/auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGhvbmUiOiIrNzkxMjEzMTI2NTMiLCJpYXQiOjE3NjU4ODI3OTcsImV4cCI6MTc2NTg4MjkxN30.Jz1fJd2c7WQFj1gRWl5T-BYb1kF3MvWFM4PQ8NQH7Ys
+
 ###
 POST http://localhost:5000/api/v1/auth/refresh-token
-Content-Type: application/json
-
-{
-   "username": "Jho"
-}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGhvbmUiOiIrNzkxMjEzMTI2NTMiLCJpYXQiOjE3NjU4ODEzNDIsImV4cCI6MTc2NTg4MTQ2Mn0.MsMTXWFmd3WexQg2gkhpQQ4Dhp041Sr2LwS-2Aq2BvA
 
 ###
 GET http://localhost:5000/api/v1/auth/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGhvbmUiOiIrNzkxMjEzMTI2NTMiLCJpYXQiOjE3NjU1MzQ2MTEsImV4cCI6MTc2NTUzNDY0MX0.rC0912OU4X1IHZyPv09ZXXvuJRUUBlfwRyTo1gpbEh0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGhvbmUiOiIrNzkxMjEzMTI2NTMiLCJpYXQiOjE3NjU4ODEyNzQsImV4cCI6MTc2NTg4MTMwNH0.xnJyfhjX3ok6iGuNcLNncTsZM9VRrHV7fKWUo-fz0dI

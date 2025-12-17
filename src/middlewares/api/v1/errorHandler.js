@@ -1,5 +1,6 @@
 import fs from 'fs'
 import multer from 'multer'
+import jwt from 'jsonwebtoken'
 
 export function errorHandler(error, req, res, next) {
    console.error(error)
@@ -12,9 +13,9 @@ export function errorHandler(error, req, res, next) {
 
    if (error instanceof multer.MulterError) {
       let message
-      
-      if(error.code == 'UNEXPECTED_FILE_TYPE') message = 'Неверное разрешение файла (jpeg, png)'
-      else if(error.code == 'LIMIT_FILE_SIZE') message = 'Слишком большой файл (до 100Кб)'
+
+      if (error.code == 'UNEXPECTED_FILE_TYPE') message = 'Неверное разрешение файла (jpeg, png)'
+      else if (error.code == 'LIMIT_FILE_SIZE') message = 'Слишком большой файл (до 100Кб)'
 
       return res.status(422).json({
          error: 'Ошибка валидации',
@@ -52,6 +53,39 @@ export function errorHandler(error, req, res, next) {
       return res.status(409).json({
          error: 'Ошибка уникальности',
          message: 'Запись с таким значением уже существует',
+         details: {
+            error: error,
+            stack: error.stack,
+         }
+      })
+   }
+
+   if (error.status == 401) {
+      return res.status(401).json({
+         error: 'Ошибка аутентификации',
+         message: 'Токен отсутствует',
+         details: {
+            error: error,
+            stack: error.stack,
+         }
+      })
+   }
+
+   if (error instanceof jwt.TokenExpiredError) {
+      return res.status(403).json({
+         error: 'Ошибка аутентификации',
+         message: 'Токен устарел',
+         details: {
+            error: error,
+            stack: error.stack,
+         }
+      })
+   }
+
+   if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(403).json({
+         error: 'Ошибка аутентификации',
+         message: 'Неверный токен',
          details: {
             error: error,
             stack: error.stack,

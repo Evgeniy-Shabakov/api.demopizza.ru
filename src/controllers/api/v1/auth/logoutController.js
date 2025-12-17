@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
 import { prisma } from '#services/prismaClient.js'
 import config from '#config/config.js'
-import { extractToken, generateJWTTokens } from '#utils/auth/JWTHelper.js'
+import { extractToken } from '#utils/auth/JWTHelper.js'
 import { AuthError } from '#utils/errors/authError.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
 
-export const refreshTokenController = baseController(async (req, res) => {
+export const logoutController = baseController(async (req, res) => {
    const token = extractToken(req)
 
    const user = jwt.verify(token, config.jwtRefreshTokenSecret)
@@ -20,7 +20,5 @@ export const refreshTokenController = baseController(async (req, res) => {
    })
    if (!userInDB) throw new AuthError()
 
-   const tokens = await generateJWTTokens(req, user)
-
-   res.json(tokens)
+   res.status(204).send()
 })

@@ -9,6 +9,7 @@ const config = {
    jwtRefreshTokenSecret: process.env.JWT_REFRESH_TOKEN_SECRET,
    jwtAccessTokenLiveTime: process.env.JWT_ACCESS_TOKEN_LIVE_TIME,
    jwtRefreshTokenLiveTime: process.env.JWT_REFRESH_TOKEN_LIVE_TIME,
+   authTelegramBotToken: process.env.AUTH_TELEGRAM_BOT_TOKEN
 }
 
 export default config
