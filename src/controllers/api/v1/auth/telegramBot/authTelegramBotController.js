@@ -1,6 +1,7 @@
 import axios from 'axios'
 import config from '#config/config.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
+import { nodeCache } from '#services/nodeCache.js'
 
 export const authTelegramBotController = baseController(async (req, res) => {
 
@@ -35,12 +36,21 @@ async function handleTextMessage(message) {
 }
 
 async function handleStartCommand(chatId, text) {
-   const userAuthToken = text.split(' ')[1]
+   const linkUniquePart = text.split(' ')[1]
 
-   if (!userAuthToken) {
-      await sendSimpleMessage(chatId, "Для входа используйте ссылку из приложения");
+   if (!linkUniquePart) {
+      await sendSimpleMessage(chatId, "Для входа используйте ссылку из приложения")
       return
    }
+
+   const cacheData = nodeCache.get(`https://t.me/${config.authTelegramBotUsername}?start=${linkUniquePart}`)
+
+   if (!cacheData) {
+      await sendSimpleMessage(chatId, "⚠️ Ссылка недействительна или устарела. Обновите ссылку в приложении.")
+      return
+   }
+
+   await sendSimpleMessage(chatId, "Все идет хорошо")
 }
 
 async function handleContactMessage(message) {
