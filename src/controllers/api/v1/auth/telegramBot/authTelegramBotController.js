@@ -58,7 +58,7 @@ async function handleStartCommand(chatId, text) {
 }
 
 async function handleContactMessage(message) {
-   const chatId = message.message.chat.id
+   const chatId = message.chat.id
    const phoneNumber = message.contact.phone_number
 
    await sendSimpleMessage(chatId, `вы отправили контакт ${phoneNumber}`)
