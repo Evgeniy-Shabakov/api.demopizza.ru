@@ -39,18 +39,22 @@ async function handleStartCommand(chatId, text) {
    const linkUniquePart = text.split(' ')[1]
 
    if (!linkUniquePart) {
-      await sendSimpleMessage(chatId, "Для входа используйте ссылку из приложения")
+      await sendSimpleMessage(chatId, "Для входа в сервис Demopizza используйте ссылку из приложения")
       return
    }
 
-   const cacheData = nodeCache.get(`https://t.me/${config.authTelegramBotUsername}?start=${linkUniquePart}`)
+   const cacheCay = `https://t.me/${config.authTelegramBotUsername}?start=${linkUniquePart}`
+   const cacheData = nodeCache.get(cacheCay)
 
    if (!cacheData) {
       await sendSimpleMessage(chatId, "⚠️ Ссылка недействительна или устарела. Обновите ссылку в приложении.")
       return
    }
 
-   await sendSimpleMessage(chatId, "Все идет хорошо")
+   nodeCache.set(cacheCay, { status: 'waiting_phone' })
+   nodeCache.set(chatId, cacheCay)   //для быстрого поиска cacheCay по chatId
+
+   await sendPhoneRequest(chatId)
 }
 
 async function handleContactMessage(message) {
@@ -61,5 +65,24 @@ async function sendSimpleMessage(chatId, text) {
    await axios.post(`https://api.telegram.org/bot${config.authTelegramBotToken}/sendMessage`, {
       chat_id: chatId,
       text: text
+   })
+}
+
+async function sendPhoneRequest(chatId) {
+   await axios.post(`https://api.telegram.org/bot${config.authTelegramBotToken}/sendMessage`, {
+      chat_id: chatId,
+      text: 'Для входа в сервис Demopizza необходимо подтвердить номер телефона',
+      reply_markup: {
+         keyboard: [
+            [
+               {
+                  text: '✅ ПОДТВЕРДИТЬ НОМЕР ТЕЛЕФОНА',
+                  request_contact: true
+               }
+            ]
+         ],
+         resize_keyboard: true,
+         one_time_keyboard: true
+      }
    })
 }
