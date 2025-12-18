@@ -43,16 +43,16 @@ async function handleStartCommand(chatId, text) {
       return
    }
 
-   const cacheCay = `https://t.me/${config.authTelegramBotUsername}?start=${linkUniquePart}`
-   const cacheData = nodeCache.get(cacheCay)
+   const linkAsCacheCay = `https://t.me/${config.authTelegramBotUsername}?start=${linkUniquePart}`
+   const cacheData = nodeCache.get(linkAsCacheCay)
 
    if (!cacheData) {
       await sendSimpleMessage(chatId, "⚠️ Ссылка недействительна или устарела. Обновите ссылку в приложении.")
       return
    }
 
-   nodeCache.set(cacheCay, { status: 'waiting_phone' })
-   nodeCache.set(chatId, cacheCay)   //для быстрого поиска cacheCay по chatId
+   nodeCache.set(linkAsCacheCay, { status: 'waiting_phone' })
+   nodeCache.set(chatId, linkAsCacheCay)   //для быстрого поиска linkAsCacheCay по chatId
 
    await sendPhoneRequest(chatId)
 }
@@ -61,7 +61,28 @@ async function handleContactMessage(message) {
    const chatId = message.chat.id
    const phoneNumber = message.contact.phone_number
 
-   await sendSimpleMessage(chatId, `вы отправили контакт ${phoneNumber}`)
+   const linkAsCacheCay = nodeCache.get(chatId)
+   nodeCache.del(chatId)  //Удаляем временную связь chatId → linkAsCacheCay
+
+   if (!linkAsCacheCay) {
+      await sendSimpleMessage(chatId, '⚠️ Сначала начните процесс входа через приложение.')
+      return
+   }
+
+   const authData = nodeCache.get(linkAsCacheCay)
+
+   if (!authData || authData.status !== 'waiting_phone') {
+      await sendSimpleMessage(chatId, "⚠️ Запрос на подтверждение номера не найден.")
+      return
+   }
+
+   nodeCache.set(linkAsCacheCay, {
+      status: 'verified',
+      phone: phoneNumber
+   })
+
+   await sendSimpleMessage(chatId, `✅ Номер подтверждён.
+      \nВернитесь в сервис Demopizza. Вход произойдет автоматически`)
 }
 
 async function sendSimpleMessage(chatId, text) {
