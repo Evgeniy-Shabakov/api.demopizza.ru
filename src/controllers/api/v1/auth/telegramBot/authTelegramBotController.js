@@ -81,8 +81,8 @@ async function handleContactMessage(message) {
       phone: phoneNumber
    })
 
-   await sendSimpleMessage(chatId, `✅ Номер подтверждён.\n 
-      Вернитесь в сервис Demopizza. Вход произойдет автоматически`)
+   await sendSimpleMessage(chatId, `✅ Номер подтверждён.
+      \nВернитесь в сервис Demopizza. Вход произойдет автоматически`)
 }
 
 async function sendSimpleMessage(chatId, text) {
