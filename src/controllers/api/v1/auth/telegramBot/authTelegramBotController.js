@@ -4,7 +4,6 @@ import { baseController } from "#controllers/api/v1/baseController.js"
 import { nodeCache } from '#services/nodeCache.js'
 
 export const authTelegramBotController = baseController(async (req, res) => {
-
    const message = req.body.message
 
    if (message.text) {
@@ -20,41 +19,27 @@ export const authTelegramBotController = baseController(async (req, res) => {
 async function handleTextMessage(message) {
    const chatId = message.chat.id
    const text = message.text.trim()
-
-   switch (true) {
-      case text.startsWith('/start'):
-         await handleStartCommand(chatId, text)
-         break
-
-      case text === '/help':
-         await sendSimpleMessage(chatId, 'Доступные команды: /start, /help')
-         break
-
-      default:
-         await sendSimpleMessage(chatId, `Не понимаю команду: '${text}'. Напишите /help`)
-   }
-}
-
-async function handleStartCommand(chatId, text) {
    const linkUniquePart = text.split(' ')[1]
 
-   if (!linkUniquePart) {
-      await sendSimpleMessage(chatId, "Для входа в сервис Demopizza используйте ссылку из приложения")
-      return
+   if (text.startsWith('/start') && linkUniquePart) {
+      const linkAsCacheCay = `https://t.me/${config.authTelegramBotUsername}?start=${linkUniquePart}`
+      const cacheData = nodeCache.get(linkAsCacheCay)
+
+      if (!cacheData) {
+         await sendSimpleMessage(chatId, '⚠️ Ссылка недействительна или устарела. Обновите ссылку в приложении.')
+         return
+      }
+
+      nodeCache.set(linkAsCacheCay, { status: 'waiting_phone' })
+      nodeCache.set(chatId, linkAsCacheCay)   //для быстрого поиска linkAsCacheCay по chatId
+
+      await sendPhoneRequest(chatId)
    }
-
-   const linkAsCacheCay = `https://t.me/${config.authTelegramBotUsername}?start=${linkUniquePart}`
-   const cacheData = nodeCache.get(linkAsCacheCay)
-
-   if (!cacheData) {
-      await sendSimpleMessage(chatId, "⚠️ Ссылка недействительна или устарела. Обновите ссылку в приложении.")
-      return
+   else {
+      sendSimpleMessage(chatId,
+         `Бот Demopizza предназначен только для входа в сервисы Demopizza.
+         Для входа используйте кнопку из приложения`)
    }
-
-   nodeCache.set(linkAsCacheCay, { status: 'waiting_phone' })
-   nodeCache.set(chatId, linkAsCacheCay)   //для быстрого поиска linkAsCacheCay по chatId
-
-   await sendPhoneRequest(chatId)
 }
 
 async function handleContactMessage(message) {
