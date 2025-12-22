@@ -8,7 +8,7 @@ import { AuthError } from '#utils/errors/authError.js'
 export const loginController = baseController(async (req, res) => {
    let user
 
-   if (req.body.loginTgBotLink) {
+   if (req.body?.loginTgBotLink) {
       const cacheData = nodeCache.get(req.body.loginTgBotLink)
 
       if (!cacheData) throw new AuthError(403, 'Ссылка на телеграм устарела')
