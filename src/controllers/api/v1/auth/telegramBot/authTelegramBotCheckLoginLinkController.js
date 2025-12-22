@@ -1,7 +1,8 @@
 import { nodeCache } from '#services/nodeCache.js'
+import { baseController } from "#controllers/api/v1/baseController.js"
 import { AuthError } from '#utils/errors/authError.js'
 
-export const authTelegramBotCheckLoginLinkCotroller = baseController(async (req, res) => {
+export const authTelegramBotCheckLoginLinkController = baseController(async (req, res) => {
    cacheData = nodeCache.get(req.body.loginLink)
 
    if (!cacheData) throw new AuthError(403, 'Ссылка на телеграм устарела, обновите страницу')
