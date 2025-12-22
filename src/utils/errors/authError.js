@@ -1,6 +1,6 @@
 
 export class AuthError extends Error {
-   constructor(message = 'Unauthorized', status = 401) {
+   constructor(status = 401, message = 'Unauthorized') {
       super(message)
       this.status = status
    }

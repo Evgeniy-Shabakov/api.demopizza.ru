@@ -7,6 +7,7 @@ import cors from 'cors'
 import config from '#config/config.js'
 import router from '#routes/router.js'
 import { errorHandler } from '#middlewares/api/v1/errorHandler.js'
+import { pathNotFoundHandler } from '#middlewares/api/v1/pathNotFoundHandler.js'
 
 export const app = express()
 
@@ -28,4 +29,5 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/', router)
 
+app.use(pathNotFoundHandler)
 app.use(errorHandler)

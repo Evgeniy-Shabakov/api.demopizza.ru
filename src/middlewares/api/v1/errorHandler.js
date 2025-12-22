@@ -1,6 +1,7 @@
 import fs from 'fs'
 import multer from 'multer'
 import jwt from 'jsonwebtoken'
+import { AuthError } from '#utils/errors/authError.js'
 
 export function errorHandler(error, req, res, next) {
    console.error(error)
@@ -86,6 +87,17 @@ export function errorHandler(error, req, res, next) {
       return res.status(403).json({
          error: 'Ошибка аутентификации',
          message: 'Неверный токен',
+         details: {
+            error: error,
+            stack: error.stack,
+         }
+      })
+   }
+
+   if (error instanceof AuthError && error.status == 403) {
+      return res.status(403).json({
+         error: 'Ошибка аутентификации',
+         message: error.message,
          details: {
             error: error,
             stack: error.stack,

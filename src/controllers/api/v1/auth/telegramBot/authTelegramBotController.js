@@ -37,7 +37,7 @@ async function handleTextMessage(message) {
    }
    else {
       sendSimpleMessage(chatId,
-         `Бот Demopizza предназначен только для входа в сервисы Demopizza. Для входа используйте кнопку из приложения`)
+         `⚠️ Бот Demopizza предназначен только для входа в сервисы Demopizza. Для входа используйте кнопку из приложения`)
    }
 }
 
