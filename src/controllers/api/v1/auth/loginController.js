@@ -3,6 +3,7 @@ import { baseController } from "#controllers/api/v1/baseController.js"
 import { UserResource } from "#resources/api/v1/userResource.js"
 import { generateJWTTokens } from '#utils/auth/JWTHelper.js'
 import { nodeCache } from '#services/nodeCache.js'
+import { AuthError } from '#utils/errors/authError.js'
 
 export const loginController = baseController(async (req, res) => {
    let user
