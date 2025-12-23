@@ -30,7 +30,10 @@ async function handleTextMessage(message) {
          return
       }
 
-      nodeCache.set(linkAsCacheCay, { status: 'waiting_phone' })
+      nodeCache.set(linkAsCacheCay, {
+         ...cacheData,
+         status: 'waiting_phone'
+      })
       nodeCache.set(chatId, linkAsCacheCay)   //для быстрого поиска linkAsCacheCay по chatId
 
       await sendPhoneRequest(chatId)
@@ -61,6 +64,7 @@ async function handleContactMessage(message) {
    }
 
    nodeCache.set(linkAsCacheCay, {
+      ...cacheData,
       status: 'verified',
       phone: phoneNumber
    })

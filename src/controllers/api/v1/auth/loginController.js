@@ -11,15 +11,22 @@ export const loginController = baseController(async (req, res) => {
    if (req.body?.loginTgBotLink) {
       const cacheData = nodeCache.get(req.body.loginTgBotLink)
 
-      if (!cacheData) throw new AuthError(403, 'Ссылка на телеграм устарела')
-      if (cacheData.status !== 'verified') throw new AuthError(403, 'Номер телефона не подтвержден')
+      if (!cacheData) {
+         throw new AuthError(403, 'Ссылка на телеграм устарела')
+      }
+      if (cacheData.tgBotLoginSession !== req.body?.tgBotLoginSession) {
+         throw new AuthError(403, 'Сессия аутентификации не совпадает')
+      }
+      if (cacheData.status !== 'verified') {
+         throw new AuthError(403, 'Номер телефона не подтвержден')
+      }
 
       user = await prisma.user.findUnique({
          where: { phone: cacheData.phone }
       })
    }
 
-   if(!user) throw new AuthError(403, 'Пользователя нет в БД')
+   if (!user) throw new AuthError(403, 'Пользователя нет в БД')
 
    const tokens = await generateJWTTokens(req, user)
 
