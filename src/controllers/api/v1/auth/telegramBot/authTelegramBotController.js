@@ -64,7 +64,7 @@ async function handleContactMessage(message) {
    }
 
    nodeCache.set(linkAsCacheCay, {
-      ...cacheData,
+      ...authData,
       status: 'verified',
       phone: phoneNumber
    })
