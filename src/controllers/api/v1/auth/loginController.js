@@ -8,13 +8,13 @@ import { AuthError } from '#utils/errors/authError.js'
 export const loginController = baseController(async (req, res) => {
    let user
 
-   if (req.body?.authTgBotLoginLink) {
+   if (req.body.authTgBotLoginLink) {
       const cacheData = nodeCache.get(req.body.authTgBotLoginLink)
 
       if (!cacheData) {
          throw new AuthError(403, 'Ссылка на телеграм устарела')
       }
-      if (cacheData.authTgBotLoginSessionID !== req.body?.authTgBotLoginSessionID) {
+      if (cacheData.authTgBotLoginSessionID !== req.body.authTgBotLoginSessionID) {
          throw new AuthError(403, 'Сессия аутентификации не совпадает')
       }
       if (cacheData.status !== 'verified') {
@@ -24,6 +24,9 @@ export const loginController = baseController(async (req, res) => {
       user = await prisma.user.findUnique({
          where: { phone: cacheData.phone }
       })
+   }
+   else {
+      throw new AuthError(403, 'Недостаточно данных для входа в систему')
    }
 
    if (!user) throw new AuthError(403, 'Пользователя нет в БД')

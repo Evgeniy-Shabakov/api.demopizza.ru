@@ -8,16 +8,20 @@ import { authTelegramBotLoginLinkGenerateController } from '#controllers/api/v1/
 import { authTelegramBotCheckLoginLinkController } from '#controllers/api/v1/auth/telegramBot/authTelegramBotCheckLoginLinkController.js'
 import { authTgBotCheckLoginLinkValidationSchema } from '#validations/api/v1/auth/authTgBotCheckLoginLinkValidationSchema.js'
 import { validateBody } from '#middlewares/api/v1/validators/validateBody.js'
+import { loginSchemaValidation } from '#validations/api/v1/auth/loginSchemaValidation.js'
 
 const router = express.Router()
 
-router.post('/login', loginController)
+router.post('/login',
+   validateBody(loginSchemaValidation),
+   loginController
+)
 router.delete('/logout', logoutController)
 router.post('/refresh-token', refreshTokenController)
 
 router.post('/telegram-bot/webhook', authTelegramBotController)
 router.get('/telegram-bot/get-login-link', authTelegramBotLoginLinkGenerateController)
-router.get('/telegram-bot/check-login-link',
+router.post('/telegram-bot/check-login-link',
    validateBody(authTgBotCheckLoginLinkValidationSchema),
    authTelegramBotCheckLoginLinkController
 )
