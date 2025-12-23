@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const authTgBotCheckLoginLinkValidationSchema = z.object({
    authTgBotLoginLink: z
-      .string().trim()
+      .string('1111111').trim()
       .min(10, 'Слишком мало символов')
       .max(150, 'Слишком много символов'),
 
