@@ -56,15 +56,15 @@ async function handleContactMessage(message) {
       return
    }
 
-   const authData = nodeCache.get(linkAsCacheCay)
+   const cacheData = nodeCache.get(linkAsCacheCay)
 
-   if (!authData || authData.status !== 'waiting_phone') {
+   if (!cacheData || cacheData.status !== 'waiting_phone') {
       await sendSimpleMessage(chatId, "⚠️ Запрос на подтверждение номера не найден.")
       return
    }
 
    nodeCache.set(linkAsCacheCay, {
-      ...authData,
+      ...cacheData,
       status: 'verified',
       phone: phoneNumber
    })
