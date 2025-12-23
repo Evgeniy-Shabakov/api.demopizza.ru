@@ -5,18 +5,18 @@ import { baseController } from "#controllers/api/v1/baseController.js"
 
 export const authTelegramBotLoginLinkGenerateController = baseController(async (req, res) => {
 
-   const authTelegramBotLoginLink = `https://t.me/${config.authTelegramBotUsername}?start=${randomUUID()}`
-   const tgBotLoginSession = randomUUID()
+   const authTgBotLoginLink = `https://t.me/${config.authTelegramBotUsername}?start=${randomUUID()}`
+   const authTgBotLoginSessionID = randomUUID()
 
-   nodeCache.set(authTelegramBotLoginLink, {
+   nodeCache.set(authTgBotLoginLink, {
       status: 'pending',
-      tgBotLoginSession: tgBotLoginSession
+      authTgBotLoginSessionID: authTgBotLoginSessionID
    })
 
    res.status(200).json({
       data: {
-         authTelegramBotLoginLink,
-         tgBotLoginSession: tgBotLoginSession
+         authTgBotLoginLink: authTgBotLoginLink,
+         authTgBotLoginSessionID: authTgBotLoginSessionID
       }
    })
 })

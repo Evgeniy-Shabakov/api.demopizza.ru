@@ -8,13 +8,13 @@ import { AuthError } from '#utils/errors/authError.js'
 export const loginController = baseController(async (req, res) => {
    let user
 
-   if (req.body?.loginTgBotLink) {
-      const cacheData = nodeCache.get(req.body.loginTgBotLink)
+   if (req.body?.authTgBotLoginLink) {
+      const cacheData = nodeCache.get(req.body.authTgBotLoginLink)
 
       if (!cacheData) {
          throw new AuthError(403, 'Ссылка на телеграм устарела')
       }
-      if (cacheData.tgBotLoginSession !== req.body?.tgBotLoginSession) {
+      if (cacheData.authTgBotLoginSessionID !== req.body?.authTgBotLoginSessionID) {
          throw new AuthError(403, 'Сессия аутентификации не совпадает')
       }
       if (cacheData.status !== 'verified') {
