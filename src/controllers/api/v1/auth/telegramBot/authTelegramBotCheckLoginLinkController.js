@@ -16,5 +16,9 @@ export const authTelegramBotCheckLoginLinkController = baseController(async (req
       throw new AuthError(403, 'Сессия аутентификации не совпадает')
    }
 
-   res.status(200).json({ status: cacheData.status })
+   res.status(200).json({
+      data: {
+         status: cacheData.status
+      }
+   })
 })

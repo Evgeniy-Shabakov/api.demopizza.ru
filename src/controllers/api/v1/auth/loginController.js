@@ -31,8 +31,10 @@ export const loginController = baseController(async (req, res) => {
    const tokens = await generateJWTTokens(req, user)
 
    res.json({
-      ...tokens,
-      user: new UserResource(user)
+      data: {
+         ...tokens,
+         user: new UserResource(user)
+      }
    })
 })
 
