@@ -1,7 +1,8 @@
 import fs from 'fs'
 import multer from 'multer'
 import jwt from 'jsonwebtoken'
-import { AuthError } from '#utils/errors/authError.js'
+import { UnauthorizedError } from '#errors/api/v1/UnauthorizedError.js'
+import { ForbiddenError } from '#errors/api/v1/ForbiddenError.js'
 
 export function errorHandler(error, req, res, next) {
    console.error(error)
@@ -61,10 +62,21 @@ export function errorHandler(error, req, res, next) {
       })
    }
 
-   if (error.status == 401) {
+   if (error instanceof UnauthorizedError) {
       return res.status(401).json({
-         error: 'Ошибка аутентификации',
-         message: 'Токен отсутствует',
+         error: 'Unauthorized error',
+         message: error.message || 'Unauthorized error',
+         details: {
+            error: error,
+            stack: error.stack,
+         }
+      })
+   }
+
+   if (error instanceof ForbiddenError) {
+      return res.status(403).json({
+         error: 'Forbidden error',
+         message: error.message || 'Forbidden error',
          details: {
             error: error,
             stack: error.stack,
@@ -74,7 +86,7 @@ export function errorHandler(error, req, res, next) {
 
    if (error instanceof jwt.TokenExpiredError) {
       return res.status(403).json({
-         error: 'Ошибка аутентификации',
+         error: 'Ошибка: недостаточно прав',
          message: 'Токен устарел',
          details: {
             error: error,
@@ -85,19 +97,8 @@ export function errorHandler(error, req, res, next) {
 
    if (error instanceof jwt.JsonWebTokenError) {
       return res.status(403).json({
-         error: 'Ошибка аутентификации',
+         error: 'Ошибка: недостаточно прав',
          message: 'Неверный токен',
-         details: {
-            error: error,
-            stack: error.stack,
-         }
-      })
-   }
-
-   if (error instanceof AuthError && error.status == 403) {
-      return res.status(403).json({
-         error: 'Ошибка аутентификации',
-         message: error.message,
          details: {
             error: error,
             stack: error.stack,

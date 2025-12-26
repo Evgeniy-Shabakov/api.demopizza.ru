@@ -11,12 +11,13 @@ model User {
    middleName      String?   @map("middle_name")
    nickname        String?
    job             String?
-   
-   createdAt       DateTime  @default(now()) @map("created_at")
-   updatedAt       DateTime  @updatedAt @map("updated_at")
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
 
    addresses Address[]
    sessions  RefreshToken[]
+   userRoles UserRole[]
 
    @@map("users")
 }

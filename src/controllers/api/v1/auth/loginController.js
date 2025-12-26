@@ -1,9 +1,10 @@
+import bcrypt from 'bcrypt'
 import { prisma } from '#services/prismaClient.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
 import { UserResource } from "#resources/api/v1/userResource.js"
 import { generateJWTTokens } from '#utils/auth/JWTHelper.js'
 import { nodeCache } from '#services/nodeCache.js'
-import { AuthError } from '#utils/errors/authError.js'
+import { UnauthorizedError } from '#errors/api/v1/UnauthorizedError.js'
 
 export const loginController = baseController(async (req, res) => {
    let user
@@ -12,24 +13,31 @@ export const loginController = baseController(async (req, res) => {
       const cacheData = nodeCache.get(req.body.authTgBotLoginLink)
 
       if (!cacheData) {
-         throw new AuthError(403, 'Ссылка на телеграм устарела')
+         throw new UnauthorizedError('Ссылка на телеграм устарела')
       }
       if (cacheData.authTgBotLoginSessionID !== req.body.authTgBotLoginSessionID) {
-         throw new AuthError(403, 'Сессия аутентификации не совпадает')
+         throw new UnauthorizedError('Сессия аутентификации не совпадает')
       }
       if (cacheData.status !== 'verified') {
-         throw new AuthError(403, 'Номер телефона не подтвержден')
+         throw new UnauthorizedError('Номер телефона не подтвержден')
       }
 
-      user = await prisma.user.findUnique({
-         where: { phone: cacheData.phone }
-      })
+      user = await findOrFailUserWithRoles(cacheData.phone)
+   }
+   else if (req.body.phone) {
+      user = await findOrFailUserWithRoles(req.body.phone)
+
+      if (!user.password) throw new UnauthorizedError('Невозможен вход по паролю')
+
+      const isPasswordValid = await bcrypt.compare(req.body.password, user.password)
+
+      if (!isPasswordValid) throw new UnauthorizedError('Неверный пароль')
    }
    else {
-      throw new AuthError(403, 'Недостаточно данных для входа в систему')
+      throw new UnauthorizedError('Недостаточно данных для входа в систему')
    }
 
-   if (!user) throw new AuthError(403, 'Пользователя нет в БД')
+   if (!user) throw new UnauthorizedError('Пользователь не найден')
 
    const tokens = await generateJWTTokens(req, user)
 
@@ -40,6 +48,28 @@ export const loginController = baseController(async (req, res) => {
       }
    })
 })
+
+async function findOrFailUserWithRoles(phone) {
+   let user = await prisma.user.findUnique({
+      where: { phone: phone },
+      include: { userRoles: { include: { role: true } } }
+   })
+
+   if (!user) throw new UnauthorizedError('Пользователь с таким номером телефона не найден')
+
+   user = {
+      ...user,
+      roles: user.userRoles.map(item => {
+         return {
+            id: item.role.id,
+            name: item.role.name,
+            restaurantId: item.restaurantId
+         }
+      })
+   }
+
+   return user
+}
 
 // if (!user) {
 //    user = await prisma.user.create({
