@@ -31,7 +31,7 @@ content-type: application/json
    "countryId": 1,
    //iframe код карты для отображения зон доставки на сайте (клиент будет делать с помощью яндекс карт)
    //необязательный параметр
-   "mapIframe": "<iframe></iframe>" //необязательный параметр
+   "mapIframe": "<iframe></iframe>"
 }
 
 ###
