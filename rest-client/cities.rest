@@ -1,0 +1,39 @@
+###  доступные query параметры для GET запросов 
+###  include: ['country'],
+###  sort: ['id', 'name', 'createdAt', 'updatedAt'] asc по умолчанию, desc надо прописывать
+
+GET https://api.demopizza.ru/api/v1/cities
+###
+
+GET https://api.demopizza.ru/api/v1/cities?include=country&sort=name,desc
+
+###
+GET https://api.demopizza.ru/api/v1/cities/1
+
+###
+POST https://api.demopizza.ru/api/v1/cities
+content-type: application/json
+
+{
+   "name": "Пермь",
+   "countryId": 1,
+   //iframe код карты для отображения зон доставки на сайте (клиент будет делать с помощью яндекс карт)
+   //необязательный параметр
+   "mapIframe": "<iframe></iframe>" 
+}
+
+###
+PUT https://api.demopizza.ru/api/v1/cities/2
+content-type: application/json
+
+{
+   "name": "Пермь New",
+   "countryId": 1,
+   //iframe код карты для отображения зон доставки на сайте (клиент будет делать с помощью яндекс карт)
+   //необязательный параметр
+   "mapIframe": "<iframe></iframe>" //необязательный параметр
+}
+
+###
+DELETE https://api.demopizza.ru/api/v1/cities/2
+

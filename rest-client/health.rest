@@ -1,0 +1,2 @@
+### проверка работы api 
+GET https://api.demopizza.ru/health

@@ -1,0 +1,31 @@
+###  доступные query параметры для GET запросов 
+###  include: ['cities'],
+###  sort: ['id', 'name', 'createdAt', 'updatedAt'] asc по умолчанию, desc надо прописывать
+
+GET https://api.demopizza.ru/api/v1/countries
+###
+
+GET https://api.demopizza.ru/api/v1/countries?include=cities&sort=name,desc
+
+###
+GET https://api.demopizza.ru/api/v1/countries/1
+
+###
+POST https://api.demopizza.ru/api/v1/countries
+content-type: application/json
+
+{
+   "name": "Узбекистан"
+}
+
+###
+PUT https://api.demopizza.ru/api/v1/countries/4
+content-type: application/json
+
+{
+   "name": "Узбекистан New"
+}
+
+###
+DELETE https://api.demopizza.ru/api/v1/countries/2
+
