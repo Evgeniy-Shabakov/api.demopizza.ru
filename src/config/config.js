@@ -5,6 +5,7 @@ dotenv.config()  // Загружаем переменные окружения �
 const config = {
    backendPort: process.env.BACKEND_PORT,
    adminPanelUrl: process.env.ADMIN_PANEL_URL,
+   adminPanelLocalDevUrl: process.env.ADMIN_PANEL_LOCAL_DEV_URL,
    clientUrl: process.env.CLIENT_URL,
    jwtAccessTokenSecret: process.env.JWT_ACCESS_TOKEN_SECRET,
    jwtRefreshTokenSecret: process.env.JWT_REFRESH_TOKEN_SECRET,

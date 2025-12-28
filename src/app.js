@@ -13,7 +13,7 @@ export const app = express()
 
 app.use(helmet())
 app.use(compression())
-app.use(cors({ origin: config.adminPanelUrl }))
+app.use(cors({ origin: [config.adminPanelUrl, config.adminPanelLocalDevUrl] }))
 
 app.use(express.static('storage/public', {
    setHeaders: (res, path) => res.set('Cross-Origin-Resource-Policy', 'cross-origin') //для images на фронте
