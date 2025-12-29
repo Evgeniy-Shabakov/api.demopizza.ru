@@ -41,9 +41,24 @@ export const loginController = baseController(async (req, res) => {
 
    const tokens = await generateJWTTokens(req, user)
 
+   res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 30 * 1000, // 30 сек (сделать через параметры т.к. должно совпадать с JWT)
+      path: '/',
+    });
+
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 2 * 60 * 1000, // 2 минуты (сделать через параметры т.к. должно совпадать с JWT)
+      path: '/api/v1/auth/refresh-token',
+    });
+
    res.json({
       data: {
-         ...tokens,
          user: new UserResource(user)
       }
    })

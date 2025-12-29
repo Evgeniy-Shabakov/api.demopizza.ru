@@ -1,0 +1,38 @@
+### алгоритм работы авторизации
+// 1. Пользователь заходит на страницу входа
+// 2. Фронтенд отправляет запрос на получение уникальной ссылки (authTgBotLoginLink)
+//    и уникального ключа сессии аутентификации (authTgBotLoginSessionID). 
+//    Ссылка действительна 5 минут
+GET https://api.demopizza.ru/api/v1/auth/telegram-bot/get-login-link
+
+// 3. Фронтенд отрисовыввает кнопку "войти с помощью телеграмм", 
+//    для мониторов необходимо также сделать QR-код для ссылки (import QrcodeVue from 'qrcode.vue'),
+//    а также сохраняет в памяти authTgBotLoginSessionID
+// 4. При нажатии на кнопку вызывается событие window.open(authTgBotLoginLink)
+// 5. Пользователь попадает в телеграм бот, предназначенный для подтверждения номера телефона 
+//    и подтверждает его
+// 6. Для того чтобы фронтенду понять, подтвержден ли номер телефона, фронтенд отправляет запрос на 
+//    auth/telegram-bot/check-login-link. Лучше организовать отправку запросов для проверки после 
+//    сразу после получения ссылки для входа в интервале 4-5 сек. И завершить интервал после успешного
+//    ответа или выхода со страницы login
+###
+POST https://api.demopizza.ru/api/v1/auth/telegram-bot/check-login-link
+content-type: application/json
+
+{
+   "authTgBotLoginLink": "https://t.me/demopizza_ru_bot?start=4c728a89-816b-4cfe-a035-4972901e85df",
+   "authTgBotLoginSessionID": "0002708f-2237-492f-a5be-799f48b9c864"
+}
+
+// 7. После подтверждения номера телефона в тг боте, запрос вернет "status": "verified"
+// 8. Если статус verified, то можно отправлять эти данные на 
+###
+POST https://api.demopizza.ru/api/v1/auth/login
+content-type: application/json
+
+{
+   "authTgBotLoginLink": "https://t.me/demopizza_ru_bot?start=4c728a89-816b-4cfe-a035-4972901e85df",
+   "authTgBotLoginSessionID": "0002708f-2237-492f-a5be-799f48b9c864"
+}
+
+// 9. При успешной авторизации auth/login вернет JWT токены и данные пользователя
