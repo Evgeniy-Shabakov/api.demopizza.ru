@@ -1,30 +1,16 @@
 import bcrypt from 'bcrypt'
+import config from '#config/config.js'
 import { prisma } from '#services/prismaClient.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
 import { UserResource } from "#resources/api/v1/userResource.js"
-import { generateJWTTokens } from '#utils/auth/JWTHelper.js'
+import { generateJWTTokens } from '#utils/auth/generateJWTTokens.js'
 import { nodeCache } from '#services/nodeCache.js'
 import { UnauthorizedError } from '#errors/api/v1/UnauthorizedError.js'
 
 export const loginController = baseController(async (req, res) => {
    let user
 
-   if (req.body.authTgBotLoginLink) {
-      const cacheData = nodeCache.get(req.body.authTgBotLoginLink)
-
-      if (!cacheData) {
-         throw new UnauthorizedError('Ссылка на телеграм устарела')
-      }
-      if (cacheData.authTgBotLoginSessionID !== req.body.authTgBotLoginSessionID) {
-         throw new UnauthorizedError('Сессия аутентификации не совпадает')
-      }
-      if (cacheData.status !== 'verified') {
-         throw new UnauthorizedError('Номер телефона не подтвержден')
-      }
-
-      user = await findOrFailUserWithRoles(cacheData.phone)
-   }
-   else if (req.body.phone) {
+   if (req.body.phone) {
       user = await findOrFailUserWithRoles(req.body.phone)
 
       if (!user.password) throw new UnauthorizedError('Невозможен вход по паролю')
@@ -34,28 +20,25 @@ export const loginController = baseController(async (req, res) => {
       if (!isPasswordValid) throw new UnauthorizedError('Неверный пароль')
    }
    else {
-      throw new UnauthorizedError('Недостаточно данных для входа в систему')
+      const cacheData = nodeCache.get(req.cookies.authTgBotLoginLink)
+
+      if (!cacheData) {
+         throw new UnauthorizedError('Ссылка на телеграм устарела')
+      }
+      if (cacheData.authTgBotLoginSessionID !== req.cookies.authTgBotLoginSessionID) {
+         throw new UnauthorizedError('Сессия аутентификации не совпадает')
+      }
+      if (cacheData.status !== 'verified') {
+         throw new UnauthorizedError('Номер телефона не подтвержден')
+      }
+
+      user = await findOrFailUserWithRoles(cacheData.phone)
    }
 
-   if (!user) throw new UnauthorizedError('Пользователь не найден')
+   const { accessToken, refreshToken } = await generateJWTTokens(req, user)
 
-   const {accessToken, refreshToken} = await generateJWTTokens(req, user)
-
-   res.cookie('accessToken', accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 30 * 1000, // 30 сек (сделать через параметры т.к. должно совпадать с JWT)
-      path: '/',
-    });
-
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 2 * 60 * 1000, // 2 минуты (сделать через параметры т.к. должно совпадать с JWT)
-      path: '/api/v1/auth/refresh-token',
-    });
+   res.cookie('accessToken', accessToken, config.jwtAccessTokenCookieOption)
+   res.cookie('refreshToken', refreshToken, config.jwtRefreshTokenCookieOption)
 
    res.json({
       data: {
@@ -70,7 +53,7 @@ async function findOrFailUserWithRoles(phone) {
       include: { userRoles: { include: { role: true } } }
    })
 
-   if (!user) throw new UnauthorizedError('Пользователь с таким номером телефона не найден')
+   if (!user) throw new UnauthorizedError('Пользователь c таким номером телефона не найден')
 
    user = {
       ...user,

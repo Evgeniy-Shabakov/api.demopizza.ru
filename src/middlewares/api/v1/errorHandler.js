@@ -62,6 +62,28 @@ export function errorHandler(error, req, res, next) {
       })
    }
 
+   if (error instanceof jwt.TokenExpiredError) {
+      return res.status(401).json({
+         error: 'Unauthorized error',
+         message: 'Токен устарел',
+         details: {
+            error: error,
+            stack: error.stack,
+         }
+      })
+   }
+
+   if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({
+         error: 'Unauthorized error',
+         message: 'Токен не предоставлен или некорректен',
+         details: {
+            error: error,
+            stack: error.stack,
+         }
+      })
+   }
+
    if (error instanceof UnauthorizedError) {
       return res.status(401).json({
          error: 'Unauthorized error',
@@ -77,28 +99,6 @@ export function errorHandler(error, req, res, next) {
       return res.status(403).json({
          error: 'Forbidden error',
          message: error.message || 'Forbidden error',
-         details: {
-            error: error,
-            stack: error.stack,
-         }
-      })
-   }
-
-   if (error instanceof jwt.TokenExpiredError) {
-      return res.status(403).json({
-         error: 'Ошибка: недостаточно прав',
-         message: 'Токен устарел',
-         details: {
-            error: error,
-            stack: error.stack,
-         }
-      })
-   }
-
-   if (error instanceof jwt.JsonWebTokenError) {
-      return res.status(403).json({
-         error: 'Ошибка: недостаточно прав',
-         message: 'Неверный токен',
          details: {
             error: error,
             stack: error.stack,

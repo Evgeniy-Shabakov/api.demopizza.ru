@@ -14,14 +14,14 @@ const router = express.Router()
 
 router.post('/login', validateLoginBody(loginSchemaValidation), loginController)
 router.delete('/logout', logoutController)
-router.post('/refresh-token', refreshTokenController)
+router.post('/refresh', refreshTokenController)
 
 router.post('/telegram-bot/webhook', authTelegramBotController)
 router.get('/telegram-bot/get-login-link', authTelegramBotLoginLinkGenerateController)
 router.post('/telegram-bot/check-login-link', validateLoginBody(authTgBotCheckLoginLinkValidationSchema),
    authTelegramBotCheckLoginLinkController)
 
-router.get('/user', verifyJWTAccessToken, (req, res) => {
+router.get('/test', verifyJWTAccessToken, (req, res) => {
    res.json({ user: req.user })
 })
 

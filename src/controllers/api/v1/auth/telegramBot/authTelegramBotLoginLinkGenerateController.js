@@ -13,10 +13,12 @@ export const authTelegramBotLoginLinkGenerateController = baseController(async (
       authTgBotLoginSessionID: authTgBotLoginSessionID
    })
 
+   res.cookie('authTgBotLoginLink', authTgBotLoginLink, config.authTgBotCookieOption)
+   res.cookie('authTgBotLoginSessionID', authTgBotLoginSessionID, config.authTgBotCookieOption)
+
    res.status(200).json({
       data: {
-         authTgBotLoginLink: authTgBotLoginLink,
-         authTgBotLoginSessionID: authTgBotLoginSessionID
+         authTgBotLoginLink: authTgBotLoginLink
       }
    })
 })

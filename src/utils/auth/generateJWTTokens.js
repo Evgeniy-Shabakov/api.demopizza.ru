@@ -1,16 +1,6 @@
 import jwt from 'jsonwebtoken'
 import config from '#config/config.js'
 import { prisma } from '#services/prismaClient.js'
-import { UnauthorizedError } from '#errors/api/v1/UnauthorizedError.js'
-
-export function extractToken(req) {
-   const authHeader = req.headers['authorization']
-   const token = authHeader && authHeader.split(' ')[1]
-
-   if (!token) throw new UnauthorizedError('Токен не предоставлен')
-   
-   return token
-}
 
 export async function generateJWTTokens(req, user) {
    const userPayload = { id: user.id, phone: user.phone, roles: user.roles }

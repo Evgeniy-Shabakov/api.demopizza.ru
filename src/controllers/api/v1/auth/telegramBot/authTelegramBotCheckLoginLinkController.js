@@ -3,8 +3,8 @@ import { baseController } from "#controllers/api/v1/baseController.js"
 import { UnauthorizedError } from '#errors/api/v1/UnauthorizedError.js'
 
 export const authTelegramBotCheckLoginLinkController = baseController(async (req, res) => {
-   const authTgBotLoginLink = req.body.authTgBotLoginLink
-   const authTgBotLoginSessionID = req.body.authTgBotLoginSessionID
+   const authTgBotLoginLink = req.cookies.authTgBotLoginLink
+   const authTgBotLoginSessionID = req.cookies.authTgBotLoginSessionID
 
    const cacheData = nodeCache.get(authTgBotLoginLink)
 

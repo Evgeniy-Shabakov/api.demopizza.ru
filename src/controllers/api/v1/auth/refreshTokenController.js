@@ -1,12 +1,12 @@
 import jwt from 'jsonwebtoken'
 import { prisma } from '#services/prismaClient.js'
 import config from '#config/config.js'
-import { extractToken, generateJWTTokens } from '#utils/auth/JWTHelper.js'
+import { generateJWTTokens } from '#utils/auth/generateJWTTokens.js'
 import { UnauthorizedError } from '#errors/api/v1/UnauthorizedError.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
 
 export const refreshTokenController = baseController(async (req, res) => {
-   const token = extractToken(req)
+   const token = req.cookies.refreshToken
 
    const user = jwt.verify(token, config.jwtRefreshTokenSecret)
 
@@ -20,7 +20,10 @@ export const refreshTokenController = baseController(async (req, res) => {
    })
    if (!userInDB) throw new UnauthorizedError('Пользователь не найден')
 
-   const tokens = await generateJWTTokens(req, user)
+   const { accessToken, refreshToken } = await generateJWTTokens(req, user)
 
-   res.json(tokens)
+   res.cookie('accessToken', accessToken, config.jwtAccessTokenCookieOption)
+   res.cookie('refreshToken', refreshToken, config.jwtRefreshTokenCookieOption)
+
+   res.status(200).end()
 })
