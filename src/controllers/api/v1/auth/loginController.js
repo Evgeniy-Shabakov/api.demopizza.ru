@@ -39,7 +39,7 @@ export const loginController = baseController(async (req, res) => {
 
    if (!user) throw new UnauthorizedError('Пользователь не найден')
 
-   const tokens = await generateJWTTokens(req, user)
+   const {accessToken, refreshToken} = await generateJWTTokens(req, user)
 
    res.cookie('accessToken', accessToken, {
       httpOnly: true,
