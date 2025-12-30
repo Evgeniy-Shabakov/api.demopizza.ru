@@ -6,7 +6,6 @@ import { refreshTokenController } from '#controllers/api/v1/auth/refreshTokenCon
 import { authTelegramBotController } from '#controllers/api/v1/auth/telegramBot/authTelegramBotController.js'
 import { authTelegramBotLoginLinkGenerateController } from '#controllers/api/v1/auth/telegramBot/authTelegramBotLoginLinkGenerateController.js'
 import { authTelegramBotCheckLoginLinkController } from '#controllers/api/v1/auth/telegramBot/authTelegramBotCheckLoginLinkController.js'
-import { authTgBotCheckLoginLinkValidationSchema } from '#validations/api/v1/auth/authTgBotCheckLoginLinkValidationSchema.js'
 import { loginSchemaValidation } from '#validations/api/v1/auth/loginSchemaValidation.js'
 import { validateLoginBody } from '#middlewares/api/v1/auth/validateLoginBody.js'
 
@@ -18,8 +17,7 @@ router.post('/refresh', refreshTokenController)
 
 router.post('/telegram-bot/webhook', authTelegramBotController)
 router.get('/telegram-bot/get-login-link', authTelegramBotLoginLinkGenerateController)
-router.post('/telegram-bot/check-login-link', validateLoginBody(authTgBotCheckLoginLinkValidationSchema),
-   authTelegramBotCheckLoginLinkController)
+router.post('/telegram-bot/check-login-link',authTelegramBotCheckLoginLinkController)
 
 router.get('/test', verifyJWTAccessToken, (req, res) => {
    res.json({ user: req.user })

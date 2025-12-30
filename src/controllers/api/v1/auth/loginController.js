@@ -9,8 +9,9 @@ import { UnauthorizedError } from '#errors/api/v1/UnauthorizedError.js'
 
 export const loginController = baseController(async (req, res) => {
    let user
+   console.log(req.cookies)
 
-   if (req.body.phone) {
+   if (req.body) {
       user = await findOrFailUserWithRoles(req.body.phone)
 
       if (!user.password) throw new UnauthorizedError('Невозможен вход по паролю')
