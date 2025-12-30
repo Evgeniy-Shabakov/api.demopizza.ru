@@ -16,7 +16,7 @@ export const loginController = baseController(async (req, res) => {
       if (!user.password) throw new UnauthorizedError('Невозможен вход по паролю')
 
       const isPasswordValid = await bcrypt.compare(req.body.password, user.password)
-
+      
       if (!isPasswordValid) throw new UnauthorizedError('Неверный пароль')
    }
    else if(req.cookies.authTgBotLoginLink && req.cookies.authTgBotLoginSessionID){

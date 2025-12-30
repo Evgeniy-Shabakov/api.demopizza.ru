@@ -17,7 +17,7 @@ GET https://api.demopizza.ru/api/v1/auth/telegram-bot/get-login-link
 POST https://api.demopizza.ru/api/v1/auth/telegram-bot/check-login-link
 
 // 7. После подтверждения номера телефона в тг боте, запрос вернет "status": "verified"
-// 8. Если статус verified, то можно отправлять эти данные на 
+// 8. Если статус verified, то можно отправить пустой запрос на login
 ###
 POST https://api.demopizza.ru/api/v1/auth/login
 
