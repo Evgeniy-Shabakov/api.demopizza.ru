@@ -6,6 +6,10 @@ export const authTelegramBotCheckLoginLinkController = baseController(async (req
    const authTgBotLoginLink = req.cookies.authTgBotLoginLink
    const authTgBotLoginSessionID = req.cookies.authTgBotLoginSessionID
 
+   if (!authTgBotLoginLink || !authTgBotLoginSessionID) {
+      throw new UnauthorizedError('Недостаточно данных для проверки')
+   }
+
    const cacheData = nodeCache.get(authTgBotLoginLink)
 
    if (!cacheData) {

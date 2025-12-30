@@ -9,7 +9,6 @@ import { UnauthorizedError } from '#errors/api/v1/UnauthorizedError.js'
 
 export const loginController = baseController(async (req, res) => {
    let user
-   console.log(req.cookies)
 
    if (req.body) {
       user = await findOrFailUserWithRoles(req.body.phone)
@@ -20,7 +19,7 @@ export const loginController = baseController(async (req, res) => {
 
       if (!isPasswordValid) throw new UnauthorizedError('Неверный пароль')
    }
-   else {
+   else if(req.cookies.authTgBotLoginLink && req.cookies.authTgBotLoginSessionID){
       const cacheData = nodeCache.get(req.cookies.authTgBotLoginLink)
 
       if (!cacheData) {
@@ -34,6 +33,9 @@ export const loginController = baseController(async (req, res) => {
       }
 
       user = await findOrFailUserWithRoles(cacheData.phone)
+   }
+   else {
+      throw new UnauthorizedError('Недостаточно данных для входа')
    }
 
    const { accessToken, refreshToken } = await generateJWTTokens(req, user)
