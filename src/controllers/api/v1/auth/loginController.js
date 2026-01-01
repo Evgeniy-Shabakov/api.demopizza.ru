@@ -51,6 +51,8 @@ export const loginController = baseController(async (req, res) => {
 })
 
 async function findOrFailUserWithRoles(phone) {
+   console.log(phone)
+   
    let user = await prisma.user.findUnique({
       where: { phone: phone },
       include: { userRoles: { include: { role: true } } }
