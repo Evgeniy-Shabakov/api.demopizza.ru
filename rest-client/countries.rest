@@ -1,17 +1,20 @@
+@host=https://api.demopizza.ru/api/v1
+# @host=http://localhost:5000/api/v1
+
 ###  доступные query параметры для GET запросов 
 ###  include: ['cities'],
 ###  sort: ['id', 'name', 'createdAt', 'updatedAt'] asc по умолчанию, desc надо прописывать
 
-GET https://api.demopizza.ru/api/v1/countries
+GET {{host}}/countries
 ###
 
-GET https://api.demopizza.ru/api/v1/countries?include=cities&sort=name,desc
+GET {{host}}/countries?include=cities&sort=name,desc
 
 ###
-GET https://api.demopizza.ru/api/v1/countries/1
+GET {{host}}/countries/1
 
 ###
-POST https://api.demopizza.ru/api/v1/countries
+POST {{host}}/countries
 content-type: application/json
 
 {
@@ -19,7 +22,7 @@ content-type: application/json
 }
 
 ###
-PUT https://api.demopizza.ru/api/v1/countries/4
+PUT {{host}}/countries/4
 content-type: application/json
 
 {
@@ -27,5 +30,5 @@ content-type: application/json
 }
 
 ###
-DELETE https://api.demopizza.ru/api/v1/countries/2
+DELETE {{host}}/countries/2
 

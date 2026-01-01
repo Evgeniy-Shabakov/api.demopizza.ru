@@ -1,8 +1,12 @@
+@host=https://api.demopizza.ru/api/v1
+# @host=http://localhost:5000/api/v1
+
 ### алгоритм работы авторизации
 // 1. Пользователь заходит на страницу входа
 // 2. Фронтенд отправляет запрос на получение уникальной ссылки (authTgBotLoginLink) 
 //    Ссылка действительна 5 минут
-GET https://api.demopizza.ru/api/v1/auth/telegram-bot/get-login-link
+
+GET {{host}}/auth/telegram-bot/get-login-link
 
 // 3. Фронтенд отрисовыввает кнопку "войти с помощью телеграмм", 
 //    для мониторов необходимо также сделать QR-код для ссылки (import QrcodeVue from 'qrcode.vue')
@@ -13,24 +17,25 @@ GET https://api.demopizza.ru/api/v1/auth/telegram-bot/get-login-link
 //    auth/telegram-bot/check-login-link. Лучше организовать polling для проверки 
 //    сразу после получения ссылки для входа в интервале 3-5 сек. И завершить polling после успешного
 //    ответа или выхода со страницы login
+
 ###
-POST https://api.demopizza.ru/api/v1/auth/telegram-bot/check-login-link
+POST {{host}}/auth/telegram-bot/check-login-link
 
 // 7. После подтверждения номера телефона в тг боте, запрос вернет "status": "verified"
 // 8. Если статус verified, то можно отправить пустой запрос на login
 ###
-POST https://api.demopizza.ru/api/v1/auth/login
+POST {{host}}/auth/login
 
 // 9. При успешной авторизации auth/login установит JWT токены в куки и вернет данные пользователя.
 //    Для тестов accessToken действует 30 секунд, refreshToken 2 минуты 
 // 10. Для обновления accessToken
 ###
-POST https://api.demopizza.ru/api/v1/auth/refresh
+POST {{host}}/auth/refresh
 
 // 11. Logout
 ###
-DELETE https://api.demopizza.ru/api/v1/auth/logout
+DELETE {{host}}/auth/logout
 
 // 12. Для теста пока есть только 1 защищенный роут, возвращает пользователя если он авторизован
 ###
-GET https://api.demopizza.ru/api/v1/auth/test
+GET {{host}}/auth/test

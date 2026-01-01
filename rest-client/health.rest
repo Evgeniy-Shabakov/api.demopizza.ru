@@ -1,2 +1,5 @@
+@host=https://api.demopizza.ru
+# @host=http://localhost:5000
+
 ### проверка работы api 
-GET https://api.demopizza.ru/health
+GET {{host}}/health
