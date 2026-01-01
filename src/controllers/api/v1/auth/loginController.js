@@ -51,6 +51,10 @@ export const loginController = baseController(async (req, res) => {
 })
 
 async function findOrFailUserWithRoles(phone) {
+   if (!phone.startsWith('+')) {
+     phone = '+' + phone;
+   }
+   
    console.log(phone)
    
    let user = await prisma.user.findUnique({
