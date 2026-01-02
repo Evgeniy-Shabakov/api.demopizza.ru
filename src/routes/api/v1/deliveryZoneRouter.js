@@ -1,4 +1,5 @@
 import express from 'express'
+import { verifyJWTAccessToken } from '#middlewares/api/v1/auth/verifyJWTAccessToken.js'
 import { validateId } from '#middlewares/api/v1/validators/validateId.js'
 import { validateBody } from '#middlewares/api/v1/validators/validateBody.js'
 import { validateQuery } from '#middlewares/api/v1/validators/validateQuery.js'
@@ -12,20 +13,29 @@ import { deliveryZoneDeleteController } from '#controllers/api/v1/deliveryZone/d
 
 const router = express.Router()
 
-router.get('/', validateQuery(deliveryZoneQueryValidationData), deliveryZoneIndexController)
+router.get('/',
+   validateQuery(deliveryZoneQueryValidationData),
+   deliveryZoneIndexController)
 
 router.get('/:id',
    validateId,
    validateQuery(deliveryZoneQueryValidationData),
-   deliveryZoneShowController
-)
-router.post('/', validateBody(deliveryZoneBodyValidationSchema), deliveryZoneStoreController)
+   deliveryZoneShowController)
+
+router.post('/',
+   verifyJWTAccessToken,
+   validateBody(deliveryZoneBodyValidationSchema),
+   deliveryZoneStoreController)
 
 router.put('/:id',
+   verifyJWTAccessToken,
    validateId,
    validateBody(deliveryZoneBodyValidationSchema),
    deliveryZoneUpdateController
 )
-router.delete('/:id', validateId, deliveryZoneDeleteController)
+router.delete('/:id',
+   verifyJWTAccessToken,
+   validateId,
+   deliveryZoneDeleteController)
 
 export default router

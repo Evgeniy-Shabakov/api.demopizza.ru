@@ -1,4 +1,5 @@
 import express from 'express'
+import { verifyJWTAccessToken } from '#middlewares/api/v1/auth/verifyJWTAccessToken.js'
 import { validateId } from '#middlewares/api/v1/validators/validateId.js'
 import { validateBody } from '#middlewares/api/v1/validators/validateBody.js'
 import { validateQuery } from '#middlewares/api/v1/validators/validateQuery.js'
@@ -19,13 +20,20 @@ router.get('/:id',
    validateQuery(restaurantQueryValidationData),
    restaurantShowController
 )
-router.post('/', validateBody(restaurantBodyValidationSchema), restaurantStoreController)
+router.post('/',
+   verifyJWTAccessToken,
+   validateBody(restaurantBodyValidationSchema),
+   restaurantStoreController)
 
 router.put('/:id',
+   verifyJWTAccessToken,
    validateId,
    validateBody(restaurantBodyValidationSchema),
    restaurantUpdateController
 )
-router.delete('/:id', validateId, restaurantDeleteController)
+router.delete('/:id',
+   verifyJWTAccessToken,
+   validateId,
+   restaurantDeleteController)
 
 export default router

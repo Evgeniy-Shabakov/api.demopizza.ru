@@ -1,4 +1,5 @@
 import express from 'express'
+import { verifyJWTAccessToken } from '#middlewares/api/v1/auth/verifyJWTAccessToken.js'
 import { validateId } from '#middlewares/api/v1/validators/validateId.js'
 import { validateBody } from '#middlewares/api/v1/validators/validateBody.js'
 import { validateQuery } from '#middlewares/api/v1/validators/validateQuery.js'
@@ -12,20 +13,29 @@ import { restaurantScheduleDeleteController } from '#controllers/api/v1/restaura
 
 const router = express.Router()
 
-router.get('/', validateQuery(restaurantScheduleQueryValidationData), restaurantScheduleIndexController)
+router.get('/',
+   validateQuery(restaurantScheduleQueryValidationData),
+   restaurantScheduleIndexController)
 
 router.get('/:id',
    validateId,
    validateQuery(restaurantScheduleQueryValidationData),
    restaurantScheduleShowController
 )
-router.post('/', validateBody(restaurantScheduleBodyValidationSchema), restaurantScheduleStoreController)
+router.post('/',
+   verifyJWTAccessToken,
+   validateBody(restaurantScheduleBodyValidationSchema),
+   restaurantScheduleStoreController)
 
 router.put('/:id',
+   verifyJWTAccessToken,
    validateId,
    validateBody(restaurantScheduleBodyValidationSchema),
-   restaurantScheduleUpdateController
-)
-router.delete('/:id', validateId, restaurantScheduleDeleteController)
+   restaurantScheduleUpdateController)
+
+router.delete('/:id',
+   verifyJWTAccessToken,
+   validateId,
+   restaurantScheduleDeleteController)
 
 export default router

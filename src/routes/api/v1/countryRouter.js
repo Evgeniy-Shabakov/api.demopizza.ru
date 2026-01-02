@@ -1,4 +1,5 @@
 import express from 'express'
+import { verifyJWTAccessToken } from '#middlewares/api/v1/auth/verifyJWTAccessToken.js'
 import { validateId } from '#middlewares/api/v1/validators/validateId.js'
 import { validateBody } from '#middlewares/api/v1/validators/validateBody.js'
 import { validateQuery } from '#middlewares/api/v1/validators/validateQuery.js'
@@ -19,13 +20,20 @@ router.get('/:id',
    validateQuery(countryQueryValidationData),
    countryShowController
 )
-router.post('/', validateBody(countryBodyValidationSchema), countryStoreController)
+router.post('/',
+   verifyJWTAccessToken,
+   validateBody(countryBodyValidationSchema),
+   countryStoreController)
 
 router.put('/:id',
+   verifyJWTAccessToken,
    validateId,
    validateBody(countryBodyValidationSchema),
    countryUpdateController
 )
-router.delete('/:id', validateId, countryDeleteController)
+router.delete('/:id',
+   verifyJWTAccessToken,
+   validateId,
+   countryDeleteController)
 
 export default router

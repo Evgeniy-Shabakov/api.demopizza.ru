@@ -17,10 +17,14 @@ router.post('/refresh', refreshTokenController)
 
 router.post('/telegram-bot/webhook', authTelegramBotController)
 router.get('/telegram-bot/get-login-link', authTelegramBotLoginLinkGenerateController)
-router.post('/telegram-bot/check-login-link',authTelegramBotCheckLoginLinkController)
+router.post('/telegram-bot/check-login-link', authTelegramBotCheckLoginLinkController)
 
-router.get('/test', verifyJWTAccessToken, (req, res) => {
-   res.json({ user: req.user })
+router.get('/user', verifyJWTAccessToken, (req, res) => {
+   res.json({
+      data: {
+         user: req.user
+      }
+   })
 })
 
 export default router

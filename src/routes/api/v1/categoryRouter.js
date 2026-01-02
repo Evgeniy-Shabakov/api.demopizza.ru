@@ -1,4 +1,5 @@
 import express from 'express'
+import { verifyJWTAccessToken } from '#middlewares/api/v1/auth/verifyJWTAccessToken.js'
 import { validateId } from '#middlewares/api/v1/validators/validateId.js'
 import { validateBody } from '#middlewares/api/v1/validators/validateBody.js'
 import { validateQuery } from '#middlewares/api/v1/validators/validateQuery.js'
@@ -12,20 +13,29 @@ import { categoryDeleteController } from '#controllers/api/v1/category/categoryD
 
 const router = express.Router()
 
-router.get('/', validateQuery(categoryQueryValidationData), categoryIndexController)
+router.get('/',
+   validateQuery(categoryQueryValidationData),
+   categoryIndexController)
 
 router.get('/:id',
    validateId,
    validateQuery(categoryQueryValidationData),
-   categoryShowController
-)
-router.post('/', validateBody(categoryBodyValidationSchema), categoryStoreController)
+   categoryShowController)
+
+router.post('/',
+   verifyJWTAccessToken,
+   validateBody(categoryBodyValidationSchema),
+   categoryStoreController)
 
 router.put('/:id',
+   verifyJWTAccessToken,
    validateId,
    validateBody(categoryBodyValidationSchema),
-   categoryUpdateController
-)
-router.delete('/:id', validateId, categoryDeleteController)
+   categoryUpdateController)
+
+router.delete('/:id',
+   verifyJWTAccessToken,
+   validateId,
+   categoryDeleteController)
 
 export default router

@@ -1,4 +1,5 @@
 import express from 'express'
+import { verifyJWTAccessToken } from '#middlewares/api/v1/auth/verifyJWTAccessToken.js'
 import { validateId } from '#middlewares/api/v1/validators/validateId.js'
 import { validateBody } from '#middlewares/api/v1/validators/validateBody.js'
 import { validateQuery } from '#middlewares/api/v1/validators/validateQuery.js'
@@ -18,19 +19,24 @@ router.get('/', validateQuery(productQueryValidationData), productIndexControlle
 router.get('/:id',
    validateId,
    validateQuery(productQueryValidationData),
-   productShowController
-)
+   productShowController)
+   
 router.post('/',
+   verifyJWTAccessToken,
    productFileLoading,
    validateBody(productBodyValidationSchema),
-   productStoreController
-)
+   productStoreController)
+
 router.put('/:id',
+   verifyJWTAccessToken,
    validateId,
    productFileLoading,
    validateBody(productBodyValidationSchema),
-   productUpdateController
-)
-router.delete('/:id', validateId, productDeleteController)
+   productUpdateController)
+
+router.delete('/:id',
+   verifyJWTAccessToken,
+   validateId,
+   productDeleteController)
 
 export default router

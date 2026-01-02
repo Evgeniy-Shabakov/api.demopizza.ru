@@ -1,4 +1,5 @@
 import express from 'express'
+import { verifyJWTAccessToken } from '#middlewares/api/v1/auth/verifyJWTAccessToken.js'
 import { validateId } from '#middlewares/api/v1/validators/validateId.js'
 import { validateBody } from '#middlewares/api/v1/validators/validateBody.js'
 import { validateQuery } from '#middlewares/api/v1/validators/validateQuery.js'
@@ -12,20 +13,31 @@ import { addressDeleteController } from '#controllers/api/v1/address/addressDele
 
 const router = express.Router()
 
-router.get('/', validateQuery(addressQueryValidationData), addressIndexController)
+router.get('/',
+   verifyJWTAccessToken,
+   validateQuery(addressQueryValidationData),
+   addressIndexController)
 
 router.get('/:id',
+   verifyJWTAccessToken,
    validateId,
    validateQuery(addressQueryValidationData),
-   addressShowController
-)
-router.post('/', validateBody(addressBodyValidationSchema), addressStoreController)
+   addressShowController)
+
+router.post('/',
+   verifyJWTAccessToken,
+   validateBody(addressBodyValidationSchema),
+   addressStoreController)
 
 router.put('/:id',
+   verifyJWTAccessToken,
    validateId,
    validateBody(addressBodyValidationSchema),
-   addressUpdateController
-)
-router.delete('/:id', validateId, addressDeleteController)
+   addressUpdateController)
+
+router.delete('/:id',
+   verifyJWTAccessToken,
+   validateId,
+   addressDeleteController)
 
 export default router
