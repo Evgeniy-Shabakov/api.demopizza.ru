@@ -1,0 +1,3 @@
+export const ERROR_CODE = Object.freeze( {
+   JWT_ACCESS_TOKEN_VERIFY_INVALID: 'JWT_ACCESS_TOKEN_VERIFY_INVALID',
+})

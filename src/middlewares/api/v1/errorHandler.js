@@ -3,6 +3,7 @@ import multer from 'multer'
 import jwt from 'jsonwebtoken'
 import { UnauthorizedError } from '#errors/api/v1/UnauthorizedError.js'
 import { ForbiddenError } from '#errors/api/v1/ForbiddenError.js'
+import { ERROR_CODE } from '#constants/api/v1/errorCode.js'
 
 export function errorHandler(error, req, res, next) {
    console.error(error)
@@ -62,6 +63,29 @@ export function errorHandler(error, req, res, next) {
       })
    }
 
+   if (error instanceof UnauthorizedError) {
+      return res.status(401).json({
+         error: 'Unauthorized error',
+         message: error.message,
+         details: {
+            error: error,
+            stack: error.stack,
+         }
+      })
+   }
+
+   if (error.code == ERROR_CODE.JWT_ACCESS_TOKEN_VERIFY_INVALID) {
+      return res.status(401).json({
+         error: 'Unauthorized error',
+         code: error.code,
+         message: error.message,
+         details: {
+            error: error,
+            stack: error.stack,
+         }
+      })
+   }
+
    if (error instanceof jwt.TokenExpiredError) {
       return res.status(401).json({
          error: 'Unauthorized error',
@@ -84,21 +108,10 @@ export function errorHandler(error, req, res, next) {
       })
    }
 
-   if (error instanceof UnauthorizedError) {
-      return res.status(401).json({
-         error: 'Unauthorized error',
-         message: error.message || 'Unauthorized error',
-         details: {
-            error: error,
-            stack: error.stack,
-         }
-      })
-   }
-
    if (error instanceof ForbiddenError) {
       return res.status(403).json({
          error: 'Forbidden error',
-         message: error.message || 'Forbidden error',
+         message: error.message,
          details: {
             error: error,
             stack: error.stack,
