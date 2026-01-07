@@ -1,6 +1,6 @@
 
 export class ForbiddenError extends Error {
-   constructor(message = 'Forbidden error') {
+   constructor(message) {
       super(message)
    }
 }

@@ -1,18 +1,43 @@
-export const SUPER_ADMIN = 'super-admin'
-export const SUPER_ADMIN_DESCRIPTION = 'Роль супер-админа'
-
-export const DIRECTOR = 'Директор'
-export const DIRECTOR_DESCRIPTION = 'Доступны все возможности'
-
-export const ADMINISTRATOR = 'Администратор'
-export const ADMINISTRATOR_DESCRIPTION = 'Доступны все возможности, кроме изменений данных директора и добавления других администраторов'
-
-export const MENU_MANAGER = 'Менеджер меню'
-export const MENU_MANAGER_DESCRIPTION = 'Доступно изменение категорий и товаров'
-
-export const ORDER_MANAGER = 'Менеджер заказов'
-export const ORDER_MANAGER_DESCRIPTION = 'Доступно изменение статуса заказов'
-
-export const COURIER = 'Курьер'
-export const COURIER_DESCRIPTION = 'Доступно изменение статуса заказов на "доставлено"'
+export const ROLE = Object.freeze({
+   SUPER_ADMIN: {
+      ID: 1,
+      NAME: 'super-admin',
+      DESCRIPTION: 'Роль супер-админа'
+   },
+   DIRECTOR_GENERAL: {
+      ID: 2,
+      NAME: 'Генеральный директор',
+      DESCRIPTION: 'Доступны все возможности'
+   },
+   DEPUTY_GENERAL_DIRECTOR: {
+      ID: 3,
+      NAME: 'Заместитель генерального директора',
+      DESCRIPTION: 'Доступны все возможности, кроме изменений данных генерального директора и добавления других заместителей генерального директора'
+   },
+   ADMINISTRATOR_GENERAL: {
+      ID: 4,
+      NAME: 'Главный администратор',
+      DESCRIPTION: 'Доступны все манипуляции с базой данных, кроме добавления/удаления сотрудников. Данная роль предназначина для специалиста, который будет заполнять общие данные(города, меню, графики и т.д.). Также может использоваться для изменения статуса заказа в любом ресторане.'
+   },
+   DIRECTOR_RESTAURANT: {
+      ID: 5,
+      NAME: 'Директор ресторана',
+      DESCRIPTION: 'Доступны все возможности в рамках одного ресторана'
+   },
+   DEPUTY_DIRECTOR_RESTAURANT: {
+      ID: 6,
+      NAME: 'Заместитель директора ресторана',
+      DESCRIPTION: 'Доступны все возможности в рамках ресторана, кроме изменений данных директора и добавления других заместителей'
+   },
+   ADMINISTRATOR_RESTAURANT: {
+      ID: 7,
+      NAME: 'Админитсратор ресторана',
+      DESCRIPTION: 'Доступно изменение статуса заказов в рамках ресторана'
+   },
+   COURIER: {
+      ID: 8,
+      NAME: 'Курьер',
+      DESCRIPTION: 'Доступно изменение статуса заказов на "доставлено"'
+   },
+})
 

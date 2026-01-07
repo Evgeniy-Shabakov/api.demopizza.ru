@@ -57,7 +57,7 @@ async function findOrFailUserWithRoles(phone) {
    
    let user = await prisma.user.findUnique({
       where: { phone: phone },
-      include: { userRoles: { include: { role: true } } }
+      include: { userRoles: true }
    })
 
    if (!user) throw new UnauthorizedError('Пользователь c таким номером телефона не найден')
@@ -66,8 +66,7 @@ async function findOrFailUserWithRoles(phone) {
       ...user,
       roles: user.userRoles.map(item => {
          return {
-            id: item.role.id,
-            name: item.role.name,
+            roleId: item.roleId,
             restaurantId: item.restaurantId
          }
       })

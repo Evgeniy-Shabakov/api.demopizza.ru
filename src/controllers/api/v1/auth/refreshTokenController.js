@@ -15,12 +15,23 @@ export const refreshTokenController = baseController(async (req, res) => {
    })
    if (deleteResult.count === 0) throw new UnauthorizedError('Refresh токен уже отозван или не существует')
 
-   const userInDB = await prisma.user.findUnique({
-      where: { id: user.id }
+   let userInDB = await prisma.user.findUnique({
+      where: { id: user.id },
+      include: { userRoles: true }
    })
    if (!userInDB) throw new UnauthorizedError('Пользователь не найден')
 
-   const { accessToken, refreshToken } = await generateJWTTokens(req, user)
+   userInDB = {
+      ...userInDB,
+      roles: userInDB.userRoles.map(item => {
+         return {
+            roleId: item.roleId,
+            restaurantId: item.restaurantId
+         }
+      })
+   }
+
+   const { accessToken, refreshToken } = await generateJWTTokens(req, userInDB)
 
    res.cookie('accessToken', accessToken, config.jwtAccessTokenCookieOption)
    res.cookie('refreshToken', refreshToken, config.jwtRefreshTokenCookieOption)
