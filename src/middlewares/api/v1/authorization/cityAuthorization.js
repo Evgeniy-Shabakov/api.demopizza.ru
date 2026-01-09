@@ -1,47 +1,9 @@
-import { ROLE } from "#constants/api/v1/roles.js"
-import { checkRole } from "./checkRole.js"
-import { ForbiddenError } from "#errors/api/v1/ForbiddenError.js"
+import { PERMISSIONS } from "#constants/api/v1/permissions.js"
+import { baseAutorization } from "./baseAuthorization.js"
 
-export function cityIndexAutorization() {
-   return function (req, res, next) {
-      try {
-         next()
-      } catch (error) {
-         next(error)
-      }
-   }
-}
+export const cityAuthorization = baseAutorization((user) => {
 
-export function cityShowAutorization() {
-   return function (req, res, next) {
-      try {
-         next()
-      } catch (error) {
-         next(error)
-      }
-   }
-}
+   if (user.hasAnyRole(PERMISSIONS.CITY_ALL_ACTIONS)) return true
 
-export function cityStoreAutorization() {
-   return function (req, res, next) {
-      try {
-         if (!req.user || !req.user.roles || !req.user.roles.length) {
-            throw new ForbiddenError('Пользователь не аутентифицирован или у пользователя нет ролей')
-         }
-
-         const userRolesIds = req.user.roles.map(r => r.roleId)
-
-         if (userRolesIds.includes(ROLE.SUPER_ADMIN.ID)) return next()
-
-         if (userRolesIds.includes(ROLE.DIRECTOR.ID)) return next()
-
-         throw new ForbiddenError('У пользователя отсутсвует нужная роль')
-      } catch (error) {
-         next(error)
-      }
-   }
-}
-
-export function hasRole(user, role) {
-   return user.roles.some(item => item.roleId == role.ID)
-}
+   return false
+})
