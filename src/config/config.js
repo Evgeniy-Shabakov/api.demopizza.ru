@@ -38,7 +38,7 @@ const config = {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'none',
       maxAge: 300 * 1000, //как в nodeCashe
-      path: '/api/v1/auth',
+      path: '/',
       domain: '.demopizza.ru'
    }
 }
