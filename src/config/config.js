@@ -39,6 +39,7 @@ const config = {
       sameSite: 'none',
       maxAge: 300 * 1000, //как в nodeCashe
       path: '/api/v1/auth',
+      domain: '.demopizza.ru'
    }
 }
 
