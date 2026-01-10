@@ -10,6 +10,7 @@ import { deliveryZoneShowController } from '#controllers/api/v1/deliveryZone/del
 import { deliveryZoneStoreController } from '#controllers/api/v1/deliveryZone/deliveryZoneStoreController.js'
 import { deliveryZoneUpdateController } from '#controllers/api/v1/deliveryZone/deliveryZoneUpdateController.js'
 import { deliveryZoneDeleteController } from '#controllers/api/v1/deliveryZone/deliveryZoneDeleteController.js'
+import { generalAuthorization } from '#middlewares/api/v1/authorization/generalAuthorization.js'
 
 const router = express.Router()
 
@@ -23,18 +24,18 @@ router.get('/:id',
    deliveryZoneShowController)
 
 router.post('/',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    validateBody(deliveryZoneBodyValidationSchema),
    deliveryZoneStoreController)
 
 router.put('/:id',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    validateId,
    validateBody(deliveryZoneBodyValidationSchema),
    deliveryZoneUpdateController
 )
 router.delete('/:id',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    validateId,
    deliveryZoneDeleteController)
 

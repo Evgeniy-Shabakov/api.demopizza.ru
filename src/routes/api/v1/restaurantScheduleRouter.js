@@ -10,6 +10,7 @@ import { restaurantScheduleShowController } from '#controllers/api/v1/restaurant
 import { restaurantScheduleStoreController } from '#controllers/api/v1/restaurantSchedule/restaurantScheduleStoreController.js'
 import { restaurantScheduleUpdateController } from '#controllers/api/v1/restaurantSchedule/restaurantScheduleUpdateController.js'
 import { restaurantScheduleDeleteController } from '#controllers/api/v1/restaurantSchedule/restaurantScheduleDeleteController.js'
+import { generalAuthorization } from '#middlewares/api/v1/authorization/generalAuthorization.js'
 
 const router = express.Router()
 
@@ -23,18 +24,18 @@ router.get('/:id',
    restaurantScheduleShowController
 )
 router.post('/',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    validateBody(restaurantScheduleBodyValidationSchema),
    restaurantScheduleStoreController)
 
 router.put('/:id',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    validateId,
    validateBody(restaurantScheduleBodyValidationSchema),
    restaurantScheduleUpdateController)
 
 router.delete('/:id',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    validateId,
    restaurantScheduleDeleteController)
 

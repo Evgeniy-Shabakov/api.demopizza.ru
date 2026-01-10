@@ -10,7 +10,7 @@ import { cityShowController } from '#controllers/api/v1/city/cityShowController.
 import { cityStoreController } from '#controllers/api/v1/city/cityStoreController.js'
 import { cityUpdateController } from '#controllers/api/v1/city/cityUpdateController.js'
 import { cityDeleteController } from '#controllers/api/v1/city/cityDeleteController.js'
-import { cityAuthorization } from '#middlewares/api/v1/authorization/cityAuthorization.js'
+import { generalAuthorization } from '#middlewares/api/v1/authorization/generalAuthorization.js'
 
 const router = express.Router()
 
@@ -24,18 +24,18 @@ router.get('/:id',
    cityShowController)
 
 router.post('/',
-   verifyJWTAccessToken, cityAuthorization,
+   verifyJWTAccessToken, generalAuthorization,
    validateBody(cityBodyValidationSchema),
    cityStoreController)
 
 router.put('/:id',
-   verifyJWTAccessToken, cityAuthorization,
+   verifyJWTAccessToken, generalAuthorization,
    validateId,
    validateBody(cityBodyValidationSchema),
    cityUpdateController)
 
 router.delete('/:id',
-   verifyJWTAccessToken, cityAuthorization,
+   verifyJWTAccessToken, generalAuthorization,
    validateId,
    cityDeleteController)
 

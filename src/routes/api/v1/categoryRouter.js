@@ -10,6 +10,7 @@ import { categoryShowController } from '#controllers/api/v1/category/categorySho
 import { categoryStoreController } from '#controllers/api/v1/category/categoryStoreController.js'
 import { categoryUpdateController } from '#controllers/api/v1/category/categoryUpdateController.js'
 import { categoryDeleteController } from '#controllers/api/v1/category/categoryDeleteController.js'
+import { generalAuthorization } from '#middlewares/api/v1/authorization/generalAuthorization.js'
 
 const router = express.Router()
 
@@ -23,19 +24,19 @@ router.get('/:id',
    categoryShowController)
 
 router.post('/',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    validateBody(categoryBodyValidationSchema),
    categoryStoreController)
 
 router.put('/:id',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    validateId,
-   validateBody(categoryBodyValidationSchema),
+   validateBody(categoryBodyValidationSchema), 
    categoryUpdateController)
 
 router.delete('/:id',
-   verifyJWTAccessToken,
-   validateId,
+   verifyJWTAccessToken, generalAuthorization,
+   validateId, 
    categoryDeleteController)
 
 export default router

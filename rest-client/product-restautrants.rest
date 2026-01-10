@@ -1,0 +1,40 @@
+# @host=https://api.demopizza.ru/api/v1
+@host=http://localhost:5000/api/v1
+
+### используется для установки продукта в стоп-лист для заданного ресторана
+
+###  доступные query параметры для GET запросов 
+###  include: ['product', 'restaurant'],
+###  sort: ['id', 'productId', 'restaurantId', 'createdAt', 'updatedAt']
+
+GET {{host}}/product-restaurants
+###
+
+GET {{host}}/product-restaurants?include=product,restaurant&sort=id,desc
+
+###
+GET {{host}}/product-restaurants/1
+
+###
+POST {{host}}/product-restaurants
+content-type: application/json
+
+{
+   "productId": 1,
+   "restaurantId": 1,
+   "isInStopList": true
+}
+
+###
+PUT {{host}}/product-restaurants/2
+content-type: application/json
+
+{
+   "productId": 1,
+   "restaurantId": 1,
+   "isInStopList": true
+}
+
+###
+DELETE {{host}}/product-restaurants/2
+

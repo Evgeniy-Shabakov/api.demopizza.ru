@@ -11,6 +11,7 @@ import { productShowController } from '#controllers/api/v1/product/productShowCo
 import { productStoreController } from '#controllers/api/v1/product/productStoreController.js'
 import { productUpdateController } from '#controllers/api/v1/product/productUpdateController.js'
 import { productDeleteController } from '#controllers/api/v1/product/productDeleteController.js'
+import { generalAuthorization } from '#middlewares/api/v1/authorization/generalAuthorization.js'
 
 const router = express.Router()
 
@@ -22,20 +23,20 @@ router.get('/:id',
    productShowController)
    
 router.post('/',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    productFileLoading,
    validateBody(productBodyValidationSchema),
    productStoreController)
 
 router.put('/:id',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    validateId,
    productFileLoading,
    validateBody(productBodyValidationSchema),
    productUpdateController)
 
 router.delete('/:id',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    validateId,
    productDeleteController)
 

@@ -10,6 +10,7 @@ import { countryShowController } from '#controllers/api/v1/country/countryShowCo
 import { countryStoreController } from '#controllers/api/v1/country/countryStoreController.js'
 import { countryUpdateController } from '#controllers/api/v1/country/countryUpdateController.js'
 import { countryDeleteController } from '#controllers/api/v1/country/countryDeleteController.js'
+import { generalAuthorization } from '#middlewares/api/v1/authorization/generalAuthorization.js'
 
 const router = express.Router()
 
@@ -18,21 +19,21 @@ router.get('/', validateQuery(countryQueryValidationData), countryIndexControlle
 router.get('/:id',
    validateId,
    validateQuery(countryQueryValidationData),
-   countryShowController
-)
+   countryShowController)
+
 router.post('/',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    validateBody(countryBodyValidationSchema),
    countryStoreController)
 
 router.put('/:id',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    validateId,
    validateBody(countryBodyValidationSchema),
-   countryUpdateController
-)
+   countryUpdateController)
+
 router.delete('/:id',
-   verifyJWTAccessToken,
+   verifyJWTAccessToken, generalAuthorization,
    validateId,
    countryDeleteController)
 

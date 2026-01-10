@@ -10,6 +10,7 @@ import { productRestaurantShowController } from '#controllers/api/v1/productRest
 import { productRestaurantStoreController } from '#controllers/api/v1/productRestaurant/productRestaurantStoreController.js'
 import { productRestaurantUpdateController } from '#controllers/api/v1/productRestaurant/productRestaurantUpdateController.js'
 import { productRestaurantDeleteController } from '#controllers/api/v1/productRestaurant/productRestaurantDeleteController.js'
+import { productRestaurantAuthorization } from '#middlewares/api/v1/authorization/productRestaurantAuthorization.js'
 
 const router = express.Router()
 
@@ -23,19 +24,19 @@ router.get('/:id',
    productRestaurantShowController)
 
 router.post('/',
-   verifyJWTAccessToken,
-   validateBody(productRestaurantBodyValidationSchema),
+   verifyJWTAccessToken, productRestaurantAuthorization,
+   validateBody(productRestaurantBodyValidationSchema), 
    productRestaurantStoreController)
 
 router.put('/:id',
    verifyJWTAccessToken,
    validateId,
-   validateBody(productRestaurantBodyValidationSchema),
+   validateBody(productRestaurantBodyValidationSchema), productRestaurantAuthorization, //после validateBody т.к. нужен restaurantId
    productRestaurantUpdateController
 )
 router.delete('/:id',
    verifyJWTAccessToken,
-   validateId,
+   validateId, productRestaurantAuthorization, //после validateId т.к. нужен id
    productRestaurantDeleteController)
 
 export default router
