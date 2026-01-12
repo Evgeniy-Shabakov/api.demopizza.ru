@@ -36,7 +36,7 @@ const config = {
    authTgBotCookieOption: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: 'lax',
       maxAge: 300 * 1000, //как в nodeCashe
       path: '/api/v1/auth'
    }
