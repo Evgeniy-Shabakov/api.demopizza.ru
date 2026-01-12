@@ -20,7 +20,7 @@ const config = {
    jwtAccessTokenCookieOption: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
+      sameSite: 'strict',
       maxAge: parseJWTTimeToMs(process.env.JWT_ACCESS_TOKEN_LIVE_TIME),
       path: '/',
    },
@@ -28,7 +28,7 @@ const config = {
    jwtRefreshTokenCookieOption: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
+      sameSite: 'strict',
       maxAge: parseJWTTimeToMs(process.env.JWT_REFRESH_TOKEN_LIVE_TIME),
       path: '/api/v1/auth',
    },
@@ -36,7 +36,7 @@ const config = {
    authTgBotCookieOption: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
+      sameSite: 'strict',
       maxAge: 300 * 1000, //как в nodeCashe
       path: '/api/v1/auth'
    }
