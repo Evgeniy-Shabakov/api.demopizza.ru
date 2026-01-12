@@ -36,10 +36,9 @@ const config = {
    authTgBotCookieOption: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
+      sameSite: 'strict',
       maxAge: 300 * 1000, //как в nodeCashe
-      path: '/',
-      domain: '.demopizza.ru'
+      path: '/api/v1/auth'
    }
 }
 
