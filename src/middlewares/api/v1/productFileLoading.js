@@ -1,7 +1,7 @@
 import multer from 'multer'
 import path from 'path'
 import slugify from 'slugify'
-import { generateUniqueSuffix } from '#utils/generateUniqueSuffix.js'
+import { generateUniqueSuffix } from '#utils/api/v1/generateUniqueSuffix.js'
 
 export const productFileLoading = multer({
    storage: multer.diskStorage({

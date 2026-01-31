@@ -4,21 +4,21 @@ import config from '#config/config.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
 
 export const logoutController = baseController(async (req, res) => {
-   const refreshToken = req.cookies.refreshToken
+   const refreshToken = req.cookies.employeeRefreshToken
 
    try {
-      const user = jwt.verify(refreshToken, config.jwtRefreshTokenSecret)
+      const employees = jwt.verify(refreshToken, config.jwtEmployeesRefreshTokenSecret)
 
       await prisma.refreshToken.deleteMany({
-         where: { token: refreshToken, userId: user.id }
+         where: { token: refreshToken, employeeId: employees.id }
       })
    }
    catch (error) {
       //пропускаем ошибки, чтобы удалить куки в любом случае
    }
 
-   res.clearCookie('accessToken', config.jwtAccessTokenCookieOption)
-   res.clearCookie('refreshToken', config.jwtRefreshTokenCookieOption)
+   res.clearCookie('employeeAccessToken', config.jwtEmployeesAccessTokenCookieOption)
+   res.clearCookie('employeeRefreshToken', config.jwtEmployeesRefreshTokenCookieOption)
 
    res.status(204).send()
 })

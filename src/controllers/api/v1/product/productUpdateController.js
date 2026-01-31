@@ -2,9 +2,9 @@ import fs from 'fs/promises'
 import slugify from 'slugify'
 import { prisma } from '#services/prismaClient.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
-import { ProductResource } from "#resources/api/v1/productResource.js"
-import { renameFileName } from "#utils/renameFileName.js"
-import { generateUniqueSuffix } from "#utils/generateUniqueSuffix.js"
+import { ProductResource } from "#resources/api/v1/ProductResource.js"
+import { renameFileName } from "#utils/api/v1/renameFileName.js"
+import { generateUniqueSuffix } from "#utils/api/v1/generateUniqueSuffix.js"
 
 
 export const productUpdateController = baseController(async (req, res) => {

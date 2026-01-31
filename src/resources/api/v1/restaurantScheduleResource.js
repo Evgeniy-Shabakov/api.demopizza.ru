@@ -1,4 +1,4 @@
-import { BaseResource } from "./baseResource.js"
+import { BaseResource } from "./BaseResource.js"
 
 export class RestaurantScheduleResource extends BaseResource {
    transform(record) {

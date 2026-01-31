@@ -1,6 +1,6 @@
 import { prisma } from '#services/prismaClient.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
-import { AddressResource } from "#resources/api/v1/addressResource.js"
+import { AddressResource } from "#resources/api/v1/AddressResource.js"
 
 export const addressIndexController = baseController(async (req, res) => {
 

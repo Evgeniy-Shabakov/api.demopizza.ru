@@ -1,6 +1,6 @@
 import { prisma } from '#services/prismaClient.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
-import { UserResource } from "#resources/api/v1/userResource.js"
+import { UserResource } from "#resources/api/v1/UserResource.js"
 
 export const userUpdateController = baseController(async (req, res) => {
    

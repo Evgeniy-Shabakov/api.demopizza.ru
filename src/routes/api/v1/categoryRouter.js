@@ -1,5 +1,5 @@
 import express from 'express'
-import { verifyJWTAccessToken } from '#middlewares/api/v1/auth/verifyJWTAccessToken.js'
+import { authentication } from '#middlewares/api/v1/authentication/authentication.js'
 import { validateId } from '#middlewares/api/v1/validators/validateId.js'
 import { validateBody } from '#middlewares/api/v1/validators/validateBody.js'
 import { validateQuery } from '#middlewares/api/v1/validators/validateQuery.js'
@@ -10,7 +10,8 @@ import { categoryShowController } from '#controllers/api/v1/category/categorySho
 import { categoryStoreController } from '#controllers/api/v1/category/categoryStoreController.js'
 import { categoryUpdateController } from '#controllers/api/v1/category/categoryUpdateController.js'
 import { categoryDeleteController } from '#controllers/api/v1/category/categoryDeleteController.js'
-import { generalAuthorization } from '#middlewares/api/v1/authorization/generalAuthorization.js'
+import { routeAuthorization } from '#middlewares/api/v1/authorization/routeAuthorization.js'
+import { CATEGORIES_ROUTE_PERMISSIONS } from '#constants/api/v1/permissions/modelsRoutePermissions.js'
 
 const router = express.Router()
 
@@ -24,18 +25,18 @@ router.get('/:id',
    categoryShowController)
 
 router.post('/',
-   verifyJWTAccessToken, generalAuthorization,
+   authentication, routeAuthorization(CATEGORIES_ROUTE_PERMISSIONS.CREATE),
    validateBody(categoryBodyValidationSchema),
    categoryStoreController)
 
 router.put('/:id',
-   verifyJWTAccessToken, generalAuthorization,
+   authentication, routeAuthorization(CATEGORIES_ROUTE_PERMISSIONS.UPDATE),
    validateId,
    validateBody(categoryBodyValidationSchema), 
    categoryUpdateController)
 
 router.delete('/:id',
-   verifyJWTAccessToken, generalAuthorization,
+   authentication, routeAuthorization(CATEGORIES_ROUTE_PERMISSIONS.DELETE),
    validateId, 
    categoryDeleteController)
 

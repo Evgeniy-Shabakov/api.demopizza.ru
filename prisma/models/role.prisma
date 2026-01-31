@@ -3,11 +3,12 @@ model Role {
 
    name        String  @unique
    description String?
+   employeesControlLevel Int @default(0) @map("employees_control_level")
 
    createdAt DateTime @default(now()) @map("created_at")
    updatedAt DateTime @updatedAt @map("updated_at")
 
-   userRoles UserRole[]
+   employeeRoles EmployeeRole[]
 
    @@map("roles")
 }

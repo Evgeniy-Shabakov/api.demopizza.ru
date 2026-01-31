@@ -1,0 +1,21 @@
+model Employee {
+   id Int @id @default(autoincrement())
+
+   phone           String    @unique @db.VarChar(30)
+   phoneVerifiedAt DateTime? @map("phone_verified_at")
+   email           String?   @unique
+   emailVerifiedAt DateTime? @map("email_verified_at")
+   password        String?
+   firstName       String?   @map("first_name")
+   lastName        String?   @map("last_name")
+   middleName      String?   @map("middle_name")
+   jobTitle        String?   @map("job_title")
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   refreshTokens RefreshToken[]
+   employeeRoles EmployeeRole[]
+
+   @@map("employees")
+}

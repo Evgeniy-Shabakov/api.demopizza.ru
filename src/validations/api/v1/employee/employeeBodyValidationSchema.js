@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const userBodyValidationSchema = z.object({
+export const employeeBodyValidationSchema = z.object({
    phone: z
       .string().trim()
       .min(10, 'Мало символов')
@@ -33,15 +33,16 @@ export const userBodyValidationSchema = z.object({
       .max(50, 'Много символов')
       .nullish(),
 
-   nickname: z
-      .string().trim()
-      .min(1, 'Мало символов')
-      .max(50, 'Много символов')
-      .nullish(),
-
    job: z
       .string().trim()
       .min(1, 'Мало символов')
       .max(100, 'Много символов')
+      .nullish(),
+
+   employeeRoles: z
+      .array(z.object({
+         roleId: z.int().min(1),
+         restaurantId: z.int().min(1).nullish()
+      }))
       .nullish(),
 }).strict()

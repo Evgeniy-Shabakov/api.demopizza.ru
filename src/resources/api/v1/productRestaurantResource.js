@@ -1,6 +1,6 @@
-import { BaseResource } from "./baseResource.js"
-import { ProductResource } from "./productResource.js"
-import { RestaurantResource } from "./restaurantResource.js"
+import { BaseResource } from "./BaseResource.js"
+import { ProductResource } from "./ProductResource.js"
+import { RestaurantResource } from "./RestaurantResource.js"
 
 export class ProductRestaurantResource extends BaseResource {
    transform(record) {

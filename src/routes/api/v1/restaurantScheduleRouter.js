@@ -1,5 +1,5 @@
 import express from 'express'
-import { verifyJWTAccessToken } from '#middlewares/api/v1/auth/verifyJWTAccessToken.js'
+import { authentication } from '#middlewares/api/v1/authentication/authentication.js'
 import { validateId } from '#middlewares/api/v1/validators/validateId.js'
 import { validateBody } from '#middlewares/api/v1/validators/validateBody.js'
 import { validateQuery } from '#middlewares/api/v1/validators/validateQuery.js'
@@ -10,7 +10,8 @@ import { restaurantScheduleShowController } from '#controllers/api/v1/restaurant
 import { restaurantScheduleStoreController } from '#controllers/api/v1/restaurantSchedule/restaurantScheduleStoreController.js'
 import { restaurantScheduleUpdateController } from '#controllers/api/v1/restaurantSchedule/restaurantScheduleUpdateController.js'
 import { restaurantScheduleDeleteController } from '#controllers/api/v1/restaurantSchedule/restaurantScheduleDeleteController.js'
-import { generalAuthorization } from '#middlewares/api/v1/authorization/generalAuthorization.js'
+import { routeAuthorization } from '#middlewares/api/v1/authorization/routeAuthorization.js'
+import { RESTAURANT_SCHEDULES_ROUTE_PERMISSIONS } from '#constants/api/v1/permissions/modelsRoutePermissions.js'
 
 const router = express.Router()
 
@@ -23,19 +24,19 @@ router.get('/:id',
    validateQuery(restaurantScheduleQueryValidationData),
    restaurantScheduleShowController
 )
-router.post('/',
-   verifyJWTAccessToken, generalAuthorization,
+router.post('/', 
+   authentication, routeAuthorization(RESTAURANT_SCHEDULES_ROUTE_PERMISSIONS.CREATE),
    validateBody(restaurantScheduleBodyValidationSchema),
    restaurantScheduleStoreController)
 
 router.put('/:id',
-   verifyJWTAccessToken, generalAuthorization,
+   authentication, routeAuthorization(RESTAURANT_SCHEDULES_ROUTE_PERMISSIONS.UPDATE),
    validateId,
    validateBody(restaurantScheduleBodyValidationSchema),
    restaurantScheduleUpdateController)
 
 router.delete('/:id',
-   verifyJWTAccessToken, generalAuthorization,
+   authentication, routeAuthorization(RESTAURANT_SCHEDULES_ROUTE_PERMISSIONS.DELETE),
    validateId,
    restaurantScheduleDeleteController)
 

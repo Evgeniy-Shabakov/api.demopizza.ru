@@ -1,18 +1,19 @@
 import { ROLE } from "#constants/api/v1/roles.js"
 import { ForbiddenError } from "#errors/api/v1/ForbiddenError.js"
+import { employeeHasRole } from "#utils/api/v1/employeeHelper.js"
 
-export function baseAutorization(checkUniqueAuthorization) {
+export function baseAutorization(customCheck) {
    return async (req, res, next) => {
       try {
-         if (!req.user || !req.user.roles || !req.user.roles.length) {
-            throw new ForbiddenError('Пользователь не аутентифицирован или у пользователя нет ролей')
+         if (!req.employee || !req.employee.employeeRoles || !req.employee.employeeRoles.length) {
+            throw new ForbiddenError('Пользователь не аутентифицирован или недостаточно прав')
          }
 
-         if (req.user.hasRole(ROLE.SUPER_ADMIN)) return next()
+         if (employeeHasRole(req.employee, ROLE.SUPER_ADMIN)) return next()
 
-         if (await checkUniqueAuthorization(req)) return next()
+         if (await customCheck(req)) return next()
 
-         throw new ForbiddenError('У пользователя отсутсвует нужная роль')
+         throw new ForbiddenError('Недостаточно прав для данного действия')
       } catch (error) {
          next(error)
       }

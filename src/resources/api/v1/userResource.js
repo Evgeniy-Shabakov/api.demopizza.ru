@@ -1,5 +1,5 @@
-import { BaseResource } from "./baseResource.js"
-import { AddressResource } from "./addressResource.js"
+import { BaseResource } from "./BaseResource.js"
+import { AddressResource } from "./AddressResource.js"
 
 export class UserResource extends BaseResource {
    transform(record) {
@@ -10,11 +10,7 @@ export class UserResource extends BaseResource {
          phoneVerifiedAt: record.phoneVerifiedAt,
          email: record.email,
          emailVerifiedAt: record.emailVerifiedAt,
-         firstName: record.firstName,
-         lastName: record.lastName,
-         middleName: record.middleName,
          nickname: record.nickname,
-         job: record.job,
 
          addresses: record.addresses ? AddressResource.collection(record.addresses) : undefined,
 

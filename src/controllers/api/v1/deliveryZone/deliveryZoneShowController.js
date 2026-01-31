@@ -1,6 +1,6 @@
 import { prisma } from '#services/prismaClient.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
-import { DeliveryZoneResource } from "#resources/api/v1/deliveryZoneResource.js"
+import { DeliveryZoneResource } from "#resources/api/v1/DeliveryZoneResource.js"
 
 export const deliveryZoneShowController = baseController(async (req, res) => {
 

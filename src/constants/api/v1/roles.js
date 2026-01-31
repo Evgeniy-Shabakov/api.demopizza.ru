@@ -1,49 +1,64 @@
+import dotenv from 'dotenv'
+import { ALL_ROUTE_PERMISSIONS } from "./permissions/allRoutePermissions.js"
+import {
+   EMPLOYEES_ROUTE_PERMISSIONS,
+   PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS,
+   ORDERS_ROUTE_PERMISSIONS
+} from "./permissions/modelsRoutePermissions.js"
+
+dotenv.config()  // Загружаем переменные окружения из .env
+
+export const MAX_RESTAURANT_EMPLOYEES_CONTROL_LEVEL = 500 // <=500 для управления в рамках одного ресторана
+
 export const ROLE = Object.freeze({
    SUPER_ADMIN: {
-      ID: 1,
+      ID: parseInt(process.env.ROLE_SUPER_ADMIN_ID),
       NAME: 'super-admin',
-      DESCRIPTION: 'Роль супер-админа'
+      EMPLOYEES_CONTROL_LEVEL: 999999999
    },
-
-   //три роли с помощью которых можно управлять как общими данными, так и любым рестораном
-   DIRECTOR_GENERAL: {
+   OWNER: {
+      ID: 1,
+      NAME: 'Владелец',
+      DESCRIPTION: 'Доступны все возможности',
+      EMPLOYEES_CONTROL_LEVEL: 1000,
+      ROUTE_PERMISSIONS: ALL_ROUTE_PERMISSIONS
+   },
+   MANAGER_GENERAL: {
       ID: 2,
-      NAME: 'Генеральный директор',
-      DESCRIPTION: 'Доступны все возможности'
+      NAME: 'Управляющий всеми ресторанами',
+      DESCRIPTION: 'Доступны все возможности, кроме манипуляций с данными владельца и данными других управляющих всеми ресторанами',
+      EMPLOYEES_CONTROL_LEVEL: 900,
+      ROUTE_PERMISSIONS: ALL_ROUTE_PERMISSIONS
    },
-   DEPUTY_GENERAL_DIRECTOR: {
+   MANAGER_RESTAURANT: {
       ID: 3,
-      NAME: 'Заместитель генерального директора',
-      DESCRIPTION: 'Доступны все возможности, кроме изменений данных генерального директора и добавления других заместителей генерального директора'
-   },
-   ADMINISTRATOR_GENERAL: {
-      ID: 4,
-      NAME: 'Главный администратор',
-      DESCRIPTION: 'Доступны все манипуляции с базой данных, кроме добавления/удаления сотрудников. Данная роль предназначина для специалиста, который будет заполнять общие данные(города, меню, графики и т.д.). Также может использоваться для изменения статуса заказа в любом ресторане.'
-   },
-
-   //три роли с помощью которых можно управлять данными в рамкох заданного ресторана
-   DIRECTOR_RESTAURANT: {
-      ID: 5,
-      NAME: 'Директор ресторана',
-      DESCRIPTION: 'Доступны все возможности в рамках одного ресторана'
-   },
-   DEPUTY_DIRECTOR_RESTAURANT: {
-      ID: 6,
-      NAME: 'Заместитель директора ресторана',
-      DESCRIPTION: 'Доступны все возможности в рамках ресторана, кроме изменений данных директора и добавления других заместителей'
+      NAME: 'Управляющий рестораном',
+      DESCRIPTION: 'Доступны все возможности в рамках назначенного ресторана',
+      EMPLOYEES_CONTROL_LEVEL: MAX_RESTAURANT_EMPLOYEES_CONTROL_LEVEL, 
+      ROUTE_PERMISSIONS: [
+         ...Object.values(EMPLOYEES_ROUTE_PERMISSIONS),
+         ...Object.values(PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS),
+         ...Object.values(ORDERS_ROUTE_PERMISSIONS)
+      ]
    },
    ADMINISTRATOR_RESTAURANT: {
-      ID: 7,
-      NAME: 'Админитсратор ресторана',
-      DESCRIPTION: 'Доступно изменение статуса заказов в рамках ресторана и изменение данных стоп-листа'
+      ID: 4,
+      NAME: 'Администратор ресторана',
+      DESCRIPTION: 'Доступно изменение статусов заказов и изменение стоп-листа',
+      EMPLOYEES_CONTROL_LEVEL: 400,
+      ROUTE_PERMISSIONS: [
+         ...Object.values(PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS),
+         ...Object.values(ORDERS_ROUTE_PERMISSIONS)
+      ]
    },
-
-   // может управлять только заказами назначенными заданному курьеру
    COURIER: {
-      ID: 8,
+      ID: 5,
       NAME: 'Курьер',
-      DESCRIPTION: 'Доступно изменение статуса заказов на "доставлено"'
+      DESCRIPTION: 'Доступно изменение статусов заказов на выполнено',
+      EMPLOYEES_CONTROL_LEVEL: 100,
+      ROUTE_PERMISSIONS: [
+         ORDERS_ROUTE_PERMISSIONS.GET_ALL,
+         ORDERS_ROUTE_PERMISSIONS.UPDATE,
+      ]
    },
 })
-

@@ -1,5 +1,5 @@
-import { BaseResource } from "./baseResource.js"
-import { CityResource } from "./cityResource.js"
+import { BaseResource } from "./BaseResource.js"
+import { CityResource } from "./CityResource.js"
 
 export class CountryResource extends BaseResource {
    transform(record) {

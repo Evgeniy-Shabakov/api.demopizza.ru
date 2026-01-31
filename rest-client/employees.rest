@@ -1,0 +1,54 @@
+# @host=https://api.demopizza.ru/api/v1
+@host=http://localhost:5000/api/v1
+
+###  доступные query параметры для GET запросов 
+###  sort: ['id', 'phone', 'email', 'lastName', 'createdAt', 'updatedAt']
+
+GET {{host}}/employees
+###
+
+GET {{host}}/employees?sort=phone,desc
+
+###
+GET {{host}}/employees/15
+
+
+###
+POST {{host}}/employees
+content-type: application/json
+
+{
+   "phone": "+79129416435",
+   "employeeRoles": [
+      {
+         "roleId": 4,
+         "restaurantId": 1
+      },
+      {
+         "roleId": 5,
+         "restaurantId": 2
+      }
+   ]
+}
+
+###
+PUT {{host}}/employees/23
+content-type: application/json
+
+{
+   "phone": "+79129416030",
+   "firstName": "Евгений",
+   "employeeRoles": [
+      {
+         "roleId": 3,
+         "restaurantId": 1
+      },
+      {
+         "roleId": 5,
+         "restaurantId": 1
+      }
+   ]
+}
+
+###
+DELETE {{host}}/employees/1

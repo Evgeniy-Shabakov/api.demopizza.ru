@@ -1,6 +1,6 @@
 import { prisma } from '#services/prismaClient.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
-import { CategoryResource } from "#resources/api/v1/categoryResource.js"
+import { CategoryResource } from "#resources/api/v1/CategoryResource.js"
 
 export const categoryShowController = baseController(async (req, res) => {
 

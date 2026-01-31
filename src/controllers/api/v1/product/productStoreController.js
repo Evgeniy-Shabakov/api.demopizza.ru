@@ -1,6 +1,6 @@
 import { prisma } from '#services/prismaClient.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
-import { ProductResource } from "#resources/api/v1/productResource.js"
+import { ProductResource } from "#resources/api/v1/ProductResource.js"
 
 export const productStoreController = baseController(async (req, res) => {
    delete req.body.imageFile //без удаления лишних полей prisma выдает ошибку

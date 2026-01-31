@@ -23,7 +23,7 @@ model Restaurant {
 
    deliveryZones DeliveryZone[]
    productRestaurants ProductRestaurant[]
-   userRoles UserRole[]
+   employeeRoles EmployeeRole[]
 
    @@map("restaurants")
 }

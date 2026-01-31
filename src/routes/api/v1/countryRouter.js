@@ -1,5 +1,5 @@
 import express from 'express'
-import { verifyJWTAccessToken } from '#middlewares/api/v1/auth/verifyJWTAccessToken.js'
+import { authentication } from '#middlewares/api/v1/authentication/authentication.js'
 import { validateId } from '#middlewares/api/v1/validators/validateId.js'
 import { validateBody } from '#middlewares/api/v1/validators/validateBody.js'
 import { validateQuery } from '#middlewares/api/v1/validators/validateQuery.js'
@@ -10,7 +10,8 @@ import { countryShowController } from '#controllers/api/v1/country/countryShowCo
 import { countryStoreController } from '#controllers/api/v1/country/countryStoreController.js'
 import { countryUpdateController } from '#controllers/api/v1/country/countryUpdateController.js'
 import { countryDeleteController } from '#controllers/api/v1/country/countryDeleteController.js'
-import { generalAuthorization } from '#middlewares/api/v1/authorization/generalAuthorization.js'
+import { routeAuthorization } from '#middlewares/api/v1/authorization/routeAuthorization.js'
+import { COUNTRIES_ROUTE_PERMISSIONS } from '#constants/api/v1/permissions/modelsRoutePermissions.js'
 
 const router = express.Router()
 
@@ -22,18 +23,18 @@ router.get('/:id',
    countryShowController)
 
 router.post('/',
-   verifyJWTAccessToken, generalAuthorization,
+   authentication, routeAuthorization(COUNTRIES_ROUTE_PERMISSIONS.CREATE),
    validateBody(countryBodyValidationSchema),
    countryStoreController)
 
 router.put('/:id',
-   verifyJWTAccessToken, generalAuthorization,
+   authentication, routeAuthorization(COUNTRIES_ROUTE_PERMISSIONS.UPDATE),
    validateId,
    validateBody(countryBodyValidationSchema),
    countryUpdateController)
 
 router.delete('/:id',
-   verifyJWTAccessToken, generalAuthorization,
+   authentication, routeAuthorization(COUNTRIES_ROUTE_PERMISSIONS.DELETE),
    validateId,
    countryDeleteController)
 

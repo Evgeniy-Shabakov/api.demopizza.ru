@@ -1,5 +1,5 @@
-import { BaseResource } from "./baseResource.js"
-import { CategoryResource } from "./categoryResource.js"
+import { BaseResource } from "./BaseResource.js"
+import { CategoryResource } from "./CategoryResource.js"
 
 export class ProductResource extends BaseResource {
    transform(record) {

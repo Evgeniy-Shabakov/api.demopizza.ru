@@ -1,21 +1,26 @@
 model RefreshToken {
    id Int @id @default(autoincrement())
 
-   token      String   @unique
-   userId     Int      @map("user_id")
-   expiresAt  DateTime @map("expires_at")
-   isRevoked  Boolean  @default(false) @map("is_revoked")
-   
-   userAgent  String?  @map("user_agent")
-   ipAddress  String?  @map("ip_address")
-   deviceName String?  @map("device_name")
+   token String @unique
+
+   userId     Int? @map("user_id")
+   employeeId Int? @map("employee_id")
+
+   expiresAt DateTime @map("expires_at")
+   isRevoked Boolean  @default(false) @map("is_revoked")
+
+   userAgent  String? @map("user_agent")
+   ipAddress  String? @map("ip_address")
+   deviceName String? @map("device_name")
 
    createdAt DateTime @default(now()) @map("created_at")
    updatedAt DateTime @updatedAt @map("updated_at")
 
-   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+   user     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+   employee Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 
    @@index([token])
    @@index([userId])
+   @@index([employeeId])
    @@map("refresh_tokens")
 }

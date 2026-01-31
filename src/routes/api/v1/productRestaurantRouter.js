@@ -1,5 +1,5 @@
 import express from 'express'
-import { verifyJWTAccessToken } from '#middlewares/api/v1/auth/verifyJWTAccessToken.js'
+import { authentication } from '#middlewares/api/v1/authentication/authentication.js'
 import { validateId } from '#middlewares/api/v1/validators/validateId.js'
 import { validateBody } from '#middlewares/api/v1/validators/validateBody.js'
 import { validateQuery } from '#middlewares/api/v1/validators/validateQuery.js'
@@ -10,6 +10,8 @@ import { productRestaurantShowController } from '#controllers/api/v1/productRest
 import { productRestaurantStoreController } from '#controllers/api/v1/productRestaurant/productRestaurantStoreController.js'
 import { productRestaurantUpdateController } from '#controllers/api/v1/productRestaurant/productRestaurantUpdateController.js'
 import { productRestaurantDeleteController } from '#controllers/api/v1/productRestaurant/productRestaurantDeleteController.js'
+import { routeAuthorization } from '#middlewares/api/v1/authorization/routeAuthorization.js'
+import { PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS } from '#constants/api/v1/permissions/modelsRoutePermissions.js'
 import { productRestaurantAuthorization } from '#middlewares/api/v1/authorization/productRestaurantAuthorization.js'
 
 const router = express.Router()
@@ -24,19 +26,21 @@ router.get('/:id',
    productRestaurantShowController)
 
 router.post('/',
-   verifyJWTAccessToken, productRestaurantAuthorization,
+   authentication, routeAuthorization(PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS.CREATE),
    validateBody(productRestaurantBodyValidationSchema), 
+   productRestaurantAuthorization(PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS.CREATE),
    productRestaurantStoreController)
 
 router.put('/:id',
-   verifyJWTAccessToken,
+   authentication, routeAuthorization(PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS.UPDATE),
    validateId,
-   validateBody(productRestaurantBodyValidationSchema), productRestaurantAuthorization, //после validateBody т.к. нужен restaurantId
+   validateBody(productRestaurantBodyValidationSchema), 
+   productRestaurantAuthorization(PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS.UPDATE),
    productRestaurantUpdateController
 )
 router.delete('/:id',
-   verifyJWTAccessToken,
-   validateId, productRestaurantAuthorization, //после validateId т.к. нужен id
+   authentication, routeAuthorization(PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS.DELETE),
+   validateId, productRestaurantAuthorization(PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS.DELETE),
    productRestaurantDeleteController)
 
 export default router

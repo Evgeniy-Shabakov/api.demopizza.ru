@@ -20,13 +20,13 @@ POST {{host}}/product-restaurants
 content-type: application/json
 
 {
-   "productId": 1,
-   "restaurantId": 1,
+   "productId": 3,
+   "restaurantId": 2,
    "isInStopList": true
 }
 
 ###
-PUT {{host}}/product-restaurants/2
+PUT {{host}}/product-restaurants/1
 content-type: application/json
 
 {
@@ -36,5 +36,5 @@ content-type: application/json
 }
 
 ###
-DELETE {{host}}/product-restaurants/2
+DELETE {{host}}/product-restaurants/4
 

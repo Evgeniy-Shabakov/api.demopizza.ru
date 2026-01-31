@@ -1,7 +1,7 @@
-import { BaseResource } from "./baseResource.js"
-import { CityResource } from "./cityResource.js"
-import { UserResource } from "./userResource.js"
-import { RestaurantResource } from "./restaurantResource.js"
+import { BaseResource } from "./BaseResource.js"
+import { CityResource } from "./CityResource.js"
+import { UserResource } from "./UserResource.js"
+import { RestaurantResource } from "./RestaurantResource.js"
 
 export class AddressResource extends BaseResource {
    transform(record) {

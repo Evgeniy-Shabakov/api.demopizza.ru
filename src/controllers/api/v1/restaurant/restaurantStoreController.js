@@ -1,6 +1,6 @@
 import { prisma } from "#services/prismaClient.js"
 import { baseController } from "#controllers/api/v1/baseController.js"
-import { RestaurantResource } from "#resources/api/v1/restaurantResource.js"
+import { RestaurantResource } from "#resources/api/v1/RestaurantResource.js"
 
 export const restaurantStoreController = baseController(async (req, res) => {
    const address = {

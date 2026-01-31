@@ -1,6 +1,6 @@
 import { prisma } from '#services/prismaClient.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
-import { CityResource } from "#resources/api/v1/cityResource.js"
+import { CityResource } from "#resources/api/v1/CityResource.js"
 
 export const cityShowController = baseController(async (req, res) => {
 

@@ -15,7 +15,7 @@ export const app = express()
 app.use(helmet())
 app.use(compression())
 app.use(cors({
-   origin: [config.adminPanelUrl, config.adminPanelLocalDevUrl],
+   origin: [config.adminPanelUrl],
    credentials: true
 }))
 

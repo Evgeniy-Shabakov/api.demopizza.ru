@@ -1,0 +1,62 @@
+@host=https://api.demopizza.ru/api/v1
+# @host=http://localhost:5000/api/v1
+
+###  доступные query параметры для GET запросов 
+###  include: ['city', 'restaurantSchedule', 'address'],
+###  sort: ['id', 'name', 'createdAt', 'updatedAt']
+
+GET {{host}}/restaurants
+
+###
+GET {{host}}/restaurants/1
+
+###
+POST {{host}}/restaurants
+content-type: application/json
+
+{
+   "name": "Второй в Усинске",
+   "cityId": 1,
+   "restaurantScheduleId": 1,
+   //Доступна доставка до адреса (обычная доставка курьером)
+   "deliveryToAddressAvailable": true,
+   //Доступен самовывоз (клиент сам приезжает за заказом и забирает его в предназначенном для этого месте)
+   "pickUpAtCounterAvailable": true,
+   //Доступен самовывоз в окне для авто (клиент подьезжает к специальному окну на машине)
+   "pickUpAtCarWindowAvailable": false,
+   //Доступна подача в ресторане у бара (клиент сам подходит к стойке сотрудника и забирает заказ
+   //предназначенный для еды в ресторане)
+   "atRestaurantAtCounterAvailable": false,
+   //Доступна подача в ресторане к столику (сотрудник приносит заказ к выбранному столику)
+   "atRestaurantToTableAvailable": false,
+   //Доступна доставка на парковку у ресторана (сотрудник приносит упаковынный заказ к машине на парковке)
+   "deliveryToRestaurantParkingAvailable": false,
+   "isActive": true,
+   "street": "Молодежная",
+   "house": "25",
+   "addressAsString": "ул.Молодежная д.25" 
+}
+
+###
+PUT {{host}}/restaurants/2
+content-type: application/json
+
+{
+   "name": "Второй в Усинске111",
+   "cityId": 1,
+   "restaurantScheduleId": 1,
+   "deliveryToAddressAvailable": true,
+   "pickUpAtCounterAvailable": true,
+   "pickUpAtCarWindowAvailable": false,
+   "atRestaurantAtCounterAvailable": false,
+   "atRestaurantToTableAvailable": false,
+   "deliveryToRestaurantParkingAvailable": false,
+   "isActive": true,
+   "street": "Молодежная",
+   "house": "25",
+   "addressAsString": "ул.Молодежная д.25" 
+}
+
+###
+DELETE {{host}}/restaurants/2
+

@@ -1,5 +1,5 @@
 import express from 'express'
-import { verifyJWTAccessToken } from '#middlewares/api/v1/auth/verifyJWTAccessToken.js'
+import { authentication } from '#middlewares/api/v1/authentication/authentication.js'
 import { validateId } from '#middlewares/api/v1/validators/validateId.js'
 import { validateBody } from '#middlewares/api/v1/validators/validateBody.js'
 import { validateQuery } from '#middlewares/api/v1/validators/validateQuery.js'
@@ -11,7 +11,8 @@ import { productShowController } from '#controllers/api/v1/product/productShowCo
 import { productStoreController } from '#controllers/api/v1/product/productStoreController.js'
 import { productUpdateController } from '#controllers/api/v1/product/productUpdateController.js'
 import { productDeleteController } from '#controllers/api/v1/product/productDeleteController.js'
-import { generalAuthorization } from '#middlewares/api/v1/authorization/generalAuthorization.js'
+import { routeAuthorization } from '#middlewares/api/v1/authorization/routeAuthorization.js'
+import { PRODUCTS_ROUTE_PERMISSIONS } from '#constants/api/v1/permissions/modelsRoutePermissions.js'
 
 const router = express.Router()
 
@@ -23,20 +24,20 @@ router.get('/:id',
    productShowController)
    
 router.post('/',
-   verifyJWTAccessToken, generalAuthorization,
+   authentication, routeAuthorization(PRODUCTS_ROUTE_PERMISSIONS.CREATE),
    productFileLoading,
    validateBody(productBodyValidationSchema),
    productStoreController)
 
 router.put('/:id',
-   verifyJWTAccessToken, generalAuthorization,
+   authentication, routeAuthorization(PRODUCTS_ROUTE_PERMISSIONS.UPDATE),
    validateId,
    productFileLoading,
    validateBody(productBodyValidationSchema),
    productUpdateController)
 
 router.delete('/:id',
-   verifyJWTAccessToken, generalAuthorization,
+   authentication, routeAuthorization(PRODUCTS_ROUTE_PERMISSIONS.DELETE),
    validateId,
    productDeleteController)
 

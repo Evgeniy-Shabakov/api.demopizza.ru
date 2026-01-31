@@ -78,6 +78,36 @@ CREATE TABLE "delivery_zones" (
 );
 
 -- CreateTable
+CREATE TABLE "employees" (
+    "id" SERIAL NOT NULL,
+    "phone" VARCHAR(30) NOT NULL,
+    "phone_verified_at" TIMESTAMP(3),
+    "email" TEXT,
+    "email_verified_at" TIMESTAMP(3),
+    "password" TEXT,
+    "first_name" TEXT,
+    "last_name" TEXT,
+    "middle_name" TEXT,
+    "job_title" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "employees_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "employee_role" (
+    "id" SERIAL NOT NULL,
+    "employee_id" INTEGER NOT NULL,
+    "role_id" INTEGER NOT NULL,
+    "restaurant_id" INTEGER,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "employee_role_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "products" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
@@ -116,7 +146,8 @@ CREATE TABLE "product_restaurant" (
 CREATE TABLE "refresh_tokens" (
     "id" SERIAL NOT NULL,
     "token" TEXT NOT NULL,
-    "user_id" INTEGER NOT NULL,
+    "user_id" INTEGER,
+    "employee_id" INTEGER,
     "expires_at" TIMESTAMP(3) NOT NULL,
     "is_revoked" BOOLEAN NOT NULL DEFAULT false,
     "user_agent" TEXT,
@@ -183,6 +214,7 @@ CREATE TABLE "roles" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
+    "employees_control_level" INTEGER NOT NULL DEFAULT 0,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -197,27 +229,11 @@ CREATE TABLE "users" (
     "email" TEXT,
     "email_verified_at" TIMESTAMP(3),
     "password" TEXT,
-    "first_name" TEXT,
-    "last_name" TEXT,
-    "middle_name" TEXT,
     "nickname" TEXT,
-    "job" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "user_role" (
-    "id" SERIAL NOT NULL,
-    "user_id" INTEGER NOT NULL,
-    "role_id" INTEGER NOT NULL,
-    "restaurant_id" INTEGER,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "user_role_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -239,6 +255,15 @@ CREATE UNIQUE INDEX "cities_name_key" ON "cities"("name");
 CREATE UNIQUE INDEX "countries_name_key" ON "countries"("name");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "employees_phone_key" ON "employees"("phone");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "employees_email_key" ON "employees"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "employee_role_employee_id_role_id_restaurant_id_key" ON "employee_role"("employee_id", "role_id", "restaurant_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "products_name_key" ON "products"("name");
 
 -- CreateIndex
@@ -254,6 +279,9 @@ CREATE INDEX "refresh_tokens_token_idx" ON "refresh_tokens"("token");
 CREATE INDEX "refresh_tokens_user_id_idx" ON "refresh_tokens"("user_id");
 
 -- CreateIndex
+CREATE INDEX "refresh_tokens_employee_id_idx" ON "refresh_tokens"("employee_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "restaurants_name_key" ON "restaurants"("name");
 
 -- CreateIndex
@@ -267,9 +295,6 @@ CREATE UNIQUE INDEX "users_phone_key" ON "users"("phone");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "user_role_user_id_role_id_restaurant_id_key" ON "user_role"("user_id", "role_id", "restaurant_id");
 
 -- AddForeignKey
 ALTER TABLE "addresses" ADD CONSTRAINT "addresses_restaurantId_fkey" FOREIGN KEY ("restaurantId") REFERENCES "restaurants"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -290,6 +315,15 @@ ALTER TABLE "delivery_zones" ADD CONSTRAINT "delivery_zones_city_id_fkey" FOREIG
 ALTER TABLE "delivery_zones" ADD CONSTRAINT "delivery_zones_restaurant_id_fkey" FOREIGN KEY ("restaurant_id") REFERENCES "restaurants"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "employee_role" ADD CONSTRAINT "employee_role_employee_id_fkey" FOREIGN KEY ("employee_id") REFERENCES "employees"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "employee_role" ADD CONSTRAINT "employee_role_role_id_fkey" FOREIGN KEY ("role_id") REFERENCES "roles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "employee_role" ADD CONSTRAINT "employee_role_restaurant_id_fkey" FOREIGN KEY ("restaurant_id") REFERENCES "restaurants"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "products" ADD CONSTRAINT "products_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -302,16 +336,10 @@ ALTER TABLE "product_restaurant" ADD CONSTRAINT "product_restaurant_restaurant_i
 ALTER TABLE "refresh_tokens" ADD CONSTRAINT "refresh_tokens_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "refresh_tokens" ADD CONSTRAINT "refresh_tokens_employee_id_fkey" FOREIGN KEY ("employee_id") REFERENCES "employees"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "restaurants" ADD CONSTRAINT "restaurants_city_id_fkey" FOREIGN KEY ("city_id") REFERENCES "cities"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "restaurants" ADD CONSTRAINT "restaurants_restaurant_schedule_id_fkey" FOREIGN KEY ("restaurant_schedule_id") REFERENCES "restaurant_schedules"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "user_role" ADD CONSTRAINT "user_role_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "user_role" ADD CONSTRAINT "user_role_role_id_fkey" FOREIGN KEY ("role_id") REFERENCES "roles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "user_role" ADD CONSTRAINT "user_role_restaurant_id_fkey" FOREIGN KEY ("restaurant_id") REFERENCES "restaurants"("id") ON DELETE SET NULL ON UPDATE CASCADE;

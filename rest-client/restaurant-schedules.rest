@@ -1,0 +1,72 @@
+@host=https://api.demopizza.ru/api/v1
+# @host=http://localhost:5000/api/v1
+
+###  доступные query параметры для GET запросов 
+###  sort: ['id', 'name', 'createdAt', 'updatedAt']
+
+GET {{host}}/restaurant-schedules
+
+###
+GET {{host}}/restaurant-schedules/1
+
+###
+POST {{host}}/restaurant-schedules
+content-type: application/json
+
+{
+   "name": "График на майские 2026",
+   "mondayOpenTime": "10:00",
+   "mondayCloseTime": "22:00",
+   "mondayIsOpen": true,
+   "tuesdayOpenTime": "10:00",
+   "tuesdayCloseTime": "22:00",
+   "tuesdayIsOpen": false,
+   "wednesdayOpenTime": "10:00",
+   "wednesdayCloseTime": "22:00",
+   "wednesdayIsOpen": true,
+   "thursdayOpenTime": "10:00",
+   "thursdayCloseTime": "22:00",
+   "thursdayIsOpen": true,
+   "fridayOpenTime": "10:00",
+   "fridayCloseTime": "01:00",
+   "fridayIsOpen": true,
+   "saturdayOpenTime": "10:00",
+   "saturdayCloseTime": "01:00",
+   "saturdayIsOpen": true,
+   "sundayOpenTime": "10:00",
+   "sundayCloseTime": "01:00",
+   "sundayIsOpen": true
+}
+
+###
+PUT {{host}}/restaurant-schedules/2
+content-type: application/json
+
+{
+   "name": "График на новый год",
+   "mondayOpenTime": "10:00",
+   "mondayCloseTime": "22:00",
+   "mondayIsOpen": true,
+   "tuesdayOpenTime": "10:00",
+   "tuesdayCloseTime": "22:00",
+   "tuesdayIsOpen": false,
+   "wednesdayOpenTime": "10:00",
+   "wednesdayCloseTime": "22:00",
+   "wednesdayIsOpen": true,
+   "thursdayOpenTime": "10:00",
+   "thursdayCloseTime": "22:00",
+   "thursdayIsOpen": true,
+   "fridayOpenTime": "10:00",
+   "fridayCloseTime": "01:00",
+   "fridayIsOpen": true,
+   "saturdayOpenTime": "10:00",
+   "saturdayCloseTime": "01:00",
+   "saturdayIsOpen": true,
+   "sundayOpenTime": "10:00",
+   "sundayCloseTime": "01:00",
+   "sundayIsOpen": true
+}
+
+###
+DELETE {{host}}/restaurant-schedules/2
+
