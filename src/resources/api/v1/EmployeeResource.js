@@ -1,5 +1,5 @@
 import { BaseResource } from "./BaseResource.js"
-import { EmployeeRoleResource } from "./employeeRoleResource.js"
+import { EmployeeRoleResource } from "./EmployeeRoleResource.js"
 
 export class EmployeeResource extends BaseResource {
    transform(record) {
