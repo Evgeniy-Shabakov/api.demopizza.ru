@@ -19,6 +19,7 @@ model City {
    restaurants Restaurant[]
    deliveryZones DeliveryZone[]
    addresses Address[]
+   orders Order[]
 
    @@map("cities")
 }

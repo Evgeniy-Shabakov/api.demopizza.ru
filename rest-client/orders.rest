@@ -1,0 +1,117 @@
+@host=https://api.demopizza.ru/api/v1
+# @host=http://localhost:5000/api/v1
+
+# все заказы с пагинацией по умолчанию page=1&perPage=10
+GET {{host}}/orders
+
+### пагинация и сортировка
+GET {{host}}/orders?sort=id,desc&page=1&perPage=15
+
+###
+# получаем только АКТИВНЫЕ заказы с сортировкой от самого нового заказа
+GET {{host}}/orders?active=true&sort=id,desc
+
+###
+# получаем только НЕАКТИВНЫЕ заказы с сортировкой от самого нового заказа
+GET {{host}}/orders?active=false&sort=id,desc
+
+###
+# получаем заказы по ресторану с сортировкой от самого нового заказа
+GET {{host}}/orders?restaurantId=2&sort=id,desc
+
+###
+# получаем заказы по городу с сортировкой от самого нового заказа
+GET {{host}}/orders?cityId=1&sort=id,desc
+
+###
+# комбинируем параметры фильтров
+GET {{host}}/orders?restaurantId=2&active=false&sort=id,desc
+
+
+###
+GET {{host}}/orders/2
+
+###
+POST {{host}}/orders
+content-type: application/json
+
+{
+   // userId - необязательный параметр, т.к. заказ может быть создан администратором без указания
+   // номера телефона пользователя (клиент подходит к админу и просто делает заказ)
+   "userId": null,
+   "cityId": 1,
+   // deliveryZoneId - необязательный параметр, нужен только при заказе до адреса (orderTypeId == 1)
+   "deliveryZoneId": 2,
+   // restaurantId - необязательный параметр, нужен когда заказ не до адреса (orderTypeId != 1)
+   "restaurantId": null,
+   // userAddressId - необязательный параметр, нужен только при заказе до адреса (orderTypeId == 1)
+   "userAddressId": null,
+   
+   "orderTypeId": 1,
+   // tableNumber - необязательный параметр, нужен только при заказе к столику (orderTypeId == 5)
+   "tableNumber": null,
+   // carNumber - необязательный параметр, нужен только при заказе на парковку (orderTypeId == 6)
+   "carNumber": null,
+   // packTakeaway - необязательный параметр, (orderTypeId == 4 && 5)
+   "packTakeaway": null,
+   // leaveAtTheDoor - оставить заказ у двери, необязательный параметр, (orderTypeId == 1)
+   "leaveAtTheDoor": null,
+   // dontRingDoorbell - не звонить в дверь, необязательный параметр, (orderTypeId == 1)
+   "dontRingDoorbell": null,
+
+   "totalProductsPrice": 500,
+   "deliveryPrice": 200,
+   "totalPrice": 700,
+
+   "paymentType": "Наличными",
+   // banknoteForChange - подготовить сдачу с купюры, необязательный параметр, 
+   // нужен когда paymentType == PAYMENT_TYPE.CASH, чтобы клиент мог указать купюру (по желанию)
+   "banknoteForChange": null,
+
+   // userComment - необязательный параметр
+   "userComment": null,
+   // responsibleEmployeeComment - необязательный параметр, админ может добавить при создании или обработке заказа
+   "responsibleEmployeeComment": null,
+
+   "orderProducts": [
+      {
+         "productId": 1,
+         "quantity": 5,
+         "price": 100
+      },
+      {
+         "productId": 2,
+         "quantity": 10,
+         "price": 99
+      }
+   ]
+}
+
+###
+### обрати внимание на PATCH, изменятся только переданные данные (не нужно передавать все поля как в PUT)
+### передаешь только те поля, которые нужны для данного действия, например чтобы изменить статус на 
+### "отменен" в теле запроса оставляешь только "orderStatus": "отменен",
+PATCH {{host}}/orders/26
+content-type: application/json
+
+{
+   // cityId и restaurantId нужно передавать, только когда нужно именить ресторан для заказа
+   // например если ресторан загружен или заказ попал не в тот ресторан по ошибке
+   "cityId": 1,
+   "restaurantId": 1,
+   
+   // orderStatus - "отменен" нужно передавать, только когда нужно отменить заказ
+   // для смены статусов отдельные роуты ниже, т.к. смена статусов работает по определенному алгоритму
+   "orderStatus": "отменен",
+
+   // paymentStatus - для изменения статуса на оплачено при оплате наличными или картой при получении 
+   "paymentStatus": "Оплачено",
+
+   "responsibleEmployeeComment": "комментарий от сотрудника"
+}
+
+###
+PATCH {{host}}/orders/3/next-status
+
+###
+PATCH {{host}}/orders/3/previous-status

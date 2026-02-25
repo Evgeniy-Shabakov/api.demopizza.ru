@@ -27,6 +27,7 @@ router.get('/:id',
    validateQuery(employeeQueryValidationData), employeeAuthorization,
    employeeShowController
 )
+
 router.post('/',
    authentication, routeAuthorization(EMPLOYEES_ROUTE_PERMISSIONS.CREATE),
    validateBody(employeeBodyValidationSchema), employeeAuthorization,

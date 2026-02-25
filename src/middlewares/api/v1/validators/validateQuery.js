@@ -33,6 +33,34 @@ function createQueryValidationSchema(queryValidationData) {
             `Query параметр sort должен содержать только допустимые значения: ${queryValidationData.sort?.join(', ')}`
          )
          .optional(),
+
+      page: z
+         .coerce.number()
+         .int()
+         .nonnegative()
+         .optional(),
+
+      perPage: z
+         .coerce.number()
+         .int()
+         .nonnegative()
+         .optional(),
+
+      active: z
+         .coerce.boolean()
+         .optional(),
+
+      restaurantId: z
+         .coerce.number()
+         .int()
+         .nonnegative()
+         .optional(),
+
+      cityId: z
+         .coerce.number()
+         .int()
+         .nonnegative()
+         .optional(),
    }).strict()
 }
 
@@ -47,6 +75,9 @@ export function validateQuery(queryValidationData) {
 
          if (req.query.sort) {
             req.sort = { [req.query.sort.split(',')[0]]: req.query.sort?.split(',')[1] || 'asc' }
+         }
+         else {
+            req.sort = { id: 'asc' }
          }
 
          next()

@@ -7,13 +7,13 @@ model Address {
    userId       Int?
    cityId       Int
 
-   street       String  
-   house        String  @db.VarChar(10) 
-   corps        String? @db.VarChar(10) 
-   flat         String? @db.VarChar(10) 
+   street       String
+   house        String  @db.VarChar(10)
+   corps        String? @db.VarChar(10)
+   flat         String? @db.VarChar(10)
    entrance     Int?
    floor        Int?
-   entranceCode String? @db.VarChar(20) 
+   entranceCode String? @db.VarChar(20)
    comment      String? @db.VarChar(500)
 
    latitude        Float?
@@ -27,8 +27,10 @@ model Address {
    restaurant Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
    user       User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
    city       City        @relation(fields: [cityId], references: [id])
+   
+   orders     Order[]
 
+   @@index([userId])
+   @@index([restaurantId])
    @@map("addresses")
-   @@index([userId])   
-   @@index([restaurantId])     
 }

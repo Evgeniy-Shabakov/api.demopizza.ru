@@ -10,5 +10,5 @@ export const productRestaurantBodyValidationSchema = z.object({
       .min(1, 'Должен быть положительным целым числом'),
 
    isInStopList: z
-      .boolean('Статус стоп-листа быть булевым значением')
+      .boolean('Статус стоп-листа должен быть булевым значением')
 }).strict()

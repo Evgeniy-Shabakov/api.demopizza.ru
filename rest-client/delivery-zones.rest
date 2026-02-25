@@ -1,0 +1,52 @@
+@host=https://api.demopizza.ru/api/v1
+# @host=http://localhost:5000/api/v1
+
+###  доступные query параметры для GET запросов 
+###  include: ['city', 'restaurant'],
+###  sort: ['id', 'name', 'createdAt', 'updatedAt']
+
+GET {{host}}/delivery-zones
+###
+
+GET {{host}}/delivery-zones?include=city,restaurant&sort=id,desc
+
+###
+GET {{host}}/delivery-zones/1
+
+###
+POST {{host}}/delivery-zones
+content-type: application/json
+
+{
+   "name": "dfsdf",
+   "cityId": 1,
+   "restaurantId": 1,
+   "minOrderValueForDelivery": 0,
+   "deliveryPrice": 300,
+   //необязательное поле
+   "orderValueForFreeDelivery": 3000, 
+   // здесь должен быть json объект из массива features файла geojson
+   "geojsonFeature": {}, 
+   "isActive": true
+}
+
+###
+PUT {{host}}/delivery-zones/6
+content-type: application/json
+
+{
+   "name": "dfsdf1111",
+   "cityId": 1,
+   "restaurantId": 1,
+   "minOrderValueForDelivery": 0,
+   "deliveryPrice": 300,
+   //необязательное поле
+   "orderValueForFreeDelivery": 3000, 
+   // здесь должен быть json объект из массива features файла geojson
+   "geojsonFeature": {}, 
+   "isActive": true
+}
+
+###
+DELETE {{host}}/delivery-zones/5
+

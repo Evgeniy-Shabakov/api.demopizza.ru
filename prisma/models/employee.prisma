@@ -17,5 +17,8 @@ model Employee {
    refreshTokens RefreshToken[]
    employeeRoles EmployeeRole[]
 
+   ordersForResponsibleEmployee Order[] @relation("ResponsibleEmployee")
+   ordersForCourier        Order[] @relation("Courier")
+
    @@map("employees")
 }

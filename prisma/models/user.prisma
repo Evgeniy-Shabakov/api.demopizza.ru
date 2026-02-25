@@ -13,6 +13,7 @@ model User {
 
    addresses Address[]
    refreshTokens  RefreshToken[]
+   orders Order[]
 
    @@map("users")
 }

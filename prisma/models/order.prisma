@@ -1,0 +1,61 @@
+model Order {
+   id Int @id @default(autoincrement())
+
+   number String
+
+   userId                Int? @map("user_id")
+   cityId                Int  @map("city_id")
+   deliveryZoneId        Int? @map("delivery_zone_id")
+   restaurantId          Int  @map("restaurant_id")
+   responsibleEmployeeId Int? @map("responsible_employee_id")
+   courierId             Int? @map("courier_id")
+   userAddressId         Int? @map("user_address_id")
+
+   orderTypeId      Int      @map("order_type_id")
+   tableNumber      String?  @map("table_number")
+   carNumber        String?  @map("car_number")
+   packTakeaway     Boolean? @map("pack_takeaway")
+   leaveAtTheDoor   Boolean? @map("leave_at_the_door")
+   dontRingDoorbell Boolean? @map("dont_ring_doorbell")
+
+   orderStatus String @map("order_status")
+
+   totalProductsPrice Decimal @map("total_products_price") @db.Decimal(12, 2)
+   deliveryPrice      Decimal @map("delivery_price") @db.Decimal(12, 2)
+   totalPrice         Decimal @map("total_price") @db.Decimal(12, 2)
+
+   paymentType       String @map("payment_type")
+   banknoteForChange Int?   @map("banknote_for_change")
+   paymentStatus     String @map("payment_status")
+
+   userComment                String? @map("user_comment")
+   responsibleEmployeeComment String? @map("responsible_employee_comment")
+
+   options  Json? @map("options")
+   snapshot Json? @map("snapshot")
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   user                User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+   city                City          @relation(fields: [cityId], references: [id])
+   deliveryZone        DeliveryZone? @relation(fields: [deliveryZoneId], references: [id], onDelete: SetNull)
+   restaurant          Restaurant    @relation(fields: [restaurantId], references: [id])
+   responsibleEmployee Employee?     @relation("ResponsibleEmployee", fields: [responsibleEmployeeId], references: [id], onDelete: SetNull)
+   courier             Employee?     @relation("Courier", fields: [courierId], references: [id], onDelete: SetNull)
+   userAddress         Address?      @relation(fields: [userAddressId], references: [id], onDelete: SetNull)
+
+   orderProducts OrderProduct[]
+
+   @@index([userId])
+   @@index([cityId])
+   @@index([deliveryZoneId])
+   @@index([restaurantId])
+   @@index([responsibleEmployeeId])
+   @@index([courierId])
+   @@index([orderTypeId])
+   @@index([orderStatus])
+   @@index([paymentStatus])
+   @@index([createdAt])
+   @@map("orders")
+}
