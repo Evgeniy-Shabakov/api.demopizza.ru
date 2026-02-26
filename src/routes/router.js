@@ -11,6 +11,7 @@ import categoryRouter from './api/v1/categoryRouter.js'
 import productRouter from './api/v1/productRouter.js'
 import productRestaurantRouter from './api/v1/productRestaurantRouter.js'
 import orderRouter from './api/v1/orderRouter.js'
+import designRouter from './api/v1/designRouter.js'
 
 const router = express.Router()
 
@@ -33,5 +34,6 @@ router.use('/api/v1/categories', categoryRouter)
 router.use('/api/v1/products', productRouter)
 router.use('/api/v1/product-restaurants', productRestaurantRouter)
 router.use('/api/v1/orders', orderRouter)
+router.use('/api/v1/designs', designRouter)
 
 export default router

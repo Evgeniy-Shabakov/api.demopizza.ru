@@ -85,3 +85,11 @@ export const ORDERS_ROUTE_PERMISSIONS = Object.freeze({
   UPDATE: 'orders:update',
   DELETE: 'orders:delete'
 })
+
+export const DESIGN_ROUTE_PERMISSIONS = Object.freeze({
+  GET_ALL: 'design:get_all',
+  GET_ONE: 'design:get_one',
+  CREATE: 'design:create',
+  UPDATE: 'design:update',
+  DELETE: 'design:delete'
+})

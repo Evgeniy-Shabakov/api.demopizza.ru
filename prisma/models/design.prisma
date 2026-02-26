@@ -1,14 +1,13 @@
-model Category {
+model Design {
    id Int @id @default(autoincrement())
 
-   name String @unique
+   name     String  @unique
+   isActive Boolean @default(false) @map("is_active")
 
-   position Int?
+   settings Json
 
    createdAt DateTime @default(now()) @map("created_at")
    updatedAt DateTime @updatedAt @map("updated_at")
 
-   products Product[]
-
-   @@map("categories")
+   @@map("designs")
 }

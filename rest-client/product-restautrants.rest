@@ -42,5 +42,5 @@ DELETE {{host}}/product-restaurants/4
 GET {{host}}/product-restaurants/stop-list-count
 
 ###
-GET {{host}}/product-restaurants/stop-list-count?restaurantId=1
+GET {{host}}/product-restaurants/stop-list-count?restaurantId=4
 

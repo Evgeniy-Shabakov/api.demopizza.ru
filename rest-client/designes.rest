@@ -1,0 +1,36 @@
+@host=https://api.demopizza.ru/api/v1
+# @host=http://localhost:5000/api/v1
+
+###  доступные query параметры для GET запросов 
+###  sort: ['id', 'name', 'isActive', 'createdAt', 'updatedAt'] asc по умолчанию, desc надо прописывать
+
+GET {{host}}/designs
+
+###
+GET {{host}}/designs/1
+
+###
+POST {{host}}/designs
+content-type: application/json
+
+{
+   "name": "Основной дизайн",
+   "isActive": true,
+   // передаешь все параметры своей дизайн системы в json, эти параметры сможет менять клиент
+   // подстраивая дизайн по свой бренд (цвета, скругления и т.д.)
+   "settings":  { "mainColor": "#aaa"}
+}
+
+###
+PUT {{host}}/designs/1
+content-type: application/json
+
+{
+   "name": "Основной дизайн2",
+   "isActive": false,
+   "settings": { "mainColor": "#fff"}
+}
+
+###
+DELETE {{host}}/designs/1
+
