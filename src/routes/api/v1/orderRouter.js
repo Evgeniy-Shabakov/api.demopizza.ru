@@ -12,6 +12,7 @@ import { orderStoreController } from '#controllers/api/v1/order/orderStoreContro
 import { orderUpdateController } from '#controllers/api/v1/order/orderUpdateController.js'
 import { orderNextStatusController } from '#controllers/api/v1/order/orderNextStatusController.js'
 import { orderPreviousStatusController } from '#controllers/api/v1/order/orderPreviousStatusController.js'
+import { orderActiveCountController } from '#controllers/api/v1/order/orderActiveCountController.js'
 import { routeAuthorization } from '#middlewares/api/v1/authorization/routeAuthorization.js'
 import { ORDERS_ROUTE_PERMISSIONS } from '#constants/api/v1/permissions/modelsRoutePermissions.js'
 
@@ -21,6 +22,8 @@ router.get('/',
    authentication, routeAuthorization(ORDERS_ROUTE_PERMISSIONS.GET_ALL),
    validateQuery(orderQueryValidationData),
    orderIndexController)
+
+router.get('/active-count', orderActiveCountController)
 
 router.get('/:id',
    authentication, routeAuthorization(ORDERS_ROUTE_PERMISSIONS.GET_ONE),

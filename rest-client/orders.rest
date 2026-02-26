@@ -41,13 +41,13 @@ content-type: application/json
    "userId": null,
    "cityId": 1,
    // deliveryZoneId - необязательный параметр, нужен только при заказе до адреса (orderTypeId == 1)
-   "deliveryZoneId": 2,
+   "deliveryZoneId": 14,
    // restaurantId - необязательный параметр, нужен когда заказ не до адреса (orderTypeId != 1)
-   "restaurantId": null,
+   "restaurantId": 1,
    // userAddressId - необязательный параметр, нужен только при заказе до адреса (orderTypeId == 1)
    "userAddressId": null,
    
-   "orderTypeId": 1,
+   "orderTypeId": 2,
    // tableNumber - необязательный параметр, нужен только при заказе к столику (orderTypeId == 5)
    "tableNumber": null,
    // carNumber - необязательный параметр, нужен только при заказе на парковку (orderTypeId == 6)
@@ -91,7 +91,7 @@ content-type: application/json
 ### обрати внимание на PATCH, изменятся только переданные данные (не нужно передавать все поля как в PUT)
 ### передаешь только те поля, которые нужны для данного действия, например чтобы изменить статус на 
 ### "отменен" в теле запроса оставляешь только "orderStatus": "отменен",
-PATCH {{host}}/orders/26
+PATCH {{host}}/orders/2
 content-type: application/json
 
 {
@@ -111,7 +111,13 @@ content-type: application/json
 }
 
 ###
-PATCH {{host}}/orders/3/next-status
+PATCH {{host}}/orders/1/next-status
 
 ###
-PATCH {{host}}/orders/3/previous-status
+PATCH {{host}}/orders/1/previous-status
+
+###
+GET {{host}}/orders/active-count
+
+###
+GET {{host}}/orders/active-count?restaurantId=1

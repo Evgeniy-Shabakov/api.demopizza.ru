@@ -8,7 +8,7 @@ export const orderIndexController = baseController(async (req, res) => {
    const page = parseInt(req.query.page) || 1
    const perPage = parseInt(req.query.perPage) || 10
    const skip = (page - 1) * perPage
-   
+
    let where = {}
    const appliedFilters = {}
 
@@ -16,13 +16,13 @@ export const orderIndexController = baseController(async (req, res) => {
       where.orderStatus = { notIn: [ORDER_STATUS.COMPLETED, ORDER_STATUS.CANCEL] }
       appliedFilters.active = true
    }
-   if(req.query.active === 'false') {
+   if (req.query.active === 'false') {
       where.orderStatus = { in: [ORDER_STATUS.COMPLETED, ORDER_STATUS.CANCEL] }
       appliedFilters.active = false
    }
    if (req.query.restaurantId) {
       where.restaurantId = parseInt(req.query.restaurantId)
-       appliedFilters.restaurantId = parseInt(req.query.restaurantId)
+      appliedFilters.restaurantId = parseInt(req.query.restaurantId)
    }
    if (req.query.cityId) {
       where.cityId = parseInt(req.query.cityId)

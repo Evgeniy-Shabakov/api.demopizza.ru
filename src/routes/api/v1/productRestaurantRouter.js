@@ -10,6 +10,7 @@ import { productRestaurantShowController } from '#controllers/api/v1/productRest
 import { productRestaurantStoreController } from '#controllers/api/v1/productRestaurant/productRestaurantStoreController.js'
 import { productRestaurantUpdateController } from '#controllers/api/v1/productRestaurant/productRestaurantUpdateController.js'
 import { productRestaurantDeleteController } from '#controllers/api/v1/productRestaurant/productRestaurantDeleteController.js'
+import { productRestaurantStopListCountController } from '#controllers/api/v1/productRestaurant/productRestaurantStopListCountController.js'
 import { routeAuthorization } from '#middlewares/api/v1/authorization/routeAuthorization.js'
 import { PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS } from '#constants/api/v1/permissions/modelsRoutePermissions.js'
 import { productRestaurantAuthorization } from '#middlewares/api/v1/authorization/productRestaurantAuthorization.js'
@@ -20,6 +21,8 @@ router.get('/',
    validateQuery(productRestaurantQueryValidationData),
    productRestaurantIndexController)
 
+router.get('/stop-list-count', productRestaurantStopListCountController)
+
 router.get('/:id',
    validateId,
    validateQuery(productRestaurantQueryValidationData),
@@ -27,14 +30,14 @@ router.get('/:id',
 
 router.post('/',
    authentication, routeAuthorization(PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS.CREATE),
-   validateBody(productRestaurantBodyValidationSchema), 
+   validateBody(productRestaurantBodyValidationSchema),
    productRestaurantAuthorization(PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS.CREATE),
    productRestaurantStoreController)
 
 router.put('/:id',
    authentication, routeAuthorization(PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS.UPDATE),
    validateId,
-   validateBody(productRestaurantBodyValidationSchema), 
+   validateBody(productRestaurantBodyValidationSchema),
    productRestaurantAuthorization(PRODUCT_RESTAURANTS_ROUTE_PERMISSIONS.UPDATE),
    productRestaurantUpdateController
 )

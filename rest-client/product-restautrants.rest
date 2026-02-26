@@ -13,7 +13,7 @@ GET {{host}}/product-restaurants
 GET {{host}}/product-restaurants?include=product,restaurant&sort=id,desc
 
 ###
-GET {{host}}/product-restaurants/1
+GET {{host}}/product-restaurants/2
 
 ###
 POST {{host}}/product-restaurants
@@ -21,7 +21,7 @@ content-type: application/json
 
 {
    "productId": 5,
-   "restaurantId": 1,
+   "restaurantId": 2,
    "isInStopList": true
 }
 
@@ -31,10 +31,16 @@ content-type: application/json
 
 {
    "productId": 1,
-   "restaurantId": 1,
+   "restaurantId": 2,
    "isInStopList": true
 }
 
 ###
 DELETE {{host}}/product-restaurants/4
+
+###
+GET {{host}}/product-restaurants/stop-list-count
+
+###
+GET {{host}}/product-restaurants/stop-list-count?restaurantId=1
 
