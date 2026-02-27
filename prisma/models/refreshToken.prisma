@@ -1,7 +1,7 @@
 model RefreshToken {
    id Int @id @default(autoincrement())
 
-   token String @unique @db.VarChar(2000)
+   token String @unique @db.VarChar(512)
 
    userId     Int? @map("user_id")
    employeeId Int? @map("employee_id")

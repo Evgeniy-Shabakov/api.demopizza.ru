@@ -1,7 +1,7 @@
 model RestaurantSchedule {
-   id   Int    @id @default(autoincrement())
-   
-   name String @unique @db.VarChar(2000)
+   id Int @id @default(autoincrement())
+
+   name String @unique @db.VarChar(255)
 
    mondayOpenTime  String? @map("monday_open_time") @db.VarChar(255)
    mondayCloseTime String? @map("monday_close_time") @db.VarChar(255)

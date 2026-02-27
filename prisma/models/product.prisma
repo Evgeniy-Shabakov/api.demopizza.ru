@@ -1,7 +1,7 @@
 model Product {
    id Int @id @default(autoincrement())
 
-   name String @unique @db.VarChar(2000)
+   name String @unique @db.VarChar(255)
 
    categoryId Int @map("category_id")
 

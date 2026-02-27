@@ -5,15 +5,15 @@ model User {
    phoneVerifiedAt DateTime? @map("phone_verified_at")
    email           String?   @unique @db.VarChar(255)
    emailVerifiedAt DateTime? @map("email_verified_at")
-   password        String? @db.VarChar(255)
-   nickname        String? @db.VarChar(255)
+   password        String?   @db.VarChar(255)
+   nickname        String?   @db.VarChar(255)
 
    createdAt DateTime @default(now()) @map("created_at")
    updatedAt DateTime @updatedAt @map("updated_at")
 
-   addresses Address[]
-   refreshTokens  RefreshToken[]
-   orders Order[]
+   addresses     Address[]
+   refreshTokens RefreshToken[]
+   orders        Order[]
 
    @@map("users")
 }
