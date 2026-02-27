@@ -1,7 +1,7 @@
 model Address {
    id Int @id @default(autoincrement())
 
-   name String? @db.VarChar(100)
+   name String? @db.VarChar(255)
 
    restaurantId Int? @unique
    userId       Int?

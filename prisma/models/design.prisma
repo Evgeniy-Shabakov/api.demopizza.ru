@@ -1,7 +1,7 @@
 model Design {
    id Int @id @default(autoincrement())
 
-   name     String  @unique
+   name     String  @unique @db.VarChar(255)
    isActive Boolean @default(false) @map("is_active")
 
    settings Json

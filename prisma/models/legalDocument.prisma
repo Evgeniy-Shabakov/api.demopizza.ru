@@ -1,0 +1,15 @@
+model LegalDocument {
+   id Int @id @default(autoincrement())
+
+   name String @unique @db.VarChar(255)
+
+   filePath    String @map("file_path") @db.VarChar(1000)
+   content     String? @db.Text
+   description String? @db.VarChar(2000)
+   isActive    Boolean @default(true) @map("is_active")
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   @@map("legal_documents")
+}

@@ -1,7 +1,7 @@
 model RefreshToken {
    id Int @id @default(autoincrement())
 
-   token String @unique
+   token String @unique @db.VarChar(2000)
 
    userId     Int? @map("user_id")
    employeeId Int? @map("employee_id")
@@ -9,9 +9,9 @@ model RefreshToken {
    expiresAt DateTime @map("expires_at")
    isRevoked Boolean  @default(false) @map("is_revoked")
 
-   userAgent  String? @map("user_agent")
-   ipAddress  String? @map("ip_address")
-   deviceName String? @map("device_name")
+   userAgent  String? @map("user_agent") @db.VarChar(2000)
+   ipAddress  String? @map("ip_address") @db.VarChar(2000)
+   deviceName String? @map("device_name") @db.VarChar(2000)
 
    createdAt DateTime @default(now()) @map("created_at")
    updatedAt DateTime @updatedAt @map("updated_at")

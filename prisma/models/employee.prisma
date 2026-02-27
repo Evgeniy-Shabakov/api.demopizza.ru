@@ -3,13 +3,13 @@ model Employee {
 
    phone           String    @unique @db.VarChar(30)
    phoneVerifiedAt DateTime? @map("phone_verified_at")
-   email           String?   @unique
+   email           String?   @unique @db.VarChar(255)
    emailVerifiedAt DateTime? @map("email_verified_at")
-   password        String?
-   firstName       String?   @map("first_name")
-   lastName        String?   @map("last_name")
-   middleName      String?   @map("middle_name")
-   jobTitle        String?   @map("job_title")
+   password        String?   @db.VarChar(255)
+   firstName       String?   @map("first_name") @db.VarChar(255)
+   lastName        String?   @map("last_name") @db.VarChar(255)
+   middleName      String?   @map("middle_name") @db.VarChar(255)
+   jobTitle        String?   @map("job_title") @db.VarChar(255)
 
    createdAt DateTime @default(now()) @map("created_at")
    updatedAt DateTime @updatedAt @map("updated_at")
@@ -18,7 +18,7 @@ model Employee {
    employeeRoles EmployeeRole[]
 
    ordersForResponsibleEmployee Order[] @relation("ResponsibleEmployee")
-   ordersForCourier        Order[] @relation("Courier")
+   ordersForCourier             Order[] @relation("Courier")
 
    @@map("employees")
 }

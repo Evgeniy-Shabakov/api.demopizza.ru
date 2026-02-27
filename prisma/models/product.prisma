@@ -1,19 +1,19 @@
 model Product {
    id Int @id @default(autoincrement())
 
-   name String @unique
+   name String @unique @db.VarChar(2000)
 
    categoryId Int @map("category_id")
 
-   imagePath          String? @map("image_path")
-   descriptionShort   String? @map("description_short")
-   descriptionFull    String? @map("description_full")
+   imagePath          String? @map("image_path") @db.VarChar(1000)
+   descriptionShort   String? @map("description_short") @db.VarChar(500)
+   descriptionFull    String? @map("description_full") @db.VarChar(2000)
    priceDefault       Decimal @map("price_default") @db.Decimal(12, 2)
    positionInCategory Int?    @map("position_in_category")
    isActive           Boolean @default(true) @map("is_active")
 
    // добавлено для будущей реализации - СТАРТ
-   composition   String?
+   composition   String? @db.VarChar(2000)
    weight        Int?
    calories      Int?
    proteins      Float?

@@ -1,7 +1,7 @@
 model City {
    id Int @id @default(autoincrement())
 
-   name                               String   @unique
+   name                               String   @unique @db.VarChar(255)
 
    countryId                          Int      @map("country_id")
    
