@@ -10,7 +10,7 @@ GET {{host}}/employees
 GET {{host}}/employees?sort=phone,desc
 
 ###
-GET {{host}}/employees/15
+GET {{host}}/employees/1
 
 
 ###
@@ -19,6 +19,15 @@ content-type: application/json
 
 {
    "phone": "+79129416435",
+
+   // все параметры ниже необязательные
+   "email": "test@test.ru",
+   "firstName": "Иван",
+   "lastName": "Иванов",
+   "middleName": "Иванович",
+   //должность
+   "jobTitle": "Администратор",
+
    "employeeRoles": [
       {
          "roleId": 4,
@@ -32,20 +41,28 @@ content-type: application/json
 }
 
 ###
-PUT {{host}}/employees/23
+PUT {{host}}/employees/1
 content-type: application/json
 
 {
-   "phone": "+79129416030",
-   "firstName": "Евгений",
+   "phone": "+79129416435",
+
+   // все параметры ниже необязательные
+   "email": "test@test.ru",
+   "firstName": "Иван",
+   "lastName": "Иванов",
+   "middleName": "Иванович",
+   //название должности
+   "jobTitle": "Администратор",
+
    "employeeRoles": [
       {
-         "roleId": 3,
+         "roleId": 4,
          "restaurantId": 1
       },
       {
          "roleId": 5,
-         "restaurantId": 1
+         "restaurantId": 2
       }
    ]
 }

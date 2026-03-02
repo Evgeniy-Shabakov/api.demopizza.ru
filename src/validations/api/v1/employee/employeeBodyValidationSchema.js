@@ -33,7 +33,7 @@ export const employeeBodyValidationSchema = z.object({
       .max(50, 'Много символов')
       .nullish(),
 
-   job: z
+   jobTitle: z
       .string().trim()
       .min(1, 'Мало символов')
       .max(100, 'Много символов')
