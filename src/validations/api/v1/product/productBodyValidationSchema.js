@@ -44,7 +44,7 @@ export const productBodyValidationSchema = z.object({
          .nullish()
    ),
 
-   imageFile: z.enum(['undefined', 'null']).nullish(), //файл фалидируется в multer
+   imageFile: z.enum(['undefined', 'null']).nullish(), //файл валидируется в multer
 
    isActive: z.coerce
       .boolean('Статус активности должен быть булевым значением')

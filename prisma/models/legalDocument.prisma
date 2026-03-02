@@ -3,8 +3,9 @@ model LegalDocument {
 
    name String @unique @db.VarChar(255)
 
-   filePath    String @map("file_path") @db.VarChar(1000)
-   content     String? @db.Text
+   filePath    String?  @map("file_path") @db.VarChar(1000)
+   link        String? @db.VarChar(1000)
+   htmlContent String? @map("html_content") @db.Text
    description String? @db.VarChar(2000)
    isActive    Boolean @default(true) @map("is_active")
 

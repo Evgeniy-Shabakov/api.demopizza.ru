@@ -17,8 +17,8 @@ export function errorHandler(error, req, res, next) {
    if (error instanceof multer.MulterError) {
       let message
 
-      if (error.code == 'UNEXPECTED_FILE_TYPE') message = 'Неверное разрешение файла (jpeg, png)'
-      else if (error.code == 'LIMIT_FILE_SIZE') message = 'Слишком большой файл (до 100Кб)'
+      if (error.code == 'UNEXPECTED_FILE_TYPE') message = 'Неверное разрешение файла'
+      else if (error.code == 'LIMIT_FILE_SIZE') message = 'Слишком большой файл'
 
       return res.status(422).json({
          error: 'Ошибка валидации',

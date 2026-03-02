@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "legal_documents" ALTER COLUMN "file_path" DROP NOT NULL,
+ALTER COLUMN "link" SET DATA TYPE VARCHAR(1000);

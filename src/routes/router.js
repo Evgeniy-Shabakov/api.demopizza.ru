@@ -12,6 +12,7 @@ import productRouter from './api/v1/productRouter.js'
 import productRestaurantRouter from './api/v1/productRestaurantRouter.js'
 import orderRouter from './api/v1/orderRouter.js'
 import designRouter from './api/v1/designRouter.js'
+import legalDocumentRouter from './api/v1/legalDocumentRouter.js'
 
 const router = express.Router()
 
@@ -35,5 +36,6 @@ router.use('/api/v1/products', productRouter)
 router.use('/api/v1/product-restaurants', productRestaurantRouter)
 router.use('/api/v1/orders', orderRouter)
 router.use('/api/v1/designs', designRouter)
+router.use('/api/v1/legal-documents', legalDocumentRouter)
 
 export default router
