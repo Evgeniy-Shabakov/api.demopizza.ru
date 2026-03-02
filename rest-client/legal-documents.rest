@@ -1,6 +1,8 @@
 # @host=https://api.demopizza.ru/api/v1
 @host=http://localhost:5000/api/v1
 
+// https://api.demopizza.ru/legal-douments/ - путь для скачивания файлов
+
 GET {{host}}/legal-documents
 
 ###
