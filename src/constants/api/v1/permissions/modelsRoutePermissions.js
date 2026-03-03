@@ -101,3 +101,8 @@ export const LEGAL_DOCUMENTS_ROUTE_PERMISSIONS = Object.freeze({
    UPDATE: 'legal_documents:update',
    DELETE: 'legal_documents:delete'
 })
+
+export const COMPANY_ROUTE_PERMISSIONS = Object.freeze({
+   GET_ONE: 'legal_documents:get_one',
+   UPDATE: 'legal_documents:update',
+})

@@ -35,13 +35,13 @@ content-type: application/json
       },
       {
          "roleId": 5,
-         "restaurantId": 2
+         "restaurantId": 1
       }
    ]
 }
 
 ###
-PUT {{host}}/employees/1
+PUT {{host}}/employees/3
 content-type: application/json
 
 {
@@ -62,10 +62,10 @@ content-type: application/json
       },
       {
          "roleId": 5,
-         "restaurantId": 2
+         "restaurantId": 1
       }
    ]
 }
 
 ###
-DELETE {{host}}/employees/1
+DELETE {{host}}/employees/3

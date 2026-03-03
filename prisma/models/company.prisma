@@ -1,0 +1,21 @@
+model Company {
+   id Int @id @default(autoincrement())
+
+   name      String  @unique @db.VarChar(255)
+   brandName String  @map("brand_name") @db.VarChar(255)
+   tagline   String? @db.VarChar(255)
+
+   logoPath    String? @map("logo_path") @db.VarChar(1000)
+   faviconPath String? @map("favicon_path") @db.VarChar(1000)
+
+   phoneForOrders String? @map("phone_for_orders") @db.VarChar(30)
+   aboutUs        String? @map("about_us") @db.Text
+   contacts       String? @db.Text
+
+   linksSocial Json?  @map("links_social")
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   @@map("companies")
+}

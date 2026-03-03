@@ -1,0 +1,37 @@
+# @host=https://api.demopizza.ru/api/v1
+@host=http://localhost:5000/api/v1
+
+GET {{host}}/company
+
+###
+PUT {{host}}/company
+content-type: application/json
+
+{
+   "name": "ООО \"Доставка еды\"",
+   "brandName": "Demopizza",
+
+   // tagline - необязательный параметр, слоган
+   "tagline": "Вкусно и быстро",
+
+   // logoFile - необязательный параметр, можно добавить через form-data в postman
+   "logoFile": null, 
+
+   // faviconFile - необязательный параметр, можно добавить через form-data в postman
+   "faviconFile": null, 
+
+   // phoneForOrders - необязательный параметр, номер для заказа по телефону
+   "phoneForOrders": "+79121312653", 
+
+   // aboutUs - необязательный параметр, контент для станицы или блока "О нас"
+   // (наверно лучше делать в формате html)
+   "aboutUs": "Мы классная компания", 
+
+   // contacts - необязательный параметр, контент для станицы или блока "Контакты"
+   // (наверно лучше делать в формате html)
+   "contacts": "Наши контакты", 
+
+   // linksSocial - необязательный параметр, json для хранения ссылок на социальные сети
+   "linksSocial": null
+}
+

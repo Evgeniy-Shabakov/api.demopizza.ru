@@ -11,6 +11,7 @@ import { categories } from './categories-data.js'
 import { employees } from './employees-data.js'
 import { roles } from './roles-data.js'
 import { employeeRoles } from './employee-roles-data.js'
+import { company } from './company-data.js'
 
 const prisma = new PrismaClient()
 
@@ -26,6 +27,7 @@ async function runAllSeeders() {
    await runModelSeeder('employee', employees)
    await runModelSeeder('role', roles)
    await runModelSeeder('employeeRole', employeeRoles)
+   await runModelSeeder('company', company)
 }
 
 async function runModelSeeder(modelName, items) {
