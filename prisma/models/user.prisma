@@ -8,12 +8,15 @@ model User {
    password        String?   @db.VarChar(255)
    nickname        String?   @db.VarChar(255)
 
+   bonusCoins Decimal @default(0) @map("bonus_coins") @db.Decimal(12, 2)
+
    createdAt DateTime @default(now()) @map("created_at")
    updatedAt DateTime @updatedAt @map("updated_at")
 
-   addresses     Address[]
-   refreshTokens RefreshToken[]
-   orders        Order[]
+   addresses              Address[]
+   refreshTokens          RefreshToken[]
+   orders                 Order[]
+   bonusCoinsTransactions BonusCoinsTransaction[]
 
    @@map("users")
 }

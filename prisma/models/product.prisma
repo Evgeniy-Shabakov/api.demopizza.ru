@@ -5,12 +5,13 @@ model Product {
 
    categoryId Int @map("category_id")
 
-   imagePath          String? @map("image_path") @db.VarChar(1000)
-   descriptionShort   String? @map("description_short") @db.VarChar(500)
-   descriptionFull    String? @map("description_full") @db.VarChar(2000)
-   priceDefault       Decimal @map("price_default") @db.Decimal(12, 2)
-   positionInCategory Int?    @map("position_in_category")
-   isActive           Boolean @default(true) @map("is_active")
+   imagePath          String?  @map("image_path") @db.VarChar(1000)
+   descriptionShort   String?  @map("description_short") @db.VarChar(500)
+   descriptionFull    String?  @map("description_full") @db.VarChar(2000)
+   priceDefault       Decimal  @map("price_default") @db.Decimal(12, 2)
+   bonusCoinsDefault  Decimal? @map("bonus_coins_default") @db.Decimal(12, 2)
+   positionInCategory Int?     @map("position_in_category")
+   isActive           Boolean  @default(true) @map("is_active")
 
    // добавлено для будущей реализации - СТАРТ
    composition   String? @db.VarChar(2000)
@@ -24,9 +25,9 @@ model Product {
    createdAt DateTime @default(now()) @map("created_at")
    updatedAt DateTime @updatedAt @map("updated_at")
 
-   category Category @relation(fields: [categoryId], references: [id])
+   category           Category            @relation(fields: [categoryId], references: [id])
    productRestaurants ProductRestaurant[]
-   orderProducts OrderProduct[]
+   orderProducts      OrderProduct[]
 
    @@map("products")
 }

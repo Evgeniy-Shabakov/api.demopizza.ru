@@ -34,7 +34,10 @@ export class OrderResource extends BaseResource {
 
          totalProductsPrice: record.totalProductsPrice,
          deliveryPrice: record.deliveryPrice,
+         bonusCoinsPaid: record.bonusCoinsPaid,
          totalPrice: record.totalPrice,
+
+         bonusCoinsEarned: record.bonusCoinsEarned,
 
          paymentType: record.paymentType,
          banknoteForChange: record.banknoteForChange,

@@ -1,0 +1,20 @@
+model BonusCoinsTransaction {
+   id Int @id @default(autoincrement())
+
+   userId Int
+
+   amount       Decimal @db.Decimal(12, 2) // положительное — начисление, отрицательное — списание
+   balanceAfter Decimal @db.Decimal(12, 2)
+   reason       String  @db.VarChar(255) // например, "покупка", "начисление за регистрацию"
+   orderId      Int?
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   user  User   @relation(fields: [userId], references: [id])
+   order Order? @relation(fields: [orderId], references: [id])
+
+   @@index([userId])
+   @@index([orderId])
+   @@map("bonus_coins_transactions")
+}

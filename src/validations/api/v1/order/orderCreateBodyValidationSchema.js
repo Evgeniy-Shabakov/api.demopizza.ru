@@ -75,7 +75,16 @@ export const orderCreateBodyValidationSchema = z.object({
       .number()
       .nonnegative('Не может быть отрицательным числом'),
 
+   bonusCoinsPaid: z
+      .number()
+      .nonnegative('Не может быть отрицательным числом'),
+
    totalPrice: z
+      .number()
+      .min(1, 'Итоговая сумма заказа не может быть меньше 1р')
+      .nonnegative('Не может быть отрицательным числом'),
+
+   bonusCoinsEarned: z
       .number()
       .nonnegative('Не может быть отрицательным числом'),
 

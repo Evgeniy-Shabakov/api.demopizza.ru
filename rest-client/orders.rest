@@ -1,5 +1,5 @@
-@host=https://api.demopizza.ru/api/v1
-# @host=http://localhost:5000/api/v1
+# @host=https://api.demopizza.ru/api/v1
+@host=http://localhost:5000/api/v1
 
 # все заказы с пагинацией по умолчанию page=1&perPage=10
 GET {{host}}/orders
@@ -38,10 +38,10 @@ content-type: application/json
 {
    // userId - необязательный параметр, т.к. заказ может быть создан администратором без указания
    // номера телефона пользователя (клиент подходит к админу и просто делает заказ)
-   "userId": null,
+   "userId": 3,
    "cityId": 1,
    // deliveryZoneId - необязательный параметр, нужен только при заказе до адреса (orderTypeId == 1)
-   "deliveryZoneId": 14,
+   "deliveryZoneId": 1,
    // restaurantId - необязательный параметр, нужен когда заказ не до адреса (orderTypeId != 1)
    "restaurantId": 1,
    // userAddressId - необязательный параметр, нужен только при заказе до адреса (orderTypeId == 1)
@@ -61,7 +61,10 @@ content-type: application/json
 
    "totalProductsPrice": 500,
    "deliveryPrice": 200,
-   "totalPrice": 700,
+   "bonusCoinsPaid": 540,
+   "totalPrice": 200,
+  
+   "bonusCoinsEarned": 30,
 
    "paymentType": "Наличными",
    // banknoteForChange - подготовить сдачу с купюры, необязательный параметр, 
@@ -91,7 +94,7 @@ content-type: application/json
 ### обрати внимание на PATCH, изменятся только переданные данные (не нужно передавать все поля как в PUT)
 ### передаешь только те поля, которые нужны для данного действия, например чтобы изменить статус на 
 ### "отменен" в теле запроса оставляешь только "orderStatus": "отменен",
-PATCH {{host}}/orders/2
+PATCH {{host}}/orders/48
 content-type: application/json
 
 {
@@ -111,10 +114,10 @@ content-type: application/json
 }
 
 ###
-PATCH {{host}}/orders/1/next-status
+PATCH {{host}}/orders/48/next-status
 
 ###
-PATCH {{host}}/orders/1/previous-status
+PATCH {{host}}/orders/48/previous-status
 
 ###
 GET {{host}}/orders/active-count

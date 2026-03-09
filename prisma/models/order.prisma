@@ -20,9 +20,12 @@ model Order {
 
    orderStatus String @map("order_status")
 
-   totalProductsPrice Decimal @map("total_products_price") @db.Decimal(12, 2)
-   deliveryPrice      Decimal @map("delivery_price") @db.Decimal(12, 2)
-   totalPrice         Decimal @map("total_price") @db.Decimal(12, 2)
+   totalProductsPrice       Decimal @map("total_products_price") @db.Decimal(12, 2)
+   deliveryPrice            Decimal @map("delivery_price") @db.Decimal(12, 2)
+   bonusCoinsPaid           Decimal @default(0) @map("bonus_coins_paid") @db.Decimal(12, 2)
+   totalPrice               Decimal @map("total_price") @db.Decimal(12, 2)
+
+   bonusCoinsEarned Int @default(0) @map("bonus_coins_earned")
 
    paymentType       String @map("payment_type") @db.VarChar(255)
    banknoteForChange Int?   @map("banknote_for_change")
@@ -45,7 +48,8 @@ model Order {
    courier             Employee?     @relation("Courier", fields: [courierId], references: [id], onDelete: SetNull)
    userAddress         Address?      @relation(fields: [userAddressId], references: [id], onDelete: SetNull)
 
-   orderProducts OrderProduct[]
+   orderProducts          OrderProduct[]
+   bonusCoinsTransactions BonusCoinsTransaction[]
 
    @@index([userId])
    @@index([cityId])
