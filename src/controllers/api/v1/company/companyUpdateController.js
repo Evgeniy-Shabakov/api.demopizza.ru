@@ -2,7 +2,7 @@ import { prisma } from '#services/prismaClient.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
 import { CompanyResource } from "#resources/api/v1/CompanyResource.js"
 import { invalidateCompanyCache } from '#services/companyService.js'
-
+//
 export const companyUpdateController = baseController(async (req, res) => {
    delete req.body.logoFile //без удаления лишних полей prisma выдает ошибку
    delete req.body.faviconFile //без удаления лишних полей prisma выдает ошибку
