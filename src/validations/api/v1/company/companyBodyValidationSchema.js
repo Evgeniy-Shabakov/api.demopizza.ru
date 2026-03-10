@@ -39,6 +39,9 @@ export const companyBodyValidationSchema = z.object({
 
    linksSocial: z
       .json('Должны быть в json формате')
-      .nullish()
+      .nullish(),
+
+   isBonusCoinsEnabled: z
+      .boolean('Статус бонусной программы должен быть булевым значением')
 
 }).strict()

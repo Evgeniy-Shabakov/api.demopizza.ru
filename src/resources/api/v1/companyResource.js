@@ -1,6 +1,6 @@
 import { BaseResource } from "./BaseResource.js"
 
-export class companyResource extends BaseResource {
+export class CompanyResource extends BaseResource {
    transform(record) {
       return {
          id: record.id,
@@ -18,6 +18,8 @@ export class companyResource extends BaseResource {
          contacts: record.contacts,
 
          linksSocial: record.linksSocial,
+
+         isBonusCoinsEnabled: record.isBonusCoinsEnabled,
 
          createdAt: this.formatDate(record.createdAt),
          updatedAt: this.formatDate(record.updatedAt)

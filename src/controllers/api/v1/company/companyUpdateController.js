@@ -1,6 +1,6 @@
 import { prisma } from '#services/prismaClient.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
-import { companyResource } from "#resources/api/v1/companyResource.js"
+import { CompanyResource } from "#resources/api/v1/CompanyResource.js"
 
 export const companyUpdateController = baseController(async (req, res) => {
    delete req.body.logoFile //без удаления лишних полей prisma выдает ошибку
@@ -21,5 +21,5 @@ export const companyUpdateController = baseController(async (req, res) => {
       data: req.body
    })
 
-   res.status(200).json(new companyResource(record, {}))
+   res.status(200).json(new CompanyResource(record, {}))
 })

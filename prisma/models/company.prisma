@@ -12,7 +12,9 @@ model Company {
    aboutUs        String? @map("about_us") @db.Text
    contacts       String? @db.Text
 
-   linksSocial Json?  @map("links_social")
+   linksSocial Json? @map("links_social")
+
+   isBonusCoinsEnabled  Boolean @default(false) @map("is_bonus_coins_enabled")
 
    createdAt DateTime @default(now()) @map("created_at")
    updatedAt DateTime @updatedAt @map("updated_at")

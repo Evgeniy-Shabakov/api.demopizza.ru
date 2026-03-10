@@ -1,5 +1,5 @@
-@host=https://api.demopizza.ru/api/v1
-# @host=http://localhost:5000/api/v1
+# @host=https://api.demopizza.ru/api/v1
+@host=http://localhost:5000/api/v1
 
 GET {{host}}/company
 
@@ -32,6 +32,9 @@ content-type: application/json
    "contacts": "Наши контакты", 
 
    // linksSocial - необязательный параметр, json для хранения ссылок на социальные сети
-   "linksSocial": null
+   "linksSocial": null,
+
+   // isBonusCoinsEnabled - по умолчанию false
+   "isBonusCoinsEnabled": false,
 }
 

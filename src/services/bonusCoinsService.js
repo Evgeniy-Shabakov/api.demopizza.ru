@@ -1,14 +1,17 @@
+import { prisma } from '#services/prismaClient.js'
+
 // проверять userId на подлог
 // проверять баллы которые надо списать и начислить
 // для супер точности при работе с деньгами лучше использовать Decimal
 
-function isBonusCoinsAllowed() {
-   //будет проверка включена ли бонусная  программа
-   return true
+async function isBonusCoinsAllowed() {
+   const company = await prisma.company.findFirstOrThrow()
+
+   return company.isBonusCoinsEnabled
 }
 
 export async function reserveBonusCoins(userId, amount, tx) {
-   if (!isBonusCoinsAllowed()) return
+   if (await isBonusCoinsAllowed() == false) return
 
    const [user] = await tx.$queryRaw`  
             SELECT * FROM "users" WHERE id = ${userId} FOR UPDATE`
@@ -22,7 +25,7 @@ export async function reserveBonusCoins(userId, amount, tx) {
 }
 
 export async function updateBonusCoins({ userId, amount, orderId, reason, tx }) {
-   if (!isBonusCoinsAllowed()) return
+   if (await isBonusCoinsAllowed() == false) return
 
    const user = await tx.user.update({
       where: { id: userId },
@@ -45,7 +48,7 @@ export async function updateBonusCoins({ userId, amount, orderId, reason, tx }) 
 }
 
 export async function reverseBonusCoinsForOrder({ orderId, reason, tx }) {
-   if (!isBonusCoinsAllowed()) return
+   if (await isBonusCoinsAllowed() == false) return
 
    const transactions = await tx.bonusCoinsTransaction.findMany({
       where: { orderId: orderId }

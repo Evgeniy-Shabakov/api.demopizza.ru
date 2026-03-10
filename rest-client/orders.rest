@@ -61,8 +61,8 @@ content-type: application/json
 
    "totalProductsPrice": 500,
    "deliveryPrice": 200,
-   "bonusCoinsPaid": 540,
-   "totalPrice": 200,
+   "bonusCoinsPaid": 100,
+   "totalPrice": 600,
   
    "bonusCoinsEarned": 30,
 
