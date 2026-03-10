@@ -1,5 +1,5 @@
 import { BaseResource } from "./BaseResource.js"
-//
+
 export class CompanyResource extends BaseResource {
    transform(record) {
       return {
