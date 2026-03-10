@@ -1,11 +1,10 @@
-import { prisma } from '#services/prismaClient.js'
-
+import { getCompany } from '#services/companyService.js'
 // проверять userId на подлог
 // проверять баллы которые надо списать и начислить
 // для супер точности при работе с деньгами лучше использовать Decimal
 
 async function isBonusCoinsAllowed() {
-   const company = await prisma.company.findFirstOrThrow()
+   const company = await getCompany()
 
    return company.isBonusCoinsEnabled
 }

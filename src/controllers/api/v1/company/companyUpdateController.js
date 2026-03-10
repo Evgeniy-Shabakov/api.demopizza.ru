@@ -1,6 +1,7 @@
 import { prisma } from '#services/prismaClient.js'
 import { baseController } from "#controllers/api/v1/baseController.js"
 import { CompanyResource } from "#resources/api/v1/CompanyResource.js"
+import { invalidateCompanyCache } from '#services/companyService.js'
 
 export const companyUpdateController = baseController(async (req, res) => {
    delete req.body.logoFile //без удаления лишних полей prisma выдает ошибку
@@ -20,6 +21,8 @@ export const companyUpdateController = baseController(async (req, res) => {
       where: { id: 1 },
       data: req.body
    })
+
+   invalidateCompanyCache()
 
    res.status(200).json(new CompanyResource(record, {}))
 })
