@@ -4,13 +4,20 @@ import { OrderResource } from "#resources/api/v1/OrderResource.js"
 import { ORDER_STATUS } from "#constants/api/v1/dataTypes/orderStatus.js"
 import { generateOrderNumber, getRestaurantIdByRequest } from '#utils/api/v1/orderHelper.js'
 import { PAYMENT_STATUS_TYPE } from '#constants/api/v1/dataTypes/paymentStatusType.js'
-import { reserveBonusCoins, updateBonusCoins } from '#services/bonusCoinsService.js'
+import { reserveBonusCoins, spendBonusCoins } from '#services/bonusCoinsService.js'
+import { isBonusCoinsEnabled } from '#services/companyService.js'
 
 export const orderStoreController = baseController(async (req, res) => {
 
    const restaurantId = await getRestaurantIdByRequest(req)
 
    // нужно проверять цену в  orderProducts, либо устанавливать самостоятельно
+
+   if (await isBonusCoinsEnabled() == false) {
+      if(req.body.bonusCoinsPaid > 0 || req.body.bonusCoinsEarned > 0) {
+         throw new Error('Бонусная программа отключена')
+      }
+   }
 
    const record = await prisma.$transaction(async (tx) => {
 
@@ -33,9 +40,9 @@ export const orderStoreController = baseController(async (req, res) => {
       })
 
       if (req.body.bonusCoinsPaid > 0) {
-         await updateBonusCoins({
+         await spendBonusCoins({
             userId: req.body.userId,
-            amount: -req.body.bonusCoinsPaid,
+            amount: req.body.bonusCoinsPaid,
             orderId: order.id,
             reason: "Создание заказа",
             tx

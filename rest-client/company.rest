@@ -35,6 +35,6 @@ content-type: application/json
    "linksSocial": null,
 
    // isBonusCoinsEnabled - по умолчанию false
-   "isBonusCoinsEnabled": false
+   "isBonusCoinsEnabled": true 
 }
 

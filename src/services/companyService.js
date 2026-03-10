@@ -17,3 +17,9 @@ export async function getCompany() {
 export function invalidateCompanyCache() {
   nodeCache.del(COMPANY_CACHE_KEY)
 }
+
+export async function isBonusCoinsEnabled() {
+   const company = await getCompany()
+
+   return company.isBonusCoinsEnabled
+}

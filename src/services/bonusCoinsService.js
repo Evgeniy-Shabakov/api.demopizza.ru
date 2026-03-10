@@ -1,17 +1,8 @@
-import { getCompany } from '#services/companyService.js'
 // проверять userId на подлог
 // проверять баллы которые надо списать и начислить
 // для супер точности при работе с деньгами лучше использовать Decimal
 
-async function isBonusCoinsAllowed() {
-   const company = await getCompany()
-
-   return company.isBonusCoinsEnabled
-}
-
 export async function reserveBonusCoins(userId, amount, tx) {
-   if (await isBonusCoinsAllowed() == false) return
-
    const [user] = await tx.$queryRaw`  
             SELECT * FROM "users" WHERE id = ${userId} FOR UPDATE`
    // другой параллельный запрос не сможет изменить баланс т.к. FOR UPDATE
@@ -23,9 +14,7 @@ export async function reserveBonusCoins(userId, amount, tx) {
    }
 }
 
-export async function updateBonusCoins({ userId, amount, orderId, reason, tx }) {
-   if (await isBonusCoinsAllowed() == false) return
-
+async function updateBonusCoins({ userId, amount, orderId, reason, tx }) {
    const user = await tx.user.update({
       where: { id: userId },
       data: {
@@ -46,9 +35,19 @@ export async function updateBonusCoins({ userId, amount, orderId, reason, tx }) 
    })
 }
 
-export async function reverseBonusCoinsForOrder({ orderId, reason, tx }) {
-   if (await isBonusCoinsAllowed() == false) return
+export async function addBonusCoins({ userId, amount, orderId, reason, tx }) {
+   if (amount <= 0) throw new Error('Amount для addBonusCoins должен быть положительным')
 
+   await updateBonusCoins({ userId, amount, orderId, reason, tx })
+}
+
+export async function spendBonusCoins({ userId, amount, orderId, reason, tx }) {
+   if (amount <= 0) throw new Error('Amount для spendBonusCoins должен быть положительным')
+
+   await updateBonusCoins({ userId, amount: -amount, orderId, reason, tx })
+}
+
+export async function reverseBonusCoinsForOrder({ orderId, reason, tx }) {
    const transactions = await tx.bonusCoinsTransaction.findMany({
       where: { orderId: orderId }
    })

@@ -94,7 +94,7 @@ content-type: application/json
 ### обрати внимание на PATCH, изменятся только переданные данные (не нужно передавать все поля как в PUT)
 ### передаешь только те поля, которые нужны для данного действия, например чтобы изменить статус на 
 ### "отменен" в теле запроса оставляешь только "orderStatus": "отменен",
-PATCH {{host}}/orders/48
+PATCH {{host}}/orders/58
 content-type: application/json
 
 {
@@ -114,10 +114,10 @@ content-type: application/json
 }
 
 ###
-PATCH {{host}}/orders/48/next-status
+PATCH {{host}}/orders/58/next-status
 
 ###
-PATCH {{host}}/orders/48/previous-status
+PATCH {{host}}/orders/58/previous-status
 
 ###
 GET {{host}}/orders/active-count

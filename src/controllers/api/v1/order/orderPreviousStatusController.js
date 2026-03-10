@@ -3,7 +3,7 @@ import { baseController } from "#controllers/api/v1/baseController.js"
 import { OrderResource } from "#resources/api/v1/OrderResource.js"
 import { ORDER_TYPE } from '#constants/api/v1/dataTypes/orderType.js'
 import { ORDER_STATUS } from '#constants/api/v1/dataTypes/orderStatus.js'
-import { updateBonusCoins } from '#services/bonusCoinsService.js'
+import { spendBonusCoins } from '#services/bonusCoinsService.js'
 
 export const orderPreviousStatusController = baseController(async (req, res) => {
 
@@ -49,9 +49,9 @@ export const orderPreviousStatusController = baseController(async (req, res) => 
       })
 
       if (order.orderStatus == ORDER_STATUS.COMPLETED && order.bonusCoinsEarned > 0) {
-         await updateBonusCoins({
+         await spendBonusCoins({
             userId: order.userId,
-            amount: -order.bonusCoinsEarned,
+            amount: order.bonusCoinsEarned,
             orderId: order.id,
             reason: "Возврат из статуса: завершение заказа",
             tx
@@ -59,9 +59,9 @@ export const orderPreviousStatusController = baseController(async (req, res) => 
       }
 
       if (order.orderStatus == ORDER_STATUS.CANCEL && order.bonusCoinsPaid > 0) {
-         await updateBonusCoins({
+         await spendBonusCoins({
             userId: order.userId,
-            amount: -order.bonusCoinsPaid,
+            amount: order.bonusCoinsPaid,
             orderId: order.id,
             reason: "Возврат из статуса: отмена заказа",
             tx
