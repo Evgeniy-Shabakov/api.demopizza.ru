@@ -1,0 +1,34 @@
+# @host=https://api.demopizza.ru/api/v1
+@host=http://localhost:5000/api/v1
+
+###  доступные query параметры для GET запросов 
+###  include: ['cities'],
+###  sort: ['id', 'name', 'createdAt', 'updatedAt'] asc по умолчанию, desc надо прописывать
+
+GET {{host}}/products
+###
+
+GET {{host}}/products?include=category,productRestaurants
+
+###
+GET {{host}}/products/1
+
+###
+POST {{host}}/products
+content-type: application/json
+
+{
+   "name": "Узбекистан"
+}
+
+###
+PUT {{host}}/products/4
+content-type: application/json
+
+{
+   "name": "Узбекистан New"
+}
+
+###
+DELETE {{host}}/products/2
+

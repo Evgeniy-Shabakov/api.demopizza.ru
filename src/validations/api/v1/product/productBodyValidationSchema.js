@@ -14,6 +14,10 @@ export const productBodyValidationSchema = z.object({
       .nonnegative('Не может быть отрицательным числом')
       .nullish(),
 
+   bonusCoinsDefault: z.coerce.number()
+      .nonnegative('Не может быть отрицательным числом')
+      .nullish(),
+
    descriptionShort: z
       .string().trim()
       .min(2, 'Короткое описание должно быть от 2 до 100 символов')

@@ -1,5 +1,5 @@
-@host=https://api.demopizza.ru/api/v1
-# @host=http://localhost:5000/api/v1
+# @host=https://api.demopizza.ru/api/v1
+@host=http://localhost:5000/api/v1
 
 ### используется для установки продукта в стоп-лист для заданного ресторана
 
@@ -20,8 +20,8 @@ POST {{host}}/product-restaurants
 content-type: application/json
 
 {
-   "productId": 5,
-   "restaurantId": 2,
+   "productId": 1,
+   "restaurantId": 1,
    "isInStopList": true
 }
 
