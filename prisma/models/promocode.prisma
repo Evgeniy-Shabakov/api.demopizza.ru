@@ -1,0 +1,26 @@
+model Promocode {
+   id Int @id @default(autoincrement())
+
+   code        String  @unique @db.VarChar(50)
+   description String? @db.VarChar(255)
+   bonusCoins  Decimal @map("bonus_coins") @db.Decimal(12, 2)
+
+   isActive Boolean @default(true) @map("is_active")
+
+   employeeId Int @map("employee_id") //кто создал
+
+   userId Int?      @map("user_id") //кто использовал
+   usedAt DateTime? @map("used_at") // когда использован
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   employee Employee @relation(fields: [employeeId], references: [id])
+   user     User?    @relation(fields: [userId], references: [id])
+
+   bonusCoinsTransactions BonusCoinsTransaction[]
+
+   @@index([employeeId])
+   @@index([userId])
+   @@map("promocodes")
+}

@@ -14,7 +14,8 @@ export class EmployeeResource extends BaseResource {
          lastName: record.lastName,
          middleName: record.middleName,
          jobTitle: record.jobTitle,
-
+         isActive: record.isActive,
+         
          employeeRoles: record.employeeRoles ?
             EmployeeRoleResource.collection(record.employeeRoles) :
             undefined,

@@ -17,6 +17,7 @@ model User {
    refreshTokens          RefreshToken[]
    orders                 Order[]
    bonusCoinsTransactions BonusCoinsTransaction[]
+   promocodes             Promocode[]
 
    @@map("users")
 }
