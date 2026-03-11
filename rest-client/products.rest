@@ -1,8 +1,8 @@
-# @host=https://api.demopizza.ru/api/v1
-@host=http://localhost:5000/api/v1
+@host=https://api.demopizza.ru/api/v1
+# @host=http://localhost:5000/api/v1
 
 ###  доступные query параметры для GET запросов 
-###  include: ['cities'],
+###  include: ['category', 'productRestaurants']
 ###  sort: ['id', 'name', 'createdAt', 'updatedAt'] asc по умолчанию, desc надо прописывать
 
 GET {{host}}/products
