@@ -13,22 +13,3 @@ GET {{host}}/products?include=category,productRestaurants
 ###
 GET {{host}}/products/1
 
-###
-POST {{host}}/products
-content-type: application/json
-
-{
-   "name": "Узбекистан"
-}
-
-###
-PUT {{host}}/products/4
-content-type: application/json
-
-{
-   "name": "Узбекистан New"
-}
-
-###
-DELETE {{host}}/products/2
-
