@@ -1,0 +1,63 @@
+# @host=https://api.demopizza.ru/api/v1
+@host=http://localhost:5000/api/v1
+
+# все промокоды с пагинацией по умолчанию page=1&perPage=10
+GET {{host}}/promocodes
+
+### пагинация и сортировка
+GET {{host}}/promocodes?sort=id,desc&page=1&perPage=15
+
+###
+# получаем только АКТИВНЫЕ промокоды с сортировкой от самого нового 
+GET {{host}}/promocodes?isActive=true&sort=id,desc
+
+###
+# получаем только НЕАКТИВНЫЕ промокоды с сортировкой от самого нового
+# промокод НЕАКТИВЕН, если его деактивировал сотрудник или если его применил клиент
+GET {{host}}/promocodes?isActive=false&sort=id,desc
+
+###
+# получаем все ИСПОЛЬЗОВАННЫЕ ПРОМОКОДЫ с сортировкой от самого нового
+GET {{host}}/promocodes?usedAt=true&sort=id,desc
+
+###
+# получаем все НЕИСПОЛЬЗОВАННЫЕ ПРОМОКОДЫ с сортировкой от самого нового
+GET {{host}}/promocodes?usedAt=false&sort=id,desc
+
+###
+# комбинируем параметры фильтров
+# чаще всего если промокод неактивен, то его использовал пользователь, но если промокод отключил
+# сотрудник, то он будет неактивен и не использован пользователем
+# промокоды удалять нельзя т.к. по сути это создаваемые деньги и нужно отслеживать все создания
+# но можно деактивировать промокод, если неправильная сумма или решили отменить акцию
+GET {{host}}/promocodes?isActive=false&usedAt=false&sort=id,desc
+
+
+###
+GET {{host}}/promocodes/2
+
+###
+POST {{host}}/promocodes
+content-type: application/json
+
+{
+   "bonusCoins": 100,
+   // description - необязательный параметр
+   "description": "Розыгрыш баварской пиццы для привлечения аудиторию в группу вк"
+}
+
+### активация и деактивация кода (изменить можно только неиспользованный промокод)
+PATCH {{host}}/promocodes/7
+content-type: application/json
+
+{
+   "isActive": false
+}
+
+###
+POST {{host}}/promocodes/activate
+content-type: application/json
+
+{
+   "code": "3W7NWK6E"
+}

@@ -46,6 +46,7 @@ function createQueryValidationSchema(queryValidationData) {
          .nonnegative()
          .optional(),
 
+      //для orders
       active: z
          .coerce.boolean()
          .optional(),
@@ -60,6 +61,15 @@ function createQueryValidationSchema(queryValidationData) {
          .coerce.number()
          .int()
          .nonnegative()
+         .optional(),
+
+      //для promocodes
+      isActive: z
+         .coerce.boolean()
+         .optional(),
+
+      usedAt: z
+         .coerce.boolean()
          .optional(),
    }).strict()
 }

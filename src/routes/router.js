@@ -14,6 +14,7 @@ import orderRouter from './api/v1/orderRouter.js'
 import designRouter from './api/v1/designRouter.js'
 import legalDocumentRouter from './api/v1/legalDocumentRouter.js'
 import companyRouter from './api/v1/companyRouter.js'
+import promocodeRouter from './api/v1/promocodeRouter.js'
 
 const router = express.Router()
 
@@ -39,5 +40,6 @@ router.use('/api/v1/orders', orderRouter)
 router.use('/api/v1/designs', designRouter)
 router.use('/api/v1/legal-documents', legalDocumentRouter)
 router.use('/api/v1/company', companyRouter)
+router.use('/api/v1/promocodes', promocodeRouter)
 
 export default router

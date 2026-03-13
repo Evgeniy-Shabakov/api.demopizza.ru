@@ -106,3 +106,10 @@ export const COMPANY_ROUTE_PERMISSIONS = Object.freeze({
    GET_ONE: 'legal_documents:get_one',
    UPDATE: 'legal_documents:update',
 })
+
+export const PROMOCODE_ROUTE_PERMISSIONS = Object.freeze({
+   GET_ALL: 'promocode:get_all',
+   GET_ONE: 'promocode:get_one',
+   CREATE: 'promocode:create',
+   UPDATE: 'promocode:update'
+})

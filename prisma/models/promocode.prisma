@@ -1,16 +1,17 @@
 model Promocode {
    id Int @id @default(autoincrement())
 
-   code        String  @unique @db.VarChar(50)
-   description String? @db.VarChar(255)
+   code String @unique @db.VarChar(50)
+
    bonusCoins  Decimal @map("bonus_coins") @db.Decimal(12, 2)
+   description String? @db.VarChar(255)
 
    isActive Boolean @default(true) @map("is_active")
 
-   employeeId Int @map("employee_id") //кто создал
+   employeeId Int @map("employee_id")
 
-   userId Int?      @map("user_id") //кто использовал
-   usedAt DateTime? @map("used_at") // когда использован
+   userId Int?      @map("user_id")
+   usedAt DateTime? @map("used_at")
 
    createdAt DateTime @default(now()) @map("created_at")
    updatedAt DateTime @updatedAt @map("updated_at")

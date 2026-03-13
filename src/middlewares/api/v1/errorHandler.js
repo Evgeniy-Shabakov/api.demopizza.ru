@@ -3,6 +3,7 @@ import multer from 'multer'
 import jwt from 'jsonwebtoken'
 import { UnauthorizedError } from '#errors/api/v1/UnauthorizedError.js'
 import { ForbiddenError } from '#errors/api/v1/ForbiddenError.js'
+import { PromocodeError } from '#errors/api/v1/PromocodeError.js'
 import { ERROR_CODE } from '#constants/api/v1/errorCode.js'
 
 export function errorHandler(error, req, res, next) {
@@ -111,6 +112,17 @@ export function errorHandler(error, req, res, next) {
    if (error instanceof ForbiddenError) {
       return res.status(403).json({
          error: 'Forbidden error',
+         message: error.message,
+         details: {
+            error: error,
+            stack: error.stack,
+         }
+      })
+   }
+
+   if (error instanceof PromocodeError) {
+      return res.status(400).json({
+         error: 'Promocode error',
          message: error.message,
          details: {
             error: error,

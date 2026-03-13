@@ -59,5 +59,5 @@ export const orderIndexController = baseController(async (req, res) => {
       filters: appliedFilters
    }
 
-   res.status(200).json(OrderResource.collection(records, { meta }))
+   res.status(200).json(OrderResource.collection(records, meta))
 })
