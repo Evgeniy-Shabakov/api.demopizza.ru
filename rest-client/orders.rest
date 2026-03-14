@@ -61,10 +61,10 @@ content-type: application/json
 
    "totalProductsPrice": 500,
    "deliveryPrice": 200,
-   "bonusCoinsPaid": 100,
-   "totalPrice": 600,
+   "bonusCoinsPaid": 10,
+   "totalPrice": 700,
   
-   "bonusCoinsEarned": 30,
+   "bonusCoinsEarned": 0,
 
    "paymentType": "Наличными",
    // banknoteForChange - подготовить сдачу с купюры, необязательный параметр, 
@@ -94,7 +94,7 @@ content-type: application/json
 ### обрати внимание на PATCH, изменятся только переданные данные (не нужно передавать все поля как в PUT)
 ### передаешь только те поля, которые нужны для данного действия, например чтобы изменить статус на 
 ### "отменен" в теле запроса оставляешь только "orderStatus": "отменен",
-PATCH {{host}}/orders/58
+PATCH {{host}}/orders/63
 content-type: application/json
 
 {
@@ -114,10 +114,10 @@ content-type: application/json
 }
 
 ###
-PATCH {{host}}/orders/58/next-status
+PATCH {{host}}/orders/63/next-status
 
 ###
-PATCH {{host}}/orders/58/previous-status
+PATCH {{host}}/orders/63/previous-status
 
 ###
 GET {{host}}/orders/active-count

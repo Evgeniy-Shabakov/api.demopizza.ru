@@ -12,7 +12,8 @@ export const orderShowController = baseController(async (req, res) => {
             include: {
                product: true
             }
-         }
+         },
+         user: true
       }
    })
 

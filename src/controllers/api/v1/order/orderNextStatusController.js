@@ -36,7 +36,8 @@ export const orderNextStatusController = baseController(async (req, res) => {
                include: {
                   product: true
                }
-            }
+            },
+            user: true
          }
       })
 

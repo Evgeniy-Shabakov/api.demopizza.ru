@@ -44,7 +44,8 @@ export const orderPreviousStatusController = baseController(async (req, res) => 
                include: {
                   product: true
                }
-            }
+            },
+            user: true
          }
       })
 

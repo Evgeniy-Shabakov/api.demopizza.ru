@@ -36,7 +36,8 @@ export const orderIndexController = baseController(async (req, res) => {
             include: {
                product: true
             }
-         }
+         },
+         user: true
       },
       orderBy: req.sort,
       skip: skip,

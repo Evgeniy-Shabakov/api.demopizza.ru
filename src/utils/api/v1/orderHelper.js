@@ -14,7 +14,7 @@ export function generateOrderNumber(orderTypeId) {
 }
 
 export async function getRestaurantIdByRequest(req) {
-   if(req.body.orderTypeId != ORDER_TYPE.DELIVERY_TO_ADDRESS.ID) {
+   if (req.body.orderTypeId != ORDER_TYPE.DELIVERY_TO_ADDRESS.ID) {
       return req.body.restaurantId
    }
 
@@ -23,4 +23,12 @@ export async function getRestaurantIdByRequest(req) {
    })
 
    return deliveryZone.restaurantId
+}
+
+const orderTypeNameMap = new Map(
+   Object.values(ORDER_TYPE).map(type => [type.ID, type.NAME])
+)
+
+export function getOrderTypeNameById(id) {
+   return orderTypeNameMap.get(id)
 }

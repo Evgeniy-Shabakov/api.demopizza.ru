@@ -7,10 +7,10 @@ export async function reserveBonusCoins(userId, amount, tx) {
             SELECT * FROM "users" WHERE id = ${userId} FOR UPDATE`
    // другой параллельный запрос не сможет изменить баланс т.к. FOR UPDATE
 
-   if (!user) throw new Error('Пользователь не найден')
+   if (!user) throw new Error('Ошибка бонусной программы: пользователь не найден')
 
    if (Number(user.bonus_coins) < amount) {
-      throw new Error('Недостаточно бонусных баллов')
+      throw new Error('Ошибка бонусной программы: недостаточно бонусных баллов')
    }
 }
 

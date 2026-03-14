@@ -13,8 +13,11 @@ export const orderStoreController = baseController(async (req, res) => {
 
    // нужно проверять цену в  orderProducts, либо устанавливать самостоятельно
 
-   if (await isBonusCoinsEnabled() == false) {
-      if(req.body.bonusCoinsPaid > 0 || req.body.bonusCoinsEarned > 0) {
+   if(req.body.bonusCoinsPaid > 0 || req.body.bonusCoinsEarned > 0) {
+      if(!req.body.userId) {
+         throw new Error('Бонусы не могут быть начислены или списаны без указания пользователя')
+      }
+      if(await isBonusCoinsEnabled() == false) {
          throw new Error('Бонусная программа отключена')
       }
    }
@@ -36,7 +39,10 @@ export const orderStoreController = baseController(async (req, res) => {
 
             orderProducts: { create: req.body.orderProducts }
          },
-         include: { orderProducts: { include: { product: true } } }
+         include: {
+            orderProducts: { include: { product: true } },
+            user: true
+         }
       })
 
       if (req.body.bonusCoinsPaid > 0) {

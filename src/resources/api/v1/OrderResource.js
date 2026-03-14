@@ -6,7 +6,7 @@ import { DeliveryZoneResource } from "./DeliveryZoneResource.js"
 import { RestaurantResource } from "./RestaurantResource.js"
 import { EmployeeResource } from "./EmployeeResource.js"
 import { AddressResource } from "./AddressResource.js"
-
+import { getOrderTypeNameById } from '#utils/api/v1/orderHelper.js'
 
 export class OrderResource extends BaseResource {
    transform(record) {
@@ -23,7 +23,8 @@ export class OrderResource extends BaseResource {
          courierId: record.courierId,
          userAddressId: record.userAddressId,
 
-         orderType: record.orderType,
+         orderTypeId: record.orderTypeId,
+         orderTypeName: getOrderTypeNameById(record.orderTypeId),
          tableNumber: record.tableNumber,
          carNumber: record.carNumber,
          packTakeaway: record.packTakeaway,
