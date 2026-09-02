@@ -1,0 +1,23 @@
+model UserRefreshToken {
+   id Int @id @default(autoincrement())
+
+   token String @unique @db.VarChar(512)
+
+   userId Int @map("user_id")
+
+   expiresAt DateTime @map("expires_at")
+   isRevoked Boolean  @default(false) @map("is_revoked")
+
+   userAgent  String? @map("user_agent") @db.VarChar(2000)
+   ipAddress  String? @map("ip_address") @db.VarChar(2000)
+   deviceName String? @map("device_name") @db.VarChar(2000)
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+   @@index([token])
+   @@index([userId])
+   @@map("user_refresh_tokens")
+}

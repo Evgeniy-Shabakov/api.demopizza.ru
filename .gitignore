@@ -1,0 +1,15 @@
+node_modules
+.env
+.vscode
+
+auth.admin.rest
+auth.client.rest
+
+/generated/prisma
+
+storage/public/images/products/*
+!storage/public/images/products/.gitkeep
+
+docker-compose.override.yml
+
+

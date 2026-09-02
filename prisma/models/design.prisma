@@ -1,0 +1,13 @@
+model Design {
+   id Int @id @default(autoincrement())
+
+   name     String  @unique @db.VarChar(255)
+   isActive Boolean @default(false) @map("is_active")
+
+   settings Json
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   @@map("designs")
+}

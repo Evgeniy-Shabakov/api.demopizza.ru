@@ -1,0 +1,27 @@
+@host=http://127.0.0.1:5000/api/v1/admin
+
+GET {{host}}/categories
+
+###
+GET {{host}}/categories/1
+
+###
+POST {{host}}/categories
+Content-Type: application/json
+
+{
+   "name": "Новая категория",
+   "position": 1
+}
+
+###
+PUT {{host}}/categories/1
+Content-Type: application/json
+
+{
+   "name": "Обновлённая категория",
+   "position": 2
+}
+
+###
+DELETE {{host}}/categories/1

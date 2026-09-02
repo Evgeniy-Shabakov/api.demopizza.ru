@@ -1,0 +1,33 @@
+model Address {
+   id Int @id @default(autoincrement())
+
+   name String? @db.VarChar(255)
+
+   userId Int
+   cityId Int
+
+   street       String  @db.VarChar(255)
+   house        String  @db.VarChar(10)
+   corps        String? @db.VarChar(10)
+   flat         String? @db.VarChar(10)
+   entrance     Int?
+   floor        Int?
+   entranceCode String? @db.VarChar(20)
+   comment      String? @db.VarChar(500)
+
+   latitude        Float?
+   longitude       Float?
+   addressAsString String? @map("address_as_string") @db.VarChar(500)
+   externalApiData Json?   @map("external_api_data")
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+   city City @relation(fields: [cityId], references: [id])
+
+   orders Order[]
+
+   @@index([userId])
+   @@map("addresses")
+}

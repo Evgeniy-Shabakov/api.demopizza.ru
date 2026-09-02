@@ -1,0 +1,30 @@
+# Зависимости (Docker ставит свои)
+node_modules/
+npm-debug.log
+
+**/__tests__/**
+**/tests/**
+
+
+# Сгенерированный локально клиент Prisma (Docker сгенерирует сам внутри)
+generated/
+
+# Пользовательские загрузки и картинки товаров (пробрасываются отдельно)
+storage/
+
+# Секреты (передаются через docker-compose в память)
+.env
+.env.*
+
+# Системные файлы редакторов и Git
+.vscode/
+.git
+.gitignore
+
+# Документация и логи (не нужны для работы API)
+AGENTS.md
+*.log
+
+# Docker-файлы (не нужны в image)
+Dockerfile
+docker-compose*.yml

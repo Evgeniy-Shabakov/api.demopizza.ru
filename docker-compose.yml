@@ -1,0 +1,49 @@
+name: ${PROJECT_NAME}-backend
+
+services:
+  api-service:
+    build: .
+    image: demopizza-api-image:latest
+    container_name: ${PROJECT_NAME}-api-container
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: "postgresql://${DB_USER}:${DB_PASSWORD}@postgres-service:5432/${DB_NAME}?schema=public"
+    depends_on:
+      postgres-service:
+        condition: service_healthy
+    command: sh -c "npx prisma migrate deploy && npm run start"
+    volumes:
+      - ./storage:/app/storage
+    networks:
+      - inner-network
+      - docker-network
+
+  postgres-service:
+    image: postgres:17-alpine
+    container_name: ${PROJECT_NAME}-postgres-container
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - inner-network
+
+volumes:
+  pgdata:
+
+networks:
+  inner-network:
+    driver: bridge
+
+  docker-network:
+    external: true

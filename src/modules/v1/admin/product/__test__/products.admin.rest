@@ -1,0 +1,57 @@
+@host=http://127.0.0.1:5000/api/v1/admin
+
+POST {{host}}/products
+Content-Type: multipart/form-data; boundary=boundary_string
+
+--boundary_string
+Content-Disposition: form-data; name="name"
+
+Новый чизкейк 677
+--boundary_string
+Content-Disposition: form-data; name="categoryId"
+
+1
+--boundary_string
+Content-Disposition: form-data; name="priceDefault"
+
+300
+--boundary_string
+Content-Disposition: form-data; name="isActive"
+
+1
+--boundary_string
+Content-Disposition: form-data; name="imageFile"; filename="favicon.png"
+Content-Type: image/png
+
+< ./images/favicon.png
+--boundary_string--
+
+###
+PUT {{host}}/products/89
+Content-Type: multipart/form-data; boundary=boundary_string
+
+--boundary_string
+Content-Disposition: form-data; name="name"
+
+Новый чизкейк4443
+--boundary_string
+Content-Disposition: form-data; name="categoryId"
+
+2
+--boundary_string
+Content-Disposition: form-data; name="priceDefault"
+
+300
+--boundary_string
+Content-Disposition: form-data; name="isActive"
+
+1
+--boundary_string
+Content-Disposition: form-data; name="imageFile"; filename="favicon.png"
+Content-Type: image/png
+
+< ./images/favicon.png
+--boundary_string--
+
+###
+DELETE {{host}}/products/86

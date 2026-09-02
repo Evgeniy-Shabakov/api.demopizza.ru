@@ -1,0 +1,28 @@
+model Payment {
+   id Int @id @default(autoincrement())
+
+   provider          String  @db.VarChar(255)
+   providerPaymentId String? @map("provider_payment_id")
+   status            String  @db.VarChar(255)
+
+   amount   Decimal @db.Decimal(12, 2)
+   currency String  @default("RUB") @db.VarChar(50)
+
+   description String? @db.VarChar(500)
+   returnUrl   String? @map("return_url") @db.VarChar(2048)
+   paymentUrl  String? @map("payment_url") @db.VarChar(2048)
+
+   paidAt      DateTime? @map("paid_at")
+   confirmedAt DateTime? @map("confirmed_at")
+
+   metadata Json?
+
+   createdAt DateTime @default(now()) @map("created_at")
+   updatedAt DateTime @updatedAt @map("updated_at")
+
+   order Order?
+
+   @@unique([provider, providerPaymentId])
+   @@index([status])
+   @@map("payments")
+}
