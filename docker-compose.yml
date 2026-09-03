@@ -3,7 +3,7 @@ name: ${PROJECT_NAME}-backend
 services:
   api-service:
     build: .
-    image: demopizza-api-image:latest
+    image: ${PROJECT_NAME}-api-image:latest
     container_name: ${PROJECT_NAME}-api-container
     restart: unless-stopped
     env_file:
