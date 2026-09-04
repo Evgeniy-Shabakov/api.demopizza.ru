@@ -43,7 +43,10 @@ export const orderClientReply = z.object({
 
    city: z.object({ name: z.string() }).optional(),
    deliveryZone: z.object({ name: z.string() }).nullable().optional(),
-   restaurant: z.object({ name: z.string() }).optional(),
+    restaurant: z.object({
+       name: z.string(),
+       address: z.any().nullable(),
+    }).optional(),
    user: z.object({ phone: z.string() }).nullable().optional(),
 
    orderProducts: z.array(z.object({
