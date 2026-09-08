@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { addressClientReply } from './address.client.reply.js'
+import { addressClientReply } from './address/address.client.reply.js'
 
 export const userClientReply = z.object({
    id: z.number().int().optional(),

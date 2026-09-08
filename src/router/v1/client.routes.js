@@ -8,6 +8,7 @@ import { legalDocumentClientRoutes } from "#modules/v1/client/legal-document/leg
 import { orderClientRoutes } from "#modules/v1/client/order/order.client.routes.js"
 import { authClientRoutes } from "#modules/v1/client/auth/auth.client.routes.js"
 import { promocodeClientRoutes } from "#modules/v1/client/promocode/promocode.client.routes.js"
+import { addressClientRoutes } from "#modules/v1/client/address/address.client.routes.js"
 
 export async function clientRoutes(fastify) {
 
@@ -24,6 +25,7 @@ export async function clientRoutes(fastify) {
     await fastify.register(async (app) => {
        app.addHook('preHandler', app.authenticateUser)
        await app.register(promocodeClientRoutes, { prefix: '/promocodes' })
+       await app.register(addressClientRoutes, { prefix: '/addresses' })
     })
     
 }
