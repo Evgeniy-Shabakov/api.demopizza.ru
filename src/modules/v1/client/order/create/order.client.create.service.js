@@ -4,7 +4,7 @@ import { ORDER_STATUS } from "#constants/v1/data-types/order-status.js"
 import { PAYMENT_STATUS } from "#constants/v1/data-types/payment-status.js"
 import { createPayment } from "#modules/v1/payment/payment.service.js"
 import { reserveBonusCoins, spendBonusCoins } from "#modules/v1/shared/bonus-coins.service.js"
-import { generateOrderNumber, getRestaurantIdByRequest } from "./order.client.helper.js"
+import { generateOrderNumber, getRestaurantIdByRequest } from "../order.client.helper.js"
 
 export async function orderClientCreateService(data) {
 

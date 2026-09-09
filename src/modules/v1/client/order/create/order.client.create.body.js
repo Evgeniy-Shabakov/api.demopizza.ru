@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { addressClientBody } from '../address/address.client.body.js'
+import { addressClientBody } from '../../address/address.client.body.js'
 
 export const orderClientCreateBody = z.strictObject({
    phone: z.string().trim().min(10).max(20),
