@@ -32,7 +32,7 @@ export async function orderClientCreateService(data) {
       payment = await createPayment({
          value: data.totalPrice,
          description: `Заказ: №${orderNumber} от ${new Date().toLocaleString()}`,
-         returnUrl: `${process.env.CLIENT_URL}/order-status`
+         returnUrl: `${process.env.CLIENT_URL}/order-success`
       })
    }
 
