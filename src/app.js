@@ -25,7 +25,7 @@ import { errorHandler } from "#errors/v1/error.handler.js"
 
 export const app = Fastify({
    logger: loggerConfig,
-   trustProxy: '127.0.0.1'
+   trustProxy: true
 })
 
 app.setValidatorCompiler(validatorCompiler)
