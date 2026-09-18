@@ -33,7 +33,7 @@ app.setSerializerCompiler(serializerCompiler)
 
 app.register(helmet, helmetConfig)
 app.register(cors, corsConfig)
-app.register(rateLimit, rateLimitConfig)
+// app.register(rateLimit, rateLimitConfig)
 
 app.register(fastifyCookie)
 app.register(authAdminConfig)
