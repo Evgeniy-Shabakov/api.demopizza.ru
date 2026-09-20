@@ -5,7 +5,9 @@ export const companyClientReply = z.object({
    brandName: z.string(),
    tagline: z.string().nullable(),
    phoneForOrders: z.string().nullable(),
-
+   
    legalData: z.any().nullable(),
    options: z.any().nullable(),
+   
+   vkAppId: z.string(),
 })
