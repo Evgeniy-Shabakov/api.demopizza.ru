@@ -8,7 +8,11 @@ export const companyAdminBody = z.strictObject({
    phoneForOrders: z.string().trim().min(10).max(30).nullish(),
 
    options: z.object({
-      isBonusCoinsEnabled: z.boolean()
+      isBonusCoinsEnabled: z.boolean(),
+      paymentTypeSetting: z.object({
+         enabledPaymentTypeIds: z.array(z.number().int()),
+         paymentTypeIdByDefault: z.number().int().nullish()
+      }).nullish()
    }).nullish(),
 
    legalData: z.object({
