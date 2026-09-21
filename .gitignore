@@ -7,8 +7,9 @@ auth.client.rest
 
 /generated/prisma
 
-storage/public/images/products/*
+storage/public/images
 !storage/public/images/products/.gitkeep
+
 
 docker-compose.override.yml
 
