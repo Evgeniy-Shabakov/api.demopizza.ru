@@ -9,6 +9,7 @@ import { orderClientRoutes } from "#modules/v1/client/order/order.client.routes.
 import { authClientRoutes } from "#modules/v1/client/auth/auth.client.routes.js"
 import { promocodeClientRoutes } from "#modules/v1/client/promocode/promocode.client.routes.js"
 import { addressClientRoutes } from "#modules/v1/client/address/address.client.routes.js"
+import { pwaClientRoutes } from "#modules/v1/client/pwa/pwa.client.routes.js"
 
 export async function clientRoutes(fastify) {
 
@@ -20,12 +21,13 @@ export async function clientRoutes(fastify) {
    await fastify.register(dadataClientRoutes, { prefix: '/dadata' })
    await fastify.register(designClientRoutes, { prefix: '/designs' })
    await fastify.register(legalDocumentClientRoutes, { prefix: '/legal-documents' })
-    await fastify.register(orderClientRoutes, { prefix: '/orders' })
+   await fastify.register(orderClientRoutes, { prefix: '/orders' })
+   await fastify.register(pwaClientRoutes, { prefix: '/pwa' })
 
-    await fastify.register(async (app) => {
-       app.addHook('preHandler', app.authenticateUser)
-       await app.register(promocodeClientRoutes, { prefix: '/promocodes' })
-       await app.register(addressClientRoutes, { prefix: '/addresses' })
-    })
-    
+   await fastify.register(async (app) => {
+      app.addHook('preHandler', app.authenticateUser)
+      await app.register(promocodeClientRoutes, { prefix: '/promocodes' })
+      await app.register(addressClientRoutes, { prefix: '/addresses' })
+   })
+
 }
