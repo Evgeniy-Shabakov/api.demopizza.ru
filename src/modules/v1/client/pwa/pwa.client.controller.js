@@ -8,7 +8,7 @@ export const pwaClientController = {
          }
       })
 
-      const origin = `${request.protocol}://api.${request.host}`
+      const origin = `${request.protocol}://${request.host}`
 
       reply.type('application/manifest+json')
       return {
