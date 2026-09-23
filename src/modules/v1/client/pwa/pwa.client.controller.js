@@ -8,8 +8,6 @@ export const pwaClientController = {
          }
       })
 
-      const origin = `${request.protocol}://${request.host}`
-
       reply.type('application/manifest+json')
       return {
          name: brandName,
@@ -19,8 +17,8 @@ export const pwaClientController = {
          background_color: '#F5F5F5',
          display: 'standalone',
          icons: [
-            { src: `${origin}/images/pwa/pwa-icon-192x192.png`, sizes: '192x192', type: 'image/png' },
-            { src: `${origin}/images/pwa/pwa-icon-512x512.png`, sizes: '512x512', type: 'image/png' }
+            { src: '/images/pwa/pwa-icon-192x192.png', sizes: '192x192', type: 'image/png' },
+            { src: '/images/pwa/pwa-icon-512x512.png', sizes: '512x512', type: 'image/png' }
          ]
       }
    },
